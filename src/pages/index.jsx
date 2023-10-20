@@ -1,6 +1,8 @@
+import Dani from './dani';
 import Ian from './ian';
 
 
 export {
-    Ian,
+    Dani,
+    Ian
 };
