@@ -1,6 +1,6 @@
-import Dani from './dani';
+import Muja from './muja';
 
 
 export {
-    Dani,
+    Muja,
 };
