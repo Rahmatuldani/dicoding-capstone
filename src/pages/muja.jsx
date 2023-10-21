@@ -3,13 +3,13 @@ import { Button, Card } from 'react-bootstrap';
 import CardSkeleton from '../components/cardSkeleton';
 import axios from 'axios';
 
-const Dani = () => {
+const Muja = () => {
     const [data, setData] = React.useState();
 
     React.useState(() => {
         const fetchData = async () => {
             try {
-                const result = await axios.get('https://api.themoviedb.org/3/movie/now_playing?api_key=1c295f3a4ffee72dae8943f83cd7a3f7');
+                const result = await axios.get('https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=English%20Premier%20League');
                 setData(result.data.results);
             } catch (error) {
                 console.log(error);
@@ -22,8 +22,8 @@ const Dani = () => {
     }, []);
 
     return (
-        <section className='dani-page m-4'>
-            <h1 className='text-center mb-4'>Movie API</h1>
+        <section className='muja-page m-4'>
+            <h1 className='text-center mb-4'>Premier League Teams</h1>
             <section className='movie-list d-flex flex-wrap justify-content-center gap-4'>
                 {!data ? 
                     <>
@@ -32,12 +32,12 @@ const Dani = () => {
                         <CardSkeleton/>
                     </>
                     :
-                    data.map((item, index) => (
-                        <Card key={index} style={{ width: '18rem', height: 'fit-content' }}>
-                            <Card.Img variant="top" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} />
+                    data.map((teams) => (
+                        <Card key={teams.idTeam} style={{ width: '18rem', height: 'fit-content' }}>
+                            <Card.Img variant="top" src={`https://image.tmdb.org/t/p/w500${teams.strStadiumThumb}`} />
                             <Card.Body>
-                                <Card.Title>{item.original_title}</Card.Title>
-                                <Card.Text>{item.overview}</Card.Text>
+                                <Card.Title>{teams.strTeam}</Card.Title>
+                                <Card.Text>{teams.strDescriptionEN}</Card.Text>
                                 <Button variant="primary">Detail</Button>
                             </Card.Body>
                         </Card>
@@ -48,4 +48,4 @@ const Dani = () => {
     );
 };
 
-export default Dani;
+export default Muja;
