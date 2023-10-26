@@ -18,6 +18,6 @@ module.exports = {
     ],
     'semi': 'error',
     'indent': ['error', 4],
-    'quotes': ['error', 'single']
+    'quotes': ['error', 'single'],
   },
 }

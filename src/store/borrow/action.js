@@ -12,7 +12,7 @@ function fetchBorrowStart({id}) {
 function fetchBorrowSuccess(borrow) {
     return {
         type: BORROW_ACTION_TYPES.FETCH_BORROW_SUCCESS,
-        payload: borrow
+        payload: {...borrow}
     };
 }
 
