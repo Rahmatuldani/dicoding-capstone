@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import { userReducer } from './user/reducer';
+import { authReducer } from './auth/reducer';
 import { booksReducer } from './books/reducer';
 import { borrowReducer } from './borrow/reducer';
 
 export const rootReducer = combineReducers({
-    user: userReducer,
+    auth: authReducer,
     books: booksReducer,
     borrow: borrowReducer,
 });

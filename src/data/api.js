@@ -22,17 +22,14 @@ const api = (() => {
     }
   
     async function getAllBorrowed({ id }) {
-        const result = {
-            userId: id,
-            borrow: [
-                {
-                    isbn: '1111'
-                },
-                {
-                    isbn: '222'
-                },
-            ]
-        };
+        const result = [
+            {
+                isbn: '1111'
+            },
+            {
+                isbn: '222'
+            },
+        ];
 
         return await result;
     }

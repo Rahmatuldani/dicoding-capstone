@@ -1,5 +1,5 @@
 import { all, call, takeLatest, put } from 'typed-redux-saga';
-import { USER_ACTION_TYPES } from './types';
+import { AUTH_ACTION_TYPES } from './types';
 import { signInSuccess, signInFailed } from './action';
 import api from '../../data/api';
 
@@ -13,11 +13,11 @@ export function* signInStart({payload: {email, password}}) {
 }
 
 export function* onSignInStart() {
-    yield* takeLatest(USER_ACTION_TYPES.SIGN_IN_START, signInStart);
+    yield* takeLatest(AUTH_ACTION_TYPES.SIGN_IN_START, signInStart);
 }
 
-export function* userSagas() {
+export function* authSagas() {
     yield* all([
-        call(onSignInStart)
+        call(onSignInStart),
     ]);
 }

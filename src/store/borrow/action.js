@@ -1,26 +1,16 @@
+import { createAction } from '../../utils/reducer';
 import { BORROW_ACTION_TYPES } from './types';
 
 function fetchBorrowStart({id}) {
-    return {
-        type: BORROW_ACTION_TYPES.FETCH_BORROW_START,
-        payload: {
-            id
-        },
-    };
+    return createAction(BORROW_ACTION_TYPES.FETCH_BORROW_START, {id});
 }
 
 function fetchBorrowSuccess(borrow) {
-    return {
-        type: BORROW_ACTION_TYPES.FETCH_BORROW_SUCCESS,
-        payload: {...borrow}
-    };
+    return createAction(BORROW_ACTION_TYPES.FETCH_BORROW_SUCCESS, borrow);
 }
 
 function fetchBorrowFailed(error) {
-    return {
-        type: BORROW_ACTION_TYPES.FETCH_BORROW_FAILED,
-        payload: error
-    };
+    return createAction(BORROW_ACTION_TYPES.FETCH_BORROW_FAILED, error);
 }
 
 export {

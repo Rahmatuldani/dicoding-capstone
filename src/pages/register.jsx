@@ -1,13 +1,16 @@
 import { useSelector } from 'react-redux';
-import { selectUser } from '../store/user/selector';
+import { selectAuth } from '../store/auth/selector';
 import { Navigate } from 'react-router-dom';
 
 const Register = () => {
-    const { currentUser } = useSelector(selectUser);
-
+    // jangan diubah 
+    const { currentUser } = useSelector(selectAuth);
+    
     if (currentUser) {
         return <Navigate to={'/'} replace/>;
     }
+    // jangan diubah 
+
     return (
         <div>Register</div>
     );

@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
-import { selectUser } from '../store/user/selector';
+import { selectAuth } from '../store/auth/selector';
 
 export function AuthRequired() {
-    const { currentUser } = useSelector(selectUser);
+    const { currentUser } = useSelector(selectAuth);
 
     // Change to negate current user for use auth
     if (!currentUser) return <Navigate to={'/login'} replace/>;
