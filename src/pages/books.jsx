@@ -4,15 +4,17 @@ import { selectBooks } from '../store/books/selector';
 import { fetchBooksStart, insertBooksStart } from '../store/books/action';
 import { Loading } from '../components';
 import useInput from '../hooks/useInput';
+import FormBook from '../components/formBook';
 
 const Books = () => {
     const { books } = useSelector(selectBooks);
     const dispatch = useDispatch();
-    const [BookName, setBookName] = useInput('');
+    const [isbn, setIsbn] = useInput('');
+    const [title, setTitle] = useInput('');
 
     function handleSubmit(event) {
         event.preventDefault();
-        dispatch(insertBooksStart({BookName}));
+        dispatch(insertBooksStart({isbn, title}));
     }
 
     React.useEffect(() => {
@@ -21,13 +23,14 @@ const Books = () => {
     
     return (
         <>  
-            <div>
-            Input Buku
-                <form onSubmit={handleSubmit}>
-                    <input type='text' placeholder='nama buku' value={BookName} onChange={setBookName}/>
-                    <button type='submit'>Simpan</button>
-                </form>
-            </div>
+            <FormBook 
+                onInputSubmit={handleSubmit}
+                isbn={isbn}
+                setIsbn={setIsbn}
+                title={title} 
+                setTitle={setTitle}
+            />
+            
             <div>
             Books Page
                 {!books ? <Loading/> : 

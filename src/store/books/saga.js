@@ -12,9 +12,9 @@ export function* fetchBooks() {
     }
 }
 
-export function* insertBook({payload: {title}}) {
+export function* insertBook({payload: {isbn, title}}) {
     try {
-        const book = yield* call(api.createBook, {title});
+        const book = yield* call(api.createBook, {isbn, title});
         yield* put(insertBooksSuccess(book));
     } catch (error) {
         yield* put(insertBooksFailed(error));

@@ -13,8 +13,8 @@ function fetchBooksFailed(error) {
     return createAction(BOOKS_ACTION_TYPES.FETCH_BOOKS_FAILED, error);
 }
 
-function insertBooksStart({title}) {
-    return createAction(BOOKS_ACTION_TYPES.INSERT_BOOKS_START, {title});
+function insertBooksStart({isbn, title}) {
+    return createAction(BOOKS_ACTION_TYPES.INSERT_BOOKS_START, {isbn, title});
 }
 
 function insertBooksSuccess(book) {

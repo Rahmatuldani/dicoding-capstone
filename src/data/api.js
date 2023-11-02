@@ -16,9 +16,9 @@ const api = (() => {
         return await result;
     }
 
-    async function createBook({ title }) {
+    async function createBook({ isbn, title }) {
         const result = {
-            //isbn: isbn,
+            isbn: isbn,
             title: title,
             //author: author,
             //description: description
