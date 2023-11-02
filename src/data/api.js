@@ -15,6 +15,16 @@ const api = (() => {
         };
         return await result;
     }
+
+    async function createBook({ isbn, title }) {
+        const result = {
+            isbn: isbn,
+            title: title,
+            //author: author,
+            //description: description
+        };
+        return await result;
+    }
   
     async function getAllBooks() {
         const result = Books.books;
@@ -38,7 +48,8 @@ const api = (() => {
         register,
         login,
         getAllBooks,
-        getAllBorrowed
+        getAllBorrowed,
+        createBook
     };
 })();
   
