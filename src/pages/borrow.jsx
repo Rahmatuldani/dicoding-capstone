@@ -17,7 +17,14 @@ const Borrow = () => {
             Borrow History Page
             {!borrow ? <Loading/> : 
                 borrow.map((item, index) => (
-                    <p key={index}>{item.isbn}</p>
+                    <p key={index}>{item.book.isbn}</p>,
+                    <p key={index}>{item.book.title}</p>,
+                    <p key={index}>{item.member.id}</p>,
+                    <p key={index}>{item.member.name}</p>,
+                    <p key={index}>{item.member.phone}</p>,
+                    <p key={index}>{item.borrow.id}</p>,
+                    <p key={index}>{item.borrow.startDate}</p>,
+                    <p key={index}>{item.borrow.endDate}</p>
                 ))
             }
         </div>
