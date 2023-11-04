@@ -9,6 +9,9 @@ const INITIAL_STATE = {
 export function borrowReducer(state = INITIAL_STATE, action = {}) {
     switch (action.type) {
 
+    case BORROW_ACTION_TYPES.ADD_BORROW_START:
+        return {...state, isLoading: true};
+
     case BORROW_ACTION_TYPES.FETCH_BORROW_START:
         return {...state, isLoading: true};
 

@@ -5,7 +5,6 @@ function addBorrow(borrowData) {
     return createAction(BORROW_ACTION_TYPES.ADD_BORROW_START, borrowData)
 }
 
-
 function fetchBorrowStart({id}) {
     return createAction(BORROW_ACTION_TYPES.FETCH_BORROW_START, {id});
 }
