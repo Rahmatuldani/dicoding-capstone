@@ -31,44 +31,43 @@ const api = (() => {
         return await result;
     }
 
-    async function createBorrow({ id }) {
-        const result = [
-            {
+    async function createBorrow({ id, isbn, title, name, phone, startDate, endDate }) {
+        const result = {
+            id: id, 
+            book: {
                 isbn: isbn,
-                title: title, 
-                member: {
-                    id: id,
-                    name: name,
-                    phone: phone  
-                },
-                borrow: {
-                    id: id,
-                    startDate: startDate,
-                    endDate: endDate
-                }
-            }
-        ]
+                title: title 
+            },
+            member: {
+                id: id,
+                name: name,
+                phone: phone
+            },
+            startDate: startDate,
+            endDate: endDate
+        };
+        
         return await result;
     }
-  
-    async function getAllBorrowed({ id }) {
+
+    async function getAllBorrowed({ id, isbn, title, name, phone, startDate, endDate }) {
         const result = [
             {
-                isbn: isbn,
-                title: title,
+                id: id,
+                book: {
+                    isbn: '9781593279509',
+                    title: 'Eloquent JavaScript, Third Edition'
+                },
                 member: {
                     id: id,
-                    name: name,
-                    phone: phone
+                    name: 'Nama',
+                    phone: '123-456-678'
                 },
-                borrow: {
-                    id: id,
-                    startDate: startDate,
-                    endDate: endDate
-                }
+                startDate: '07-11-2023',
+                endDate: '31-12-2023'
             }
         ];
-
+        
         return await result;
     }
   
@@ -83,4 +82,5 @@ const api = (() => {
 })();
   
 export default api;
-  
+
+
