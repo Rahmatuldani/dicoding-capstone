@@ -1,8 +1,16 @@
 import { createAction } from '../../utils/reducer';
 import { BORROW_ACTION_TYPES } from './types';
 
-function addBorrow(borrowData) {
-    return createAction(BORROW_ACTION_TYPES.ADD_BORROW_START, borrowData)
+function addBorrowStart(borrow) {
+    return createAction(BORROW_ACTION_TYPES.ADD_BORROW_START, borrow)
+}
+
+function addBorrowSuccess(borrow) {
+    return createAction(BORROW_ACTION_TYPES.ADD_BORROW_SUCCESS, borrow)
+}
+
+function addBorrowFailed(error) {
+    return createAction(BORROW_ACTION_TYPES.ADD_BORROW_FAILED, error)
 }
 
 function fetchBorrowStart({id}) {
@@ -18,7 +26,9 @@ function fetchBorrowFailed(error) {
 }
 
 export {
-    addBorrow,
+    addBorrowStart,
+    addBorrowSuccess,
+    addBorrowFailed,
     fetchBorrowStart,
     fetchBorrowSuccess,
     fetchBorrowFailed
