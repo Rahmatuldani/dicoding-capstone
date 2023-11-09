@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectBorrow } from '../store/borrow/selector';
-import { addBorrowStart, fetchBorrowStart } from '../store/borrow/action';
-import { Loading } from '../components';
-import useInput from '../hooks/useInput';
-import FormBorrow from '../components/formBorrow';
+import { selectBorrow } from '../../store/borrow/selector';
+import { addBorrowStart, fetchBorrowStart } from '../../store/borrow/action';
+import { Loading } from '../../components';
+import useInput from '../../hooks/useInput';
+import FormBorrow from './formBorrow';
 
 const Borrow = () => {
     const { borrow } = useSelector(selectBorrow);
