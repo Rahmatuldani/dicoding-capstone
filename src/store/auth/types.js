@@ -1,5 +1,5 @@
 export const AUTH_ACTION_TYPES = {
-    SIGN_IN_START: 'auth/SIGN_IN_START',
-    SIGN_IN_SUCCESS: 'auth/SIGN_IN_SUCCESS',
-    SIGN_IN_FAILED: 'auth/SIGN_IN_FAILED',
+    SET_CURRENT_USER: 'currentUser/SET_CURRENT_USER',
+    SET_ERROR: 'currentUser/SET_ERROR',
+    SIGN_IN_START: 'currentUser/SIGN_IN_START',
 };
