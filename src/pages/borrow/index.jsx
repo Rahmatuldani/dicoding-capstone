@@ -5,18 +5,24 @@ import { addBorrowStart, fetchBorrowStart } from '../../store/borrow/action';
 import { Loading } from '../../components';
 import useInput from '../../hooks/useInput';
 import FormBorrow from './formBorrow';
+import { Card, Container } from 'react-bootstrap';
 
 const Borrow = () => {
     const { borrow } = useSelector(selectBorrow);
     const dispatch = useDispatch();
-    const [bookId, setBookId] = useInput('');
-    const [memberId, setMemberId] = useInput('');
+    const [bookTitle, setBookTitle] = useInput('');
+    const [bookAuthor, setBookAuthor] = useInput('');
     const [startDate, setStartDate] = useState(''); 
     const [endDate, setEndDate] = useState('');
 
     function handleSubmit(event) {
         event.preventDefault();
-        dispatch(addBorrowStart({bookId, memberId, startDate, endDate}));
+        dispatch(addBorrowStart({
+            bookTitle,
+            bookAuthor,
+            startDate,
+            endDate
+        }));
     }
 
     React.useEffect(() => {
@@ -24,35 +30,36 @@ const Borrow = () => {
     }, [dispatch]);
     
     return (
-        <>
-            <FormBorrow
-                onInputSubmit={handleSubmit}
-                bookId={bookId}
-                setBookId={setBookId}
-                memberId={memberId}
-                setMemberId={setMemberId}
-                startDate={startDate}
-                setStartDate={setStartDate}
-                endDate={endDate}
-                setEndDate={setEndDate}
-            />
-            <div>
+        <section className='m-4'>
+            <h1 className='text-center mb-4'>Peminjaman Buku</h1>
+            <section className='d-flex flex-wrap justify-content-center gap-4'>
+                <FormBorrow
+                    onInputSubmit={handleSubmit}
+                    bookTitle={bookTitle}
+                    setBookTitle={setBookTitle}
+                    bookAuthor={bookAuthor}
+                    setBookAuthor={setBookAuthor}
+                    startDate={startDate}
+                    setStartDate={setStartDate}
+                    endDate={endDate}
+                    setEndDate={setEndDate}
+                />
+            </section>
+            <Container>
                 <h2>Riwayat Peminjaman</h2>
-                {!borrow ? <Loading/> : 
+                {!borrow ? <Loading/> :
                     borrow.map((item, index) => (
-                        <React.Fragment key={index}>
-                            <p>Book: {item.book.title}</p>
-                            <p>ISBN: {item.book.isbn}</p>
-                            <p>Nomor Anggota: {item.member.id}</p>
-                            <p>Nama: {item.member.name}</p>
-                            <p>Telepon: {item.member.phone}</p>
-                            <p>Nomor Peminjaman: {item.id}</p>
-                            <p>Tanggal Peminjaman: {item.startDate}</p>
-                            <p>Tanggal Pengembalian: {item.endDate}</p>
-                        </React.Fragment>
+                        <Card key={index} style={{ width: '18rem' }}>
+                            <Card.Body>
+                                <Card.Title>{item.bookTitle}</Card.Title>
+                                <Card.Text>Penulis: {item.bookAuthor}</Card.Text>
+                                <Card.Text>Tanggal Peminjaman: {item.startDate}</Card.Text>
+                                <Card.Text>Tanggal Pengembalian: {item.endDate}</Card.Text>
+                            </Card.Body>
+                        </Card>
                     ))}
-            </div>
-        </>
+            </Container>
+        </section>
     );
 };
 

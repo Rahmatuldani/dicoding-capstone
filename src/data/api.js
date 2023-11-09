@@ -31,53 +31,35 @@ const api = (() => {
         return await result;
     }
 
-    async function createBorrow({ id, isbn, title, name, phone, startDate, endDate }) {
+    async function createBorrow({bookTitle, bookAuthor, startDate, endDate}) {
         const result = {
-            id: id, 
-            book: {
-                isbn: isbn,
-                title: title 
-            },
-            member: {
-                id: id,
-                name: name,
-                phone: phone
-            },
+            bookTitle: bookTitle,
+            bookAuthor: bookAuthor,
             startDate: startDate,
             endDate: endDate
         };
-        
         return await result;
     }
 
-    async function getAllBorrowed({ id, isbn, title, name, phone, startDate, endDate }) {
+    async function getAllBorrowed(formData) {
         const result = [
             {
-                id: id,
-                book: {
-                    isbn: isbn,
-                    title: title
-                },
-                member: {
-                    id: id,
-                    name: name,
-                    phone: phone
-                },
-                startDate: startDate,
-                endDate: endDate
+                bookTitle: formData.bookTitle,
+                bookAuthor: formData.bookAuthor,
+                startDate: formData.startDate,
+                endDate: formData.endDate
             }
         ];
-        
         return await result;
     }
   
     return {
         register,
         login,
+        createBook,
         getAllBooks,
         createBorrow,
         getAllBorrowed,
-        createBook
     };
 })();
   
