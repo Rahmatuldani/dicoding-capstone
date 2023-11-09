@@ -55,16 +55,16 @@ const api = (() => {
             {
                 id: id,
                 book: {
-                    isbn: '9781593279509',
-                    title: 'Eloquent JavaScript, Third Edition'
+                    isbn: isbn,
+                    title: title
                 },
                 member: {
                     id: id,
-                    name: 'Nama',
-                    phone: '123-456-678'
+                    name: name,
+                    phone: phone
                 },
-                startDate: '07-11-2023',
-                endDate: '31-12-2023'
+                startDate: startDate,
+                endDate: endDate
             }
         ];
         
