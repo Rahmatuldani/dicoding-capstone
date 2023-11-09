@@ -1,20 +1,25 @@
 import { createAction } from '../../utils/reducer';
 import { AUTH_ACTION_TYPES } from './types';
 
-function signInStart({email, password}) { 
+function setCurrentUser(user) {
+    return createAction(AUTH_ACTION_TYPES.SET_CURRENT_USER, user);
+}
+
+function setError(error) {
+    return createAction(AUTH_ACTION_TYPES.SET_ERROR, error);
+}
+
+function signIn({email, password}) {
     return createAction(AUTH_ACTION_TYPES.SIGN_IN_START, {email, password});
 }
 
-function signInSuccess(currentUser) {
-    return createAction(AUTH_ACTION_TYPES.SIGN_IN_SUCCESS, currentUser);
-}
-
-function signInFailed(error) {
-    return createAction(AUTH_ACTION_TYPES.SIGN_IN_FAILED, error);
+function signOut() {
+    return createAction(AUTH_ACTION_TYPES.SET_CURRENT_USER, null);
 }
 
 export {
-    signInStart,
-    signInSuccess,
-    signInFailed
+    setCurrentUser,
+    setError,
+    signIn,
+    signOut
 };

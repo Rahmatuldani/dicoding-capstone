@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { 
     Route, 
     createBrowserRouter, 
@@ -26,16 +25,18 @@ export function ErrorBoundary() {
     );
 }
 
-export const router = createBrowserRouter(
+const Router = createBrowserRouter(
     createRoutesFromElements(
         <Route path='/' element={<App/>} errorElement={<ErrorBoundary/>}>
-            <Route path='/login' element={<Login/>}/>
-            <Route path='/register' element={<Register/>}/>
+            <Route index element={<Home/>}/>
+            <Route path='/books' element={<Books/>}/>
+            <Route path='/borrows' element={<Borrow/>}/>
             <Route element={<AuthRequired/>}>
-                <Route index element={<Home/>}/>
-                <Route path='/books' element={<Books/>}/>
-                <Route path='/borrows' element={<Borrow/>}/>
+                <Route path='/login' element={<Login/>}/>
+                <Route path='/register' element={<Register/>}/>
             </Route>
         </Route>
     )
 );
+
+export default Router;
