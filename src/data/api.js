@@ -30,17 +30,44 @@ const api = (() => {
         const result = Books.books;
         return await result;
     }
-  
-    async function getAllBorrowed({ id }) {
+
+    async function createBorrow({ id, isbn, title, name, phone, startDate, endDate }) {
+        const result = {
+            id: id, 
+            book: {
+                isbn: isbn,
+                title: title 
+            },
+            member: {
+                id: id,
+                name: name,
+                phone: phone
+            },
+            startDate: startDate,
+            endDate: endDate
+        };
+        
+        return await result;
+    }
+
+    async function getAllBorrowed({ id, isbn, title, name, phone, startDate, endDate }) {
         const result = [
             {
-                isbn: '1111'
-            },
-            {
-                isbn: '222'
-            },
+                id: id,
+                book: {
+                    isbn: isbn,
+                    title: title
+                },
+                member: {
+                    id: id,
+                    name: name,
+                    phone: phone
+                },
+                startDate: startDate,
+                endDate: endDate
+            }
         ];
-
+        
         return await result;
     }
   
@@ -48,10 +75,12 @@ const api = (() => {
         register,
         login,
         getAllBooks,
+        createBorrow,
         getAllBorrowed,
         createBook
     };
 })();
   
 export default api;
-  
+
+
