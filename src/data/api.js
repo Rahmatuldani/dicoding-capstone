@@ -41,15 +41,8 @@ const api = (() => {
         return await result;
     }
 
-    async function getAllBorrowed(formData) {
-        const result = [
-            {
-                bookTitle: formData.bookTitle,
-                bookAuthor: formData.bookAuthor,
-                startDate: formData.startDate,
-                endDate: formData.endDate
-            }
-        ];
+    async function getAllBorrowed() {
+        const result = Books.borrow;
         return await result;
     }
   
