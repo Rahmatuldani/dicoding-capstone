@@ -4,10 +4,12 @@ import { selectBooks } from '../../store/books/selector';
 import { fetchBooksStart } from '../../store/books/action';
 import { Loading } from '../../components';
 import { Card, Container, ListGroup } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 
 const Books = () => {
     const { books } = useSelector(selectBooks);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     React.useEffect(() => {
@@ -32,7 +34,8 @@ const Books = () => {
                                         cursor: 'pointer',
                                         textDecoration: 'none',
                                     }} 
-                                    href={`/book/${book._id}`}>
+                                    onClick={() => navigate(`/books/${book._id}`)}
+                                >
                                     <Card.Img variant="top" src='https://images.tokopedia.net/img/cache/900/VqbcmM/2022/4/28/c16202b2-c1bf-497d-9759-d16e47a051cf.png' />
                                     <Card.Body>
                                         <Card.Title>{book.title}</Card.Title>

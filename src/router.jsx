@@ -31,7 +31,7 @@ const Router = createBrowserRouter(
         <Route path='/' element={<App/>} errorElement={<ErrorBoundary/>}>
             <Route index element={<Home/>}/>
             <Route path='/books' element={<Books/>}/>
-            <Route path='/book/:id' element={<DetailBook/>}/>
+            <Route path='/books/:id' element={<DetailBook/>}/>
             <Route path='/borrows' element={<Borrow/>}/>
             <Route element={<AuthRequired/>}>
                 <Route path='/login' element={<Login/>}/>
