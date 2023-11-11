@@ -7,13 +7,14 @@ import {
 } from 'react-router-dom';
 import App from './App';
 import { 
-    Books, 
+    Books,
     Borrow, 
     Home, 
     Login, 
     Register 
 } from './pages';
 import { AuthRequired } from './utils/authRequired';
+import { DetailBook } from './pages/book/detail';
 
 export function ErrorBoundary() {
     const error = useRouteError();
@@ -30,6 +31,7 @@ const Router = createBrowserRouter(
         <Route path='/' element={<App/>} errorElement={<ErrorBoundary/>}>
             <Route index element={<Home/>}/>
             <Route path='/books' element={<Books/>}/>
+            <Route path='/book/:id' element={<DetailBook/>}/>
             <Route path='/borrows' element={<Borrow/>}/>
             <Route element={<AuthRequired/>}>
                 <Route path='/login' element={<Login/>}/>

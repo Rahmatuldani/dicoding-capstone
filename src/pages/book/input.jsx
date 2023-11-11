@@ -29,7 +29,7 @@ const AddBook = () => {
     };
 
     return (
-        <section className='m-4'>
+        <section className='add-book-page mt-4'>
             <h1 className='text-center mb-4'>Add Book</h1>
             <section className='d-flex flex-wrap justify-content-center gap-4'>
                 <FormBook
