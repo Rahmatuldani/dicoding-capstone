@@ -1,8 +1,15 @@
 /* eslint-disable no-unused-vars */
-import Books from './books.json';
-import librify from '../services/axios';
 
-const api = (() => {  
+import axios from 'axios';
+
+
+const api = (() => { 
+    
+    const librify = axios.create({
+        baseURL: 'https://librify-api.up.railway.app/api',
+        headers: { 'Content-Type': 'application/json' },
+    });
+
     async function register({ name, email, password }) {
         return null;
     }
@@ -29,7 +36,7 @@ const api = (() => {
   
     async function getAllBooks() {
         const result = librify.get('/books');
-        return (await result);
+        return await result;
     }
 
     async function createBorrow({bookTitle, bookAuthor, startDate, endDate}) {

@@ -24,7 +24,7 @@ const Books = () => {
                             ? 
                             <Loading/> 
                             : 
-                            books.data.data.books.map((book, index) => (
+                            books.map((book, index) => (
                                 <Card as='a' 
                                     key={index} 
                                     style={{ 

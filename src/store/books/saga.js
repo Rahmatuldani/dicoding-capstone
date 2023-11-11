@@ -5,9 +5,11 @@ import api from '../../data/api';
 
 export function* fetchBooks() {
     try {
-        const books = yield* call(api.getAllBooks);
+        const result = yield* call(api.getAllBooks);
+        const books = result.data.data.books;
         yield* put(isSuccess(BOOKS_ACTION_TYPES.FETCH_BOOKS_SUCCESS, books));
     } catch (error) {
+        console.log('error');
         yield* put(isFailed(BOOKS_ACTION_TYPES.FETCH_BOOKS_FAILED, error));
     }
 }
@@ -26,6 +28,7 @@ export function* onInsertBooksStart() {
 }
 
 export function* onFetchBooksStart() {
+    console.log('fetch start');
     yield* takeLatest(BOOKS_ACTION_TYPES.FETCH_BOOKS_START, fetchBooks);
 }
 
