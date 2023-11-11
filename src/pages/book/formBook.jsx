@@ -2,7 +2,7 @@ import { Button, Container } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 const FormBook = ( params ) => {
     return (
-        <Container>
+        <Container className='form-book-component'>
             <h2 className='mb-3'>Input Buku</h2>
             <Form onSubmit={ params.onInputSubmit }>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">

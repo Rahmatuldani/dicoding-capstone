@@ -1,22 +1,15 @@
 import useInput from '../hooks/useInput';
-import { useDispatch, useSelector } from 'react-redux';
-import { signInStart } from '../store/auth/action';
-import { selectAuth } from '../store/auth/selector';
-import { Navigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { signIn } from '../store/auth/action';
 
 const Login = () => {
-    const { currentUser } = useSelector(selectAuth);
     const dispatch = useDispatch();
     const [email, setEmail] = useInput('');
     const [password, setPassword] = useInput('');
 
-    if (currentUser) {
-        return <Navigate to={'/'} replace/>;
-    }
-
     function handleSubmit(event) {
         event.preventDefault();
-        dispatch(signInStart({email, password}));
+        dispatch(signIn({email, password}));
     }
 
     return (

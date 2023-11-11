@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { 
     Route, 
     createBrowserRouter, 
@@ -8,13 +7,14 @@ import {
 } from 'react-router-dom';
 import App from './App';
 import { 
-    Books, 
+    Books,
     Borrow, 
     Home, 
     Login, 
     Register 
 } from './pages';
 import { AuthRequired } from './utils/authRequired';
+import { DetailBook } from './pages/book/detail';
 
 export function ErrorBoundary() {
     const error = useRouteError();
@@ -26,16 +26,19 @@ export function ErrorBoundary() {
     );
 }
 
-export const router = createBrowserRouter(
+const Router = createBrowserRouter(
     createRoutesFromElements(
         <Route path='/' element={<App/>} errorElement={<ErrorBoundary/>}>
-            <Route path='/login' element={<Login/>}/>
-            <Route path='/register' element={<Register/>}/>
+            <Route index element={<Home/>}/>
+            <Route path='/books' element={<Books/>}/>
+            <Route path='/book/:id' element={<DetailBook/>}/>
+            <Route path='/borrows' element={<Borrow/>}/>
             <Route element={<AuthRequired/>}>
-                <Route index element={<Home/>}/>
-                <Route path='/books' element={<Books/>}/>
-                <Route path='/borrows' element={<Borrow/>}/>
+                <Route path='/login' element={<Login/>}/>
+                <Route path='/register' element={<Register/>}/>
             </Route>
         </Route>
     )
 );
+
+export default Router;

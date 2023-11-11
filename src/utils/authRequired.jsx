@@ -6,7 +6,7 @@ export function AuthRequired() {
     const { currentUser } = useSelector(selectAuth);
 
     // Change to negate current user for use auth
-    if (!currentUser) return <Navigate to={'/login'} replace/>;
+    if (currentUser) return <Navigate to={'/'} replace/>;
 
     return <Outlet/>;
 }
