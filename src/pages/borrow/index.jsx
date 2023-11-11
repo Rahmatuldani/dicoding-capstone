@@ -17,6 +17,10 @@ const Borrow = () => {
 
     function handleSubmit(event) {
         event.preventDefault();
+        console.log('bookTitle', bookTitle);
+        console.log('bookAuthor', bookAuthor);
+        console.log('startDate', startDate);
+        console.log('endDate', endDate);
         dispatch(addBorrowStart({
             bookTitle,
             bookAuthor,
@@ -52,7 +56,7 @@ const Borrow = () => {
                         <Card key={index} style={{ width: '18rem' }}>
                             <Card.Body>
                                 <Card.Title>{item.bookTitle}</Card.Title>
-                                <Card.Text>Penulis: {item.bookAuthor}</Card.Text>
+                                <Card.Subtitle>{item.bookAuthor}</Card.Subtitle>
                                 <Card.Text>Tanggal Peminjaman: {item.startDate}</Card.Text>
                                 <Card.Text>Tanggal Pengembalian: {item.endDate}</Card.Text>
                             </Card.Body>

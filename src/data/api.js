@@ -42,10 +42,10 @@ const api = (() => {
     }
 
     async function getAllBorrowed() {
-        const result = Books.borrow;
+        const result = [];
         return await result;
     }
-  
+
     return {
         register,
         login,
