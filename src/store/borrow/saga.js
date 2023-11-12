@@ -6,7 +6,6 @@ import api from '../../data/api';
 export function* addBorrow({payload: {bookTitle, bookAuthor, startDate, endDate}}) {
     try {
         const borrow = yield* call(api.createBorrow, {bookTitle, bookAuthor, startDate, endDate});
-        console.log('borrow', borrow);
         yield* put(addBorrowSuccess(borrow));
     } catch (error) {
         yield* put(addBorrowFailed(error));

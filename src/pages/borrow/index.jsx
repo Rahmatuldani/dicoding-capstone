@@ -17,10 +17,6 @@ const Borrow = () => {
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log('bookTitle', bookTitle);
-        console.log('bookAuthor', bookAuthor);
-        console.log('startDate', startDate);
-        console.log('endDate', endDate);
         dispatch(addBorrowStart({
             bookTitle,
             bookAuthor,

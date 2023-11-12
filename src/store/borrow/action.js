@@ -1,8 +1,8 @@
 import { createAction } from '../../utils/reducer';
 import { BORROW_ACTION_TYPES } from './types';
 
-function addBorrowStart(bookTitle, bookAuthor, startDate, endDate) {
-    return createAction(BORROW_ACTION_TYPES.ADD_BORROW_START, {bookTitle, bookAuthor, startDate, endDate});
+function addBorrowStart(payload) {
+    return createAction(BORROW_ACTION_TYPES.ADD_BORROW_START, payload);
 }
 
 function addBorrowSuccess(borrow) {
