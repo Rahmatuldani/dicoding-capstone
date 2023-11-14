@@ -8,15 +8,16 @@ const INITIAL_STATE = {
 
 export function authReducer(state = INITIAL_STATE, action = {}) {
     switch (action.type) {
-
-    case AUTH_ACTION_TYPES.SIGN_IN_START:
-        return {...state, isLoading: true};
+    case AUTH_ACTION_TYPES.SIGN_IN:
+    case AUTH_ACTION_TYPES.REGISTER:
+        return { ...state, isLoading: true, error: null };
 
     case AUTH_ACTION_TYPES.SET_CURRENT_USER:
-        return {...state, isLoading: false, currentUser: action.payload, error: null};
-    
+        return { ...state, isLoading: false, currentUser: action.payload, error: null };
+
     case AUTH_ACTION_TYPES.SET_ERROR:
-        return {...state, isLoading: false, error: action.payload};
+        return { ...state, isLoading: false, error: action.payload };
+
     default:
         return state;
     }
