@@ -39,6 +39,10 @@ const api = (() => {
         return await result;
     }
 
+    async function getBookById(id) {
+
+    }
+
     async function createBorrow({bookTitle, bookAuthor, startDate, endDate}) {
         const result = {
             bookTitle: bookTitle,

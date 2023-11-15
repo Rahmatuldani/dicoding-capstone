@@ -3,12 +3,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectBooks } from '../../store/books/selector';
 import { fetchBooksStart } from '../../store/books/action';
 import { Loading } from '../../components';
-import { Card, Container, ListGroup } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { BsSearch } from 'react-icons/bs';
+import { 
+    Button, 
+    Card, 
+    Container, 
+    InputGroup,
+    Form
+} from 'react-bootstrap';
+import { 
+     
+    useNavigate 
+} from 'react-router-dom';
 
 
 const Books = () => {
     const { books } = useSelector(selectBooks);
+    const result = books.data.data.books;
+    console.log(result);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -20,13 +32,25 @@ const Books = () => {
         <section className='books-page mt-4'>
             <h1 className='text-center mb-4'>Books Page</h1>
             <Container>
-                <section className='d-flex flex-wrap justify-content-center gap-4'>
+                <div className='container-md'>
+                    <InputGroup className="mb-3">
+                        <Form.Control
+                            placeholder="Buku yang anda cari"
+                            aria-label="Buku yang anda cari"
+                            aria-describedby="basic-addon2"
+                        />
+                        <Button variant="outline-primary" id="button-addon2">
+                            <BsSearch />
+                        </Button>
+                    </InputGroup>
+                </div>
+                <div className='d-flex flex-wrap justify-content-center gap-4'>
                     {
-                        !books 
+                        !result 
                             ? 
                             <Loading/> 
                             : 
-                            books.map((book, index) => (
+                            result.map((book, index) => (
                                 <Card as='a' 
                                     key={index} 
                                     style={{ 
@@ -41,17 +65,13 @@ const Books = () => {
                                         <Card.Title>{book.title}</Card.Title>
                                         <Card.Text className="text-danger">{book.year}</Card.Text>
                                     </Card.Body>
-                                    <ListGroup className="list-group-flush">
-                                        <ListGroup.Item className="text-muted">{book.desc}</ListGroup.Item>
-                                        <ListGroup.Item className="text-muted">Author: {book.author}</ListGroup.Item>
-                                    </ListGroup>
                                     <Card.Footer>
                                         <small className="text-muted">Genre: {book.genre}</small>
                                     </Card.Footer>
                                 </Card>
                             ))
                     }
-                </section>
+                </div>
             </Container>
         </section>
     );
