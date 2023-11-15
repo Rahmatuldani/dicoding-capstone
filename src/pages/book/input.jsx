@@ -2,6 +2,7 @@ import FormBook from './formBook';
 import { useDispatch } from 'react-redux';
 import { insertBooksStart } from '../../store/books/action';
 import useInput from '../../hooks/useInput';
+import { useFormik } from 'formik';
 
 const AddBook = () => {
     const dispatch = useDispatch();
@@ -16,6 +17,16 @@ const AddBook = () => {
         dispatch(insertBooksStart({isbn, title}));
     }
 
+    const formik = useFormik({
+        initialValues: {
+            isbn: '',
+            title: ''
+        },
+        onSubmit: values => {
+            console.log(values);
+        }
+    });
+
     const validationForm = () => {
         if (isbn.trim() === '') {
             alert('Please enter an ISBN');
@@ -29,9 +40,9 @@ const AddBook = () => {
     };
 
     return (
-        <section className='add-book-page mt-4'>
+        <section className='container add-book-page mt-4'>
             <h1 className='text-center mb-4'>Add Book</h1>
-            <section className='d-flex flex-wrap justify-content-center gap-4'>
+            <section className='d-flex flex-wrap justify-content-center gap-4 border border-secondary rounded p-3'>
                 <FormBook
                     onInputSubmit={handleSubmit}
                     isbn={isbn}

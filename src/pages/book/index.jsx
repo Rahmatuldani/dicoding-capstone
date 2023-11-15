@@ -19,8 +19,7 @@ import {
 
 const Books = () => {
     const { books } = useSelector(selectBooks);
-    const result = books.data.data.books;
-    console.log(result);
+    console.log(books);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -46,11 +45,11 @@ const Books = () => {
                 </div>
                 <div className='d-flex flex-wrap justify-content-center gap-4'>
                     {
-                        !result 
+                        !books 
                             ? 
                             <Loading/> 
                             : 
-                            result.map((book, index) => (
+                            books.map((book, index) => (
                                 <Card as='a' 
                                     key={index} 
                                     style={{ 
