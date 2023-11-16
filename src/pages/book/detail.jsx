@@ -9,7 +9,7 @@ export const DetailBook = () => {
             <Container className='d-flex flex-wrap justify-content-center'>
                 <h2>Standard Course HSK 1</h2>
                 <Stack>
-                    <div className='d-flex flex-wrap justify-content-center gap-2'>
+                    <div className='d-flex flex-wrap justify-content-center gap-3'>
                         <Card style={{ width: '18rem' }}>
                             <Image src='https://images.tokopedia.net/img/cache/900/VqbcmM/2022/4/28/c16202b2-c1bf-497d-9759-d16e47a051cf.png' thumbnail />
                         </Card>
