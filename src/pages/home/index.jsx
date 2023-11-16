@@ -35,6 +35,9 @@ const Home = () => {
                             <Card>
                                 <Card.Img
                                     variant="top"
+                                    onError= {() => {
+                                        book.image = 'https://via.placeholder.com/150';
+                                    }}
                                     src={book.image}
                                 />
                                 <Card.Body>
