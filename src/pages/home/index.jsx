@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { selectBooks } from '../../store/books/selector';
 import { fetchBooksStart } from '../../store/books/action';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const dispatch = useDispatch();
     const { books } = useSelector(selectBooks);
     const [showAll, setShowAll] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(fetchBooksStart());
@@ -32,13 +34,17 @@ const Home = () => {
                 <Row>
                     {books.slice(0, showAll ? books.length : 6).map((book) => (
                         <Col md={2} className="mb-2" key={book.id}>
-                            <Card>
+                            <Card
+                                onClick={() => navigate(`/books/${book.id}`)}
+                                className="shadow-sm"
+                                style={{cursor: 'pointer'}}
+                            >
                                 <Card.Img
                                     variant="top"
+                                    src={book.image}
                                     onError= {() => {
                                         book.image = 'https://via.placeholder.com/150';
                                     }}
-                                    src={book.image}
                                 />
                                 <Card.Body>
                                     <Card.Title>{book.title}</Card.Title>
