@@ -33,7 +33,7 @@ const Home = () => {
                 <Tabs defaultActiveKey={genres[0]} id="genre-tabs" className="mb-5">
                     {genres.map(genre => (
                         <Tab eventKey={genre} title={genre} key={genre}>
-                            {genre}
+                            {/* {genre} */}
                         </Tab>
                     ))}
                 </Tabs>
@@ -44,7 +44,7 @@ const Home = () => {
         
                 <Row>
                     {books.slice(0, showAll ? books.length : 6).map((book) => (
-                        <Col md={2} className="mb-2" key={book.id}>
+                        <Col md={2} className="mb-4" key={book.id}>
                             <Card
                                 onClick={() => navigate(`/books/${book.id}`)}
                                 className="shadow-sm"
@@ -53,6 +53,13 @@ const Home = () => {
                                 <Card.Img
                                     variant="top"
                                     src={book.image}
+                                    style={{ 
+                                        width: '100%',
+                                        height: 'auto',
+                                        objectFit: 'cover',
+                                        aspectRatio: '1/1' 
+                                    }}
+                                    className="img-fluid"
                                     onError= {() => {
                                         book.image = 'https://via.placeholder.com/150';
                                     }}
