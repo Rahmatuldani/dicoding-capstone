@@ -1,6 +1,6 @@
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { selectBooks } from '../../store/books/selector';
 import { fetchBooksStart } from '../../store/books/action';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
     const dispatch = useDispatch();
     const { books } = useSelector(selectBooks);
-    const [showAll, setShowAll] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -32,7 +31,7 @@ const Home = () => {
                 <h2 className="text-center mb-4">Daftar Buku Terbaru</h2>
         
                 <Row>
-                    {books.slice(0, showAll ? books.length : 6).map((book) => (
+                    {books.map((book) => (
                         <Col md={2} className="mb-4" key={book.id}>
                             <Card
                                 onClick={() => navigate(`/books/${book.id}`)}
@@ -63,8 +62,10 @@ const Home = () => {
                 </Row>
 
                 <div className='d-flex justify-content-center'>
-                    <Button onClick={() => setShowAll(!showAll)}>
-                        {showAll? 'Lihat Lebih Sedikit' : 'Lihat Semua'}
+                    <Button variant="primary"
+                        onClick={() => navigate('/books')}
+                    >
+                        Lihat Semua
                     </Button>
                 </div>
         
