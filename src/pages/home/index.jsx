@@ -1,4 +1,4 @@
-import { Container, Row, Col, Card, Button, Tab,Tabs } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { selectBooks } from '../../store/books/selector';
@@ -10,7 +10,6 @@ const Home = () => {
     const { books } = useSelector(selectBooks);
     const [showAll, setShowAll] = useState(false);
     const navigate = useNavigate();
-    const genres = ['History', 'Biography', 'Art', 'Fiction', 'Non-Fiction'];
 
     useEffect(() => {
         dispatch(fetchBooksStart());
@@ -28,16 +27,6 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
-
-            <Container className='mt-5 mb-5 d-flex flex-column align-items-center justify-content-center'>
-                <Tabs defaultActiveKey={genres[0]} id="genre-tabs" className="mb-5">
-                    {genres.map(genre => (
-                        <Tab eventKey={genre} title={genre} key={genre}>
-                            {/* {genre} */}
-                        </Tab>
-                    ))}
-                </Tabs>
-            </Container>
 
             <Container className="my-5">
                 <h2 className="text-center mb-4">Daftar Buku Terbaru</h2>
