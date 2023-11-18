@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-
+import Books from './books.json';
 import axios from 'axios';
 
 
@@ -35,7 +35,8 @@ const api = (() => {
     }
   
     async function getAllBooks() {
-        const result = librify.get('/books');
+        //const result = librify.get('/books');
+        const result = Books.books;
         return await result;
     }
 

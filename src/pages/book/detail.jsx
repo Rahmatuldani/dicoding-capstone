@@ -62,7 +62,7 @@ export const DetailBook = () => {
                         <div className='box-button w-100'>
                             <div className="d-grid gap-2 p-4 bg-white rounded">
                                 <Button variant="warning" size="lg">
-                                    Favorite <BsHeart />
+                                    Like <BsHeart />
                                 </Button>
                                 <Button variant="primary" size="lg">
                                     Pinjam <BsCartPlus />
