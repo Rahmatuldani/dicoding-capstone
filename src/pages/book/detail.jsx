@@ -2,6 +2,8 @@
 import { Button, Col, Container, Image, Row } from 'react-bootstrap';
 import { useParams   } from 'react-router-dom';
 import { BsHeart, BsCartPlus   } from 'react-icons/bs';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 export const DetailBook = () => {
     // eslint-disable-next-line no-unused-vars
     const { id } = useParams ();
@@ -13,7 +15,9 @@ export const DetailBook = () => {
                         <Row className='pt-3 bg-white rounded desc-book'>
                             <Col lg={3} className='d-flex justify-content-center mb-4'>
                                 <div className='img-section'>
-                                    <Image src='/book-1.png' thumbnail />
+                                    <Zoom>
+                                        <Image src='/book-1.png' thumbnail />
+                                    </Zoom>
                                 </div>
 
                             </Col>
