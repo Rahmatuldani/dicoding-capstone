@@ -4,6 +4,7 @@ import { selectBooks } from '../../store/books/selector';
 import { fetchBooksStart } from '../../store/books/action';
 import { Loading } from '../../components';
 import { BsSearch } from 'react-icons/bs';
+import './style.css';
 import { 
     Button, 
     Card, 
@@ -18,7 +19,28 @@ import {
 
 
 const Books = () => {
-    const { books } = useSelector(selectBooks);
+    let { books } = useSelector(selectBooks);
+    books = [
+        {
+            _id: 1623623623626,
+            title: 'The Alchemist',
+            genre: 'Novel',
+            year: 1988,
+        },
+        {
+            _id: 262672623626,
+            title: 'The Godfather',
+            genre: 'Bibliography',
+            year: 1972,
+        },
+        {
+            _id: 262672623626,
+            title: 'Hunter X Hunter 09',
+            genre: 'Comics',
+            year: 2009,
+        },
+        
+    ];
     console.log(books);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -34,6 +56,7 @@ const Books = () => {
                 <div className='container-md'>
                     <InputGroup className="mb-3">
                         <Form.Control
+                            className='border-primary-subtle'
                             placeholder="Buku yang anda cari"
                             aria-label="Buku yang anda cari"
                             aria-describedby="basic-addon2"
@@ -50,7 +73,8 @@ const Books = () => {
                             <Loading/> 
                             : 
                             books.map((book, index) => (
-                                <Card as='a' 
+                                <Card as='a'
+                                    className='hoverable' 
                                     key={index} 
                                     style={{ 
                                         width: '18rem',
@@ -59,7 +83,7 @@ const Books = () => {
                                     }} 
                                     onClick={() => navigate(`/books/${book._id}`)}
                                 >
-                                    <Card.Img variant="top" src='https://images.tokopedia.net/img/cache/900/VqbcmM/2022/4/28/c16202b2-c1bf-497d-9759-d16e47a051cf.png' />
+                                    <Card.Img variant="top" src='/book-1.png' className='py-1'/>
                                     <Card.Body>
                                         <Card.Title>{book.title}</Card.Title>
                                         <Card.Text className="text-danger">{book.year}</Card.Text>

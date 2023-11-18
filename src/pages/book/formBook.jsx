@@ -8,6 +8,7 @@ const FormBook = ( params ) => {
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>ISBN</Form.Label>
                     <Form.Control
+                        className='border-primary-subtle'
                         required
                         type='text' 
                         placeholder='ISBN' 
@@ -18,9 +19,21 @@ const FormBook = ( params ) => {
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Nama Buku</Form.Label>
                     <Form.Control
+                        className='border-primary-subtle'
                         required
                         type='text'
                         placeholder='nama buku'
+                        value={ params.title }
+                        onChange={ params.setTitle } 
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Tahun</Form.Label>
+                    <Form.Control
+                        className='border-primary-subtle'
+                        required
+                        type='text'
+                        placeholder='Tahun buku'
                         value={ params.title }
                         onChange={ params.setTitle } 
                     />

@@ -42,7 +42,7 @@ const AddBook = () => {
     return (
         <section className='container add-book-page mt-4'>
             <h1 className='text-center mb-4'>Add Book</h1>
-            <section className='d-flex flex-wrap justify-content-center gap-4 border border-secondary rounded p-3'>
+            <section className='bg-white d-flex flex-wrap justify-content-center gap-4 border border-primary-subtle rounded p-3'>
                 <FormBook
                     onInputSubmit={handleSubmit}
                     isbn={isbn}
