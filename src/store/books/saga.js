@@ -1,23 +1,24 @@
 import { all, call, takeLatest, put } from 'typed-redux-saga';
 import { BOOKS_ACTION_TYPES } from './types';
-import { fetchBooksFailed, fetchBooksSuccess, insertBooksFailed, insertBooksSuccess } from './action';
+import { isSuccess, isFailed } from './action';
 import api from '../../data/api';
 
 export function* fetchBooks() {
     try {
-        const books = yield* call(api.getAllBooks);
-        yield* put(fetchBooksSuccess(books));
+        const result = yield* call(api.getAllBooks);
+        yield* put(isSuccess(BOOKS_ACTION_TYPES.FETCH_BOOKS_SUCCESS, result));
     } catch (error) {
-        yield* put(fetchBooksFailed(error));
+        console.log('error');
+        yield* put(isFailed(BOOKS_ACTION_TYPES.FETCH_BOOKS_FAILED, error));
     }
 }
 
 export function* insertBook({payload: {isbn, title}}) {
     try {
         const book = yield* call(api.createBook, {isbn, title});
-        yield* put(insertBooksSuccess(book));
+        yield* put(isSuccess(BOOKS_ACTION_TYPES.INSERT_BOOKS_SUCCESS, book));
     } catch (error) {
-        yield* put(insertBooksFailed(error));
+        yield* put(isFailed(BOOKS_ACTION_TYPES.INSERT_BOOKS_FAILED, error));
     }
 }
 
