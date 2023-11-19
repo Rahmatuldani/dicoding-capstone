@@ -3,18 +3,18 @@ import { BORROW_ACTION_TYPES } from './types';
 import { addBorrowFailed, addBorrowSuccess, fetchBorrowFailed, fetchBorrowSuccess } from './action';
 import api from '../../data/api';
 
-export function* addBorrow({payload}) {
+export function* addBorrow({payload: {bookTitle, bookAuthor, startDate, endDate}}) {
     try {
-        const borrow = yield call(api.addBorrow, payload); 
-        yield put(addBorrowSuccess(borrow));
+        const borrow = yield* call(api.createBorrow, {bookTitle, bookAuthor, startDate, endDate});
+        yield* put(addBorrowSuccess(borrow));
     } catch (error) {
-        yield put(addBorrowFailed(error));
+        yield* put(addBorrowFailed(error));
     }
 }
 
-export function* fetchBorrow({ payload: {id} }) {
+export function* fetchBorrow() {
     try {
-        const borrow = yield* call(api.getAllBorrowed, {id});
+        const borrow = yield* call(api.getAllBorrowed);
         yield* put(fetchBorrowSuccess(borrow));
     } catch (error) {
         yield* put(fetchBorrowFailed(error));
