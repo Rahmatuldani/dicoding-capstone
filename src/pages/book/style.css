@@ -1,0 +1,11 @@
+.books-page .card:hover {
+    box-shadow: 7px 13px 27px -14px rgba(0,0,0,0.61);
+    -webkit-box-shadow: 7px 13px 27px -14px rgba(0,0,0,0.61);
+    -moz-box-shadow: 7px 13px 27px -14px rgba(0,0,0,0.61);
+}
+
+@media screen and (max-width: 991px) {
+    .detail-book-page .desc-book {
+        margin-inline: .1rem;
+    }
+}

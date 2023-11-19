@@ -6,7 +6,7 @@ import api from '../../data/api';
 export function* fetchBooks() {
     try {
         const result = yield* call(api.getAllBooks);
-        yield* put(isSuccess(BOOKS_ACTION_TYPES.FETCH_BOOKS_SUCCESS, result.data.data.books));
+        yield* put(isSuccess(BOOKS_ACTION_TYPES.FETCH_BOOKS_SUCCESS, result));
     } catch (error) {
         console.log('error');
         yield* put(isFailed(BOOKS_ACTION_TYPES.FETCH_BOOKS_FAILED, error));
