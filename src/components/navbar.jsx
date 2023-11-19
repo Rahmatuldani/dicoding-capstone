@@ -45,6 +45,7 @@ function Navbar() {
                         </Typography>
                         <Stack direction='row' spacing={2} sx={{ flexGrow: 1, marginLeft: '1rem' }}>
                             <Button color='inherit' onClick={() => navigate('/books')}>Buku</Button>
+                            <Button color='inherit' onClick={() => navigate('/books/add')}>Tambah Buku</Button>
                         </Stack>
                         {currentUser ? 
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
