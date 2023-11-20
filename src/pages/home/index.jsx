@@ -33,7 +33,7 @@ const Home = () => {
         
                 <Row className='mb-4'>
                     <Col className='d-flex flex-wrap justify-content-center gap-4'>
-                        {books.map((book, index) => (
+                        {books.slice(0, 5).map((book, index) => (
                             <Card as='a'
                                 className='hoverable'
                                 key={index}
