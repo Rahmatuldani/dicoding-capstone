@@ -1,4 +1,4 @@
-import FormBook from './formBook';
+import FormBook from './components/FormBook';
 import { useDispatch } from 'react-redux';
 import { insertBooksStart } from '../../store/books/action';
 import useInput from '../../hooks/useInput';
