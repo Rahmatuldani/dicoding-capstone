@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { selectBooks } from '../../store/books/selector';
 import { fetchBooksStart } from '../../store/books/action';
 import { useNavigate } from 'react-router-dom';
+import { BsFillStarFill } from 'react-icons/bs';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -30,13 +31,18 @@ const Home = () => {
             <Container className="my-5">
                 <h2 className="text-center mb-4">Daftar Buku Terbaru</h2>
         
-                <Row>
-                    {books.map((book) => (
-                        <Col md={2} className="mb-4" key={book.id}>
-                            <Card
-                                onClick={() => navigate(`/books/${book.id}`)}
-                                className="shadow-sm"
-                                style={{cursor: 'pointer'}}
+                <Row className='mb-4'>
+                    <Col className='d-flex flex-wrap justify-content-center gap-4'>
+                        {books.map((book, index) => (
+                            <Card as='a'
+                                className='hoverable'
+                                key={index}
+                                style={{
+                                    width: '12rem',
+                                    cursor: 'pointer',
+                                    textDecoration: 'none',
+                                }}
+                                onClick={() => navigate(`/books/${book._id}`)}
                             >
                                 <Card.Img
                                     variant="top"
@@ -47,18 +53,24 @@ const Home = () => {
                                         objectFit: 'cover',
                                         aspectRatio: '1/1' 
                                     }}
-                                    className="img-fluid"
+                                    className='py-1 pt-3'
                                     onError= {() => {
                                         book.image = 'https://via.placeholder.com/150';
                                     }}
                                 />
-                                <Card.Body>
-                                    <Card.Title>{book.title}</Card.Title>
-                                    <Card.Text>{book.author}</Card.Text>
+                                <Card.Body className='d-flex flex-column gap-2'>
+                                    <div className='d-flex align-items-center gap-1'>
+                                        <small className="text-danger">
+                                                Rate: {book.rate}
+                                        </small> 
+                                        <BsFillStarFill className='text-warning' />
+                                    </div>
+                                    <Card.Subtitle className='lh-sm'>{book.title}</Card.Subtitle>
+                                    <Card.Text>{book.year}</Card.Text>
                                 </Card.Body>
                             </Card>
-                        </Col>
-                    ))}
+                        ))}
+                    </Col>
                 </Row>
 
                 <div className='d-flex justify-content-center'>
