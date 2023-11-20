@@ -20,16 +20,24 @@ import {
 
 
 const Books = () => {
-    let { books } = useSelector(selectBooks);
-    /* const [filter, setFilter] = useState('');
-    const filterData = () => {
-        return books.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()));
-    }; */
-      
-    console.log(books);
+    const { books } = useSelector(selectBooks);
+    const [valueSearch, setValueSearch] = useState('');
+    const [filteredData, setFilteredData] = useState(books);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    
+    const handleSearch = (event) => {
+        const valueSearchToLowerCase = event.target.value.toLowerCase();
+        setValueSearch(valueSearchToLowerCase);
+        
+        const filteredResults = books.filter(book =>
+            book.title.toLowerCase().includes(valueSearchToLowerCase)
+        );
+            
+        setFilteredData(filteredResults);
+    };
+        
+    console.log(valueSearch);
     React.useEffect(() => {
         dispatch(fetchBooksStart());
     }, [dispatch]);
@@ -46,19 +54,21 @@ const Books = () => {
                             placeholder="Buku yang anda cari"
                             aria-label="Buku yang anda cari"
                             aria-describedby="basic-addon2"
+                            value={valueSearch}
+                            onChange={handleSearch}
                         />
-                        <Button variant="outline-primary" id="button-addon2">
+                        <Button variant="outline-primary" disabled id="button-addon2">
                             <BsSearch />
                         </Button>
                     </InputGroup>
                 </div>
                 <div className='d-flex flex-wrap justify-content-center gap-4'>
                     {
-                        !books 
+                        !filteredData 
                             ? 
                             <Loading/> 
                             : 
-                            books.map((book, index) => (
+                            filteredData.map((book, index) => (
                                 <Card as='a'
                                     className='hoverable' 
                                     key={index} 
