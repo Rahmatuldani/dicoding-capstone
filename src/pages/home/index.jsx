@@ -1,4 +1,4 @@
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { selectBooks } from '../../store/books/selector';
@@ -17,15 +17,8 @@ const Home = () => {
 
     return (
         <>
-            <section className="bg-primary text-light p-5">
-                <Container>
-                    <Row>
-                        <Col className="text-center">
-                            <h1>Selamat Datang di Librify</h1>
-                            <p>Pinjam dan baca berbagai buku menarik di sini.</p>
-                        </Col>
-                    </Row>
-                </Container>
+            <section className="home">
+                <Image src="/hero.png" fluid />
             </section>
 
             <Container className="my-5">
