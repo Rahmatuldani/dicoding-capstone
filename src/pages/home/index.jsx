@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { selectBooks } from '../../store/books/selector';
 import { fetchBooksStart } from '../../store/books/action';
 import { useNavigate } from 'react-router-dom';
-import { BsFillStarFill } from 'react-icons/bs';
+import { BsFillHeartFill } from 'react-icons/bs';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -53,10 +53,10 @@ const Home = () => {
                                 />
                                 <Card.Body className='d-flex flex-column gap-2'>
                                     <div className='d-flex align-items-center gap-1'>
+                                        <BsFillHeartFill className='text-danger' />
                                         <small className="text-danger">
-                                                Rate: {book.rate}
-                                        </small> 
-                                        <BsFillStarFill className='text-warning' />
+                                            {book.rate}
+                                        </small>
                                     </div>
                                     <Card.Subtitle className='lh-sm'>{book.title}</Card.Subtitle>
                                     <Card.Text>{book.year}</Card.Text>
