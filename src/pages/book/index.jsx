@@ -5,7 +5,7 @@ import { selectBooks } from '../../store/books/selector';
 import { fetchBooksStart } from '../../store/books/action';
 import { Loading } from '../../components';
 import './style.css';
-import { Alert, Container } from 'react-bootstrap';
+import { Alert, Container, Pagination } from 'react-bootstrap';
 import { 
      
     useNavigate 
@@ -18,12 +18,27 @@ const Books = () => {
     const { books } = useSelector(selectBooks);
     const [titleFilter, setTitleFilter] = useState('');
     const [debouncedTitleFilter, setDebouncedTitleFilter] = useState(titleFilter);
+
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // Calculate the index range for the current page
     
     const dispatch = useDispatch();
     
     const filteredBooks = books.filter((book) =>
         book.title.toLowerCase().includes(debouncedTitleFilter.toLowerCase())
     );
+
+    const itemsPerPage = 5;
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredBooks.slice(indexOfFirstItem, indexOfLastItem);
+
+    const totalPages = Math.ceil(filteredBooks.length / itemsPerPage);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
     useEffect(() => {
         const delay = setTimeout(() => {
@@ -38,7 +53,7 @@ const Books = () => {
     }, [dispatch]);
     
     const isLoading = () => {
-        if (filteredBooks.length === 0) {
+        if (currentItems.length === 0) {
             return false;
         }
         return <Loading/>;
@@ -56,14 +71,14 @@ const Books = () => {
                 </div>
                 <div className='d-flex flex-wrap justify-content-center gap-4'>
                     {
-                        !filteredBooks || filteredBooks.length === 0
+                        !currentItems || currentItems.length === 0
                             ? 
                             isLoading() || 
                             <Alert  variant='danger'>
                                 <h5>No books found</h5>
                             </Alert>
                             : 
-                            filteredBooks.map((book, index) => (
+                            currentItems.map((book, index) => (
                                 <BookCard
                                     key={index}
                                     book={book}
@@ -71,6 +86,24 @@ const Books = () => {
                             ))
                     }
                 </div>
+                <Pagination className='pt-5 d-flex justify-content-center align-items-center'>
+                    <Pagination.Prev 
+                        onClick={() => handlePageChange(currentPage - 1)} 
+                        disabled={currentPage === 1} 
+                    />
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <Pagination.Item 
+                            key={index} 
+                            onClick={() => handlePageChange(index + 1)}
+                            active={currentPage === index + 1}
+                        >
+                            {index + 1}
+                        </Pagination.Item>
+                    ))}
+                    <Pagination.Next 
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}/>
+                </Pagination>
             </Container>
         </section>
     );
