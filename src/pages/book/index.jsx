@@ -1,17 +1,19 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectBooks } from '../../store/books/selector';
 import { fetchBooksStart } from '../../store/books/action';
 import { Loading } from '../../components';
 import './style.css';
-import { Alert, Container, Pagination } from 'react-bootstrap';
+import { Alert, Container } from 'react-bootstrap';
 import { 
      
     useNavigate 
 } from 'react-router-dom';
 import { SearchInput } from './components/SearchInput';
 import { BookCard } from './components/BookCard';
+
+import './style.css';
 
 
 const Books = () => {
@@ -20,8 +22,6 @@ const Books = () => {
     const [debouncedTitleFilter, setDebouncedTitleFilter] = useState(titleFilter);
 
     const [currentPage, setCurrentPage] = useState(1);
-
-    // Calculate the index range for the current page
     
     const dispatch = useDispatch();
     
@@ -48,7 +48,7 @@ const Books = () => {
         return () => clearTimeout(delay);
     }, [titleFilter]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         dispatch(fetchBooksStart());
     }, [dispatch]);
     
