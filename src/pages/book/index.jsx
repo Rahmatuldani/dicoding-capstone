@@ -1,15 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Alert, Container, Pagination } from 'react-bootstrap';
+
 import { selectBooks } from '../../store/books/selector';
 import { fetchBooksStart } from '../../store/books/action';
+
 import { Loading } from '../../components';
-import './style.css';
-import { Alert, Container } from 'react-bootstrap';
-import { 
-     
-    useNavigate 
-} from 'react-router-dom';
 import { SearchInput } from './components/SearchInput';
 import { BookCard } from './components/BookCard';
 
@@ -61,7 +58,7 @@ const Books = () => {
 
     return (
         <section className='books-page mt-4'>
-            <h1 className='text-center mb-4'>Books Page</h1>
+            <h1 className='text-center mb-4'>Daftar Buku</h1>
             <Container>
                 <div className='container-md'>
                     <SearchInput 
@@ -75,7 +72,7 @@ const Books = () => {
                             ? 
                             isLoading() || 
                             <Alert  variant='danger'>
-                                <h5>No books found</h5>
+                                <h5>Buku tidak ada</h5>
                             </Alert>
                             : 
                             currentItems.map((book, index) => (
