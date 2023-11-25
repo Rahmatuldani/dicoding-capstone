@@ -15,6 +15,7 @@ import './style.css';
 
 const Books = () => {
     const { books } = useSelector(selectBooks);
+
     const [titleFilter, setTitleFilter] = useState('');
     const [debouncedTitleFilter, setDebouncedTitleFilter] = useState(titleFilter);
 

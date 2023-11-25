@@ -13,8 +13,28 @@ function fetchBooksStart() {
     return createAction(BOOKS_ACTION_TYPES.FETCH_BOOKS_START);
 }
 
-function insertBooksStart({isbn, title}) {
-    return createAction(BOOKS_ACTION_TYPES.INSERT_BOOKS_START, {isbn, title});
+function insertBooksStart({
+    isbn,
+    title,
+    year,
+    genre,
+    author,
+    publisher,
+    price,
+    poster,
+    desc,
+}) {
+    return createAction(BOOKS_ACTION_TYPES.INSERT_BOOKS_START, {
+        isbn,
+        title,
+        year,
+        genre,
+        author,
+        publisher,
+        price,
+        poster,
+        desc,
+    });
 }
 
 export {

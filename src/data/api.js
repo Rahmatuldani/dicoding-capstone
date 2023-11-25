@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
-import Books from './books.json';
 import axios from 'axios';
 
 
 const api = (() => { 
     
+    const BASE_URL = 'http://20.2.89.234:5000/api';
     const librify = axios.create({
-        baseURL: 'https://librify-api.up.railway.app/api',
-        headers: { 'Content-Type': 'application/json' },
+        baseURL: 'http://20.2.89.234:5000/api',
+        authorization: { 'Bearer': 'secretpassword' }
     });
 
     async function register({ name, email, password }) {
@@ -24,20 +24,35 @@ const api = (() => {
         return await result;
     }
 
-    async function createBook({ isbn, title }) {
+    async function createBook({
+        isbn,
+        title,
+        year,
+        genre,
+        author,
+        publisher,
+        price,
+        poster,
+        desc,
+    }) {
         const result = {
-            isbn: isbn,
-            title: title,
-            //author: author,
-            //description: description
+            isbn,
+            title,
+            year,
+            genre,
+            author,
+            publisher,
+            price,
+            poster,
+            desc,
         };
         return await result;
     }
   
     async function getAllBooks() {
-        //const result = librify.get('/books');
-        const result = Books.books;
-        return await result;
+        //const response = await axios.get(`${BASE_URL}/books`);
+        const response = await librify.get('/books');
+        return response.data.data.books;
     }
 
     async function getBookById(id) {
