@@ -15,13 +15,13 @@ export const BookCard = ({ book }) => {
             }} 
             onClick={() => navigate(`/books/${book._id}`)}
         >
-            <Card.Img variant="top" src='/book-1.png' className='py-1 pt-3'/>
+            <Card.Img variant="top" src={`/${book?.picture}`} className='py-1 pt-3'/>
             <Card.Body className='d-flex flex-column gap-2'>
                 <div className='d-flex align-items-center gap-1'>
-                    <small className="text-danger">
-                    Rate: {book.rate}
-                    </small> 
                     <BsFillStarFill className='text-warning' />
+                    <small className="text-danger">
+                     {book.rate}
+                    </small> 
                 </div>
                 <Card.Subtitle className='lh-sm'>{book.title}</Card.Subtitle>
                 <Card.Text>{book.year}</Card.Text>

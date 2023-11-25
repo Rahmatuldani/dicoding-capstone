@@ -7,7 +7,7 @@ export const SearchInput = ({ value, onChange }) => {
     return (
         <InputGroup className="mb-3">
             <Form.Control
-                type="text"  
+                type="search"  
                 className='border-primary-subtle'
                 placeholder="Buku yang anda cari"
                 aria-label="Buku yang anda cari"

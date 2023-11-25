@@ -1,12 +1,26 @@
-
-import { Button, Col, Container, Image, Row } from 'react-bootstrap';
-import { useParams   } from 'react-router-dom';
-import { BsHeart, BsCartPlus   } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
 import Zoom from 'react-medium-image-zoom';
+import { useParams   } from 'react-router-dom';
+import { BsHeart, BsCartPlus, BsFillStarFill } from 'react-icons/bs';
+
+import { selectBooks } from '../../store/books/selector';
+
+import { Button, 
+    Col, 
+    Container, 
+    Image, 
+    Row 
+} from 'react-bootstrap';
+
 import 'react-medium-image-zoom/dist/styles.css';
+
 export const DetailBook = () => {
-    // eslint-disable-next-line no-unused-vars
     const { id } = useParams ();
+    const { books } = useSelector(selectBooks);
+    const filteredBooks = books.filter((book) =>
+        book._id.toLowerCase().includes(id.toLowerCase())
+    );
+    const [book] = filteredBooks;
     return (
         <section className='detail-book-page mt-4'>
             <Container>
@@ -16,19 +30,25 @@ export const DetailBook = () => {
                             <Col lg={3} className='d-flex justify-content-center mb-4'>
                                 <div className='img-section'>
                                     <Zoom>
-                                        <Image src='/book-1.png' thumbnail />
+                                        <Image src={`/${book?.picture}`} thumbnail />
                                     </Zoom>
                                 </div>
 
                             </Col>
-                            <Col lg={9} className='mb-4'>
+                            <Col lg={9} className='mb-4 d-flex flex-column gap-3'>
                                 <div className='title-section'>
-                                    <p className='mb-0 text-muted'>Yoshihiro To, Rauhiyatul Jannah, Buddy Setianto</p>
-                                    <h2>Standard Course HSK 1</h2>
+                                    <p className='mb-0 text-muted'>{book.author}</p>
+                                    <h2>{book.title}</h2>
+                                    <div className='d-flex align-items-center gap-1'>
+                                        <BsFillStarFill className='text-warning' />
+                                        <small className="text-danger">
+                                            {book.rate}
+                                        </small> 
+                                    </div>
                                 </div>
                                 <div className='desc-section'>
                                     <h3 className='fs-5'>Deskripsi</h3>
-                                    <p>Dolar AS dan Euro bukanlah mata uang internasional yang sebenarnya, tapi mata uang Amerika Serikat dan Kawasan Euro yang “dipinjam” menjadi mata uang internasional. Kami mendesain mata uang internasional yang sesungguhnya, </p>
+                                    <p>{book.desc}</p>
                                 </div>
                                 <div className='detail-section'>
                                     <h3 className='fs-5'>Detail</h3>
@@ -36,21 +56,22 @@ export const DetailBook = () => {
                                         <Col sm={6}>
                                             <div className='mb-3'>
                                                 <h4 className='fs-6'>ISBN</h4>
-                                                <p className='mb-0'>585665467856745</p>
+                                                <p className='mb-0'>{book.isbn}</p>
                                             </div>
                                             <div className='mb-3'>
-                                                <h4 className='fs-6'>Genre</h4>
-                                                <p className='mb-0'>Bahasa</p>
+                                                <h4 className='fs-6'>Halaman</h4>
+                                                <p className='mb-0'>{book.pages}</p>
                                             </div>
                                         </Col>
                                         <Col sm={6}>
                                             <div className='mb-3'>
                                                 <h4 className='fs-6'>Tahun</h4>
-                                                <p className='mb-0'>2023</p>
+                                                <p className='mb-0'>{book.year}</p>
                                             </div>
                                             <div className='mb-3'>
                                                 <h4 className='fs-6'>Penerbit</h4>
-                                                <p className='mb-0'>Erlangga</p>
+                                                <p className='mb-0'>{book.publisher                                                                                                          
+                                                }</p>
                                             </div>
                                         </Col>
                                     </Row>
@@ -61,7 +82,7 @@ export const DetailBook = () => {
                     <Col lg={3} className='d-flex justify-content-center mb-4'>
                         <div className='box-button w-100'>
                             <div className="d-grid gap-2 p-4 bg-white rounded">
-                                <Button variant="warning" size="lg">
+                                <Button className="btn-pink" size="lg">
                                     Like <BsHeart />
                                 </Button>
                                 <Button variant="primary" size="lg">
