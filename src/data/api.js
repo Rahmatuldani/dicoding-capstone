@@ -6,7 +6,6 @@ const api = (() => {
     
     const librify = axios.create({
         baseURL: 'http://20.2.89.234:5000/api',
-        Authorization: { 'Bearer': 'secretpassword' }
     });
 
     async function register({ name, email, password }) {
@@ -34,7 +33,7 @@ const api = (() => {
         poster,
         desc,
     }) {
-        const result = {
+        const data = {
             isbn,
             title,
             year,
@@ -45,7 +44,16 @@ const api = (() => {
             poster,
             desc,
         };
-        return await result;
+        const token = 'secretpassword';
+        const response = await librify.post('/books', 
+            data, 
+            { headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`,
+            }
+            });
+
+        return response;
     }
   
     async function getAllBooks() {

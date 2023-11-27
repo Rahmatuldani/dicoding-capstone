@@ -1,17 +1,32 @@
-import FormBook from './components/FormBook';
 import { useDispatch } from 'react-redux';
-import { insertBooksStart } from '../../store/books/action';
-import useInput from '../../hooks/useInput';
+import { insertBooksStart, isSuccess, isFailed } from '../../store/books/action';
 import { useFormik } from 'formik';
 import { Button, Container, FloatingLabel, Form } from 'react-bootstrap';
 import * as yup from 'yup';
+import { useContext, useRef } from 'react';
 
 const AddBook = () => {
     const dispatch = useDispatch();
+    const formRef = useRef(null);
+    const context = useContext(isSuccess);
 
 
     function addNewBook() {
-        alert(formik.values.title);
+        const newBook = {
+            isbn: formik.values.isbn,
+            title: formik.values.title,
+            year: formik.values.year,
+            genre: formik.values.genre,
+            author: formik.values.author,
+            publisher: formik.values.publisher,
+            desc: formik.values.desc,
+            price: formik.values.price,
+            poster: formik.values.poster
+        };
+        dispatch(insertBooksStart(newBook));
+        console.log(context);
+        //formRef.current.reset();
+        formik.resetForm();
     }
 
     const formik = useFormik({
@@ -24,7 +39,7 @@ const AddBook = () => {
             publisher: '',
             desc: '',
             price: '',
-            poster: ''
+            poster: null,
         },
         onSubmit: addNewBook,
         validationSchema: yup.object().shape({
@@ -43,6 +58,7 @@ const AddBook = () => {
     const handleForm = (event) => {
         const { target } = event;
         formik.setFieldValue(target.name, target.value);
+        //formik.setFieldValue('poster', target.files[0]);
     };
 
     return (
@@ -50,7 +66,7 @@ const AddBook = () => {
             <h1 className='text-center mb-4'>Tambah Buku</h1>
             <section className='bg-white d-flex flex-wrap justify-content-center gap-4 border border-primary-subtle rounded p-3'>
                 <Container className='form-book-component'>
-                    <Form noValidate  onSubmit={ formik.handleSubmit }>
+                    <Form ref={formRef} onSubmit={ formik.handleSubmit }>
                         <Form.Group className="mb-3" controlId="validationFormik01">
                             <Form.Label>ISBN</Form.Label>
                             <Form.Control
