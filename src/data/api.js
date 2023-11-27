@@ -4,10 +4,9 @@ import axios from 'axios';
 
 const api = (() => { 
     
-    const BASE_URL = 'http://20.2.89.234:5000/api';
     const librify = axios.create({
         baseURL: 'http://20.2.89.234:5000/api',
-        authorization: { 'Bearer': 'secretpassword' }
+        Authorization: { 'Bearer': 'secretpassword' }
     });
 
     async function register({ name, email, password }) {
