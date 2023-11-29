@@ -30,7 +30,7 @@ export const DetailBook = () => {
                             <Col lg={3} className='d-flex justify-content-center mb-4'>
                                 <div className='img-section'>
                                     <Zoom>
-                                        <Image src={`/${book?.picture}`} thumbnail />
+                                        <Image src={`http://20.2.89.234:5000/api/books/${book?.poster}/poster`} thumbnail />
                                     </Zoom>
                                 </div>
 
@@ -59,8 +59,12 @@ export const DetailBook = () => {
                                                 <p className='mb-0'>{book.isbn}</p>
                                             </div>
                                             <div className='mb-3'>
-                                                <h4 className='fs-6'>Halaman</h4>
-                                                <p className='mb-0'>{book.pages}</p>
+                                                <h4 className='fs-6'>Genre</h4>
+                                                <p className='mb-0'>{book.genre}</p>
+                                            </div>
+                                            <div className='mb-3'>
+                                                <h4 className='fs-6'>Penulis</h4>
+                                                <p className='mb-0'>{book.author}</p>
                                             </div>
                                         </Col>
                                         <Col sm={6}>

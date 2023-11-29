@@ -1,42 +1,41 @@
 import { Button, Container, FloatingLabel } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 const FormBook = ( params ) => {
-    console.log(params);
     return (
         <Container className='form-book-component'>
-            <Form onSubmit={ params.onSubmit }>
+            <Form onSubmit={ params.onInputSubmit }>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>ISBN</Form.Label>
                     <Form.Control
                         className='border-primary-subtle'
-                        name='isbn'
-                        type='text' 
+                        required
+                        type='number' 
                         placeholder='ISBN' 
-                        onChange={ params.onChange } 
+                        value={ params.isbn } 
+                        onChange={ params.setIsbn } 
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Nama Buku</Form.Label>
+                    <Form.Control
+                        className='border-primary-subtle'
+                        required
+                        type='text'
+                        placeholder='nama buku'
+                        value={ params.title }
+                        onChange={ params.setTitle } 
                     />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Tahun</Form.Label>
                     <Form.Control
                         className='border-primary-subtle'
-                        name='year'
-                        type='text'
-                        placeholder='nama buku'
-                        onChange={ params.onChange } 
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Nama</Form.Label>
-                    <Form.Control
-                        className='border-primary-subtle'
-                        name='title'
-                        type='text'
-                        placeholder='Nama buku'
-                        value={params.formik.values.title}
-                        onChange={(e) => {
-                            params.formik.handleChange(e);
-                            
-                        }}
+                        type='number'
+                        maxLength='4'
+                        placeholder='Tahun buku'
+                        required
+                        value={ params.year }
+                        onChange={ params.setYear } 
                     />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -46,7 +45,9 @@ const FormBook = ( params ) => {
                         name='genre'
                         type='text'
                         placeholder='Genre buku'
-                        onChange={  params.onChange } 
+                        required
+                        value={ params.genre }
+                        onChange={ params.setGenre } 
                     />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -56,7 +57,9 @@ const FormBook = ( params ) => {
                         name='author'
                         type='text'
                         placeholder='Author buku'
-                        onChange={  params.onChange } 
+                        required
+                        value={ params.author }
+                        onChange={ params.setAuthor } 
                     />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -66,7 +69,9 @@ const FormBook = ( params ) => {
                         name='publisher'
                         type='text'
                         placeholder='Publisher buku'
-                        onChange={  params.onChange } 
+                        required
+                        value={ params.publisher }
+                        onChange={ params.setPublisher } 
                     />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -74,9 +79,11 @@ const FormBook = ( params ) => {
                     <Form.Control
                         className='border-primary-subtle'
                         name='price'
-                        type='text'
+                        type='number'
                         placeholder='Price buku'
-                        onChange={  params.onChange } 
+                        required
+                        value={ params.price }
+                        onChange={ params.setPrice }  
                     />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -86,7 +93,9 @@ const FormBook = ( params ) => {
                         name='poster'
                         type='text'
                         placeholder='Poster buku'
-                        onChange={  params.onChange } 
+                        required
+                        value={ params.poster }
+                        onChange={ params.setPoster }  
                     />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -96,7 +105,9 @@ const FormBook = ( params ) => {
                             name='desc'
                             placeholder="Deskripsi buku"
                             style={{ height: '100px' }}
-                            onChange={  params.onChange } 
+                            required
+                            value={ params.desc }
+                            onChange={ params.setDesc }  
                         />
                     </FloatingLabel>
                 </Form.Group>

@@ -33,9 +33,9 @@ const Home = () => {
         
                 <Row>
                     {books.slice(0, showAll ? books.length : 6).map((book) => (
-                        <Col md={2} className="mb-4" key={book.id}>
+                        <Col md={2} className="mb-4" key={book._id}>
                             <Card
-                                onClick={() => navigate(`/books/${book.id}`)}
+                                onClick={() => navigate(`/books/${book._id}`)}
                                 className="shadow-sm"
                                 style={{cursor: 'pointer'}}
                             >
