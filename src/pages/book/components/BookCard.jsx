@@ -15,7 +15,17 @@ export const BookCard = ({ book }) => {
             }} 
             onClick={() => navigate(`/books/${book._id}`)}
         >
-            <Card.Img variant="top" src={`http://20.2.89.234:5000/api/books/${book?.poster}/poster`} className='py-1 pt-3'/>
+            <Card.Img 
+                variant="top" 
+                src={`http://20.2.89.234:5000/api/books/${book?.poster}/poster`} 
+                className='py-1 pt-3'
+                style={{ 
+                    width: '100%',
+                    height: 'auto',
+                    objectFit: 'cover',
+                    aspectRatio: '1/1' 
+                }}
+            />
             <Card.Body className='d-flex flex-column gap-2'>
                 <div className='d-flex align-items-center gap-1'>
                     <BsHeartFill className='icon-pink' />
