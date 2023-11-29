@@ -9,6 +9,7 @@ import App from './App';
 import { 
     Books,
     Borrow, 
+    Dashboard, 
     Home, 
     Login, 
     Register 
@@ -38,6 +39,7 @@ const Router = createBrowserRouter(
             <Route element={<AuthRequired/>}>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/register' element={<Register/>}/>
+                <Route path='/dashboard' element={<Dashboard/>}/>
             </Route>
         </Route>
     )

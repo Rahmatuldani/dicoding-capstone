@@ -6,6 +6,7 @@ import api from '../../data/api';
 export function* fetchBooks() {
     try {
         const result = yield* call(api.getAllBooks);
+
         yield* put(isSuccess(BOOKS_ACTION_TYPES.FETCH_BOOKS_SUCCESS, result));
     } catch (error) {
         console.log('error');
@@ -13,9 +14,31 @@ export function* fetchBooks() {
     }
 }
 
-export function* insertBook({payload: {isbn, title}}) {
+export function* insertBook({payload: {
+    isbn,
+    title,
+    year,
+    genre,
+    author,
+    publisher,
+    price,
+    poster,
+    desc,
+}}) {
     try {
-        const book = yield* call(api.createBook, {isbn, title});
+        const book = yield* call(api.createBook, {
+            isbn,
+            title,
+            year,
+            genre,
+            author,
+            publisher,
+            price,
+            poster,
+            desc,
+        });
+
+        console.log(book);
         yield* put(isSuccess(BOOKS_ACTION_TYPES.INSERT_BOOKS_SUCCESS, book));
     } catch (error) {
         yield* put(isFailed(BOOKS_ACTION_TYPES.INSERT_BOOKS_FAILED, error));
