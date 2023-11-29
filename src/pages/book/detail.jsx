@@ -2,20 +2,20 @@ import { useSelector } from 'react-redux';
 import Zoom from 'react-medium-image-zoom';
 import { useParams   } from 'react-router-dom';
 import { BsHeart, BsCartPlus, BsHeartFill } from 'react-icons/bs';
-
 import { selectBooks } from '../../store/books/selector';
 
-import { Button, 
-    Col, 
-    Container, 
-    Image, 
-    Row 
+import {
+    Button,
+    Col,
+    Container,
+    Image,
+    Row
 } from 'react-bootstrap';
 
 import 'react-medium-image-zoom/dist/styles.css';
 
 export const DetailBook = () => {
-    const { id } = useParams ();
+    const { id } = useParams();
     const { books } = useSelector(selectBooks);
     const filteredBooks = books.filter((book) =>
         book._id.toLowerCase().includes(id.toLowerCase())
@@ -43,7 +43,7 @@ export const DetailBook = () => {
                                         <BsHeartFill className='icon-pink' />
                                         <small className="text-danger">
                                             {book.rate}
-                                        </small> 
+                                        </small>
                                     </div>
                                 </div>
                                 <div className='desc-section'>
@@ -74,7 +74,7 @@ export const DetailBook = () => {
                                             </div>
                                             <div className='mb-3'>
                                                 <h4 className='fs-6'>Penerbit</h4>
-                                                <p className='mb-0'>{book.publisher                                                                                                          
+                                                <p className='mb-0'>{book.publisher
                                                 }</p>
                                             </div>
                                         </Col>
