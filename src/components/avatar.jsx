@@ -50,8 +50,8 @@ Avatar1.propTypes = {
     name: PropTypes.string
 };
 
-function AvatarComponent({name, src = null}) {
-    if (src) {
+function AvatarComponent({name, image}) {
+    if (image === null) {
         return <Avatar1 name={name}/>;
     }
 
@@ -62,7 +62,10 @@ function AvatarComponent({name, src = null}) {
 
 AvatarComponent.propTypes = {
     name: PropTypes.string,
-    src: PropTypes.string,
+    image: PropTypes.oneOfType([
+        PropTypes.string,
+        null
+    ]),
 };
 
 export default AvatarComponent;

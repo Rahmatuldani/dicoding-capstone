@@ -13,13 +13,9 @@ const api = (() => {
     }
   
     async function login({ email, password }) {
-        const result = {
-            id: 1,
-            name: 'Testing',
-            email: email,
-            password: password
-        };
-        return await result;
+        const user = await axios.post('http://localhost:5001/api/auth/login', {email, password});
+        const result = user.data;
+        return result;
     }
 
     async function createBook({
