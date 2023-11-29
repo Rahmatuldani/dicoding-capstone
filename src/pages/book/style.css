@@ -4,6 +4,11 @@
     -moz-box-shadow: 7px 13px 27px -14px rgba(0,0,0,0.61);
 }
 
+.btn-pink {
+    background-color: #e83e8c !important;
+    border-color: #e83e8c!important;
+}
+
 @media screen and (max-width: 991px) {
     .detail-book-page .desc-book {
         margin-inline: .1rem;
