@@ -1,3 +1,4 @@
+import AlertUtil from '../../utils/alert';
 import { createAction } from '../../utils/reducer';
 import { AUTH_ACTION_TYPES } from './types';
 
@@ -6,6 +7,7 @@ function setCurrentUser(user) {
 }
 
 function setError(error) {
+    AlertUtil('error', error);
     return createAction(AUTH_ACTION_TYPES.SET_ERROR, error);
 }
 

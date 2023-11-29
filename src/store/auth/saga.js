@@ -6,9 +6,9 @@ import { AUTH_ACTION_TYPES } from './types';
 export function* signInStart({payload: {email, password}}) {
     try {
         const currentUser = yield* call(api.login, {email, password});
-        yield* put(setCurrentUser(currentUser));
+        yield* put(setCurrentUser(currentUser.data.user));
     } catch (error) {
-        yield* put(setError(error));
+        yield* put(setError(error.response.data.message));
     }
 }
 
