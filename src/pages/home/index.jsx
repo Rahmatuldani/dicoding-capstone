@@ -18,7 +18,8 @@ const Home = () => {
     return (
         <>
             <section className="home">
-                <Image src="/hero.png" style={{width: '100%'}} />
+                <Image src="/hero.png" className="d-none d-md-block img-fluid" style={{width: '100%'}} />
+                <Image src="/hero-mobile.png" className="d-block d-md-none img-fluid" style={{ width: '100%', aspectRatio: '1/1' }} />
             </section>
 
             <Container className="my-5">
