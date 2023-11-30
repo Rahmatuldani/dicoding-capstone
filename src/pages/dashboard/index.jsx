@@ -10,13 +10,13 @@ const Dashboard = () => {
                 <div className='col-auto min-vh-100 bg-light p-0'>
                     <div className="list-group list-group-flush">
                         <a className="list-group-item list-group-item-action list-group-item-light p-3 text-primary active"  href="#!">
-                            <BsFillCalendar2PlusFill /> <span className='ms-1 d-none d-sm-inline'>Peminjaman</span>
+                            <BsFillCalendar2PlusFill /> <span className='md-1 d-none d-lg-inline'>Peminjaman</span>
                         </a>
                         <a className="list-group-item list-group-item-action list-group-item-light p-3 text-primary" href="#!">
-                            <BsExclamationTriangleFill /> <span className='ms-1 d-none d-sm-inline'>Denda</span>
+                            <BsExclamationTriangleFill /> <span className='md-1 d-none d-lg-inline'>Denda</span>
                         </a>
                         <a className="list-group-item list-group-item-action list-group-item-light p-3 text-primary" href="#!">
-                            <BsFillHeartFill /> <span className='ms-1 d-none d-sm-inline'>LIke</span>
+                            <BsFillHeartFill /> <span className='md-1 d-none d-lg-inline'>LIke</span>
                         </a>
                     </div>
                 </div>
