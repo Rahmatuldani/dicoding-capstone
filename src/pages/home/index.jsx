@@ -24,15 +24,14 @@ const Home = () => {
 
             <Container className="my-5">
                 <h2 className="text-center mb-4">Buku Terbaru</h2>
-        
+
                 <Row className='mb-4'>
-                    <Col className='d-flex flex-wrap justify-content-center gap-4'>
-                        {books.slice(0, 5).map((book, index) => (
+                    {books.slice(0, 4).map((book, index) => (
+                        <Col xs={6} md={4} lg={3} key={index} className='d-flex flex-wrap justify-content-center gap-4'>
                             <Card as='a'
-                                className='hoverable'
-                                key={index}
+                                className='hoverable mb-4'
                                 style={{
-                                    width: '12rem',
+                                    width: '100%',
                                     cursor: 'pointer',
                                     textDecoration: 'none',
                                 }}
@@ -41,14 +40,14 @@ const Home = () => {
                                 <Card.Img
                                     variant="top"
                                     src={book.image}
-                                    style={{ 
+                                    style={{
                                         width: '100%',
                                         height: 'auto',
                                         objectFit: 'cover',
-                                        aspectRatio: '1/1' 
+                                        aspectRatio: '1/1',
                                     }}
                                     className='py-1 pt-3'
-                                    onError= {() => {
+                                    onError={() => {
                                         book.image = 'https://via.placeholder.com/150';
                                     }}
                                 />
@@ -63,31 +62,27 @@ const Home = () => {
                                     <Card.Text>{book.year}</Card.Text>
                                 </Card.Body>
                             </Card>
-                        ))}
-                    </Col>
+                        </Col>
+                    ))}
                 </Row>
 
                 <div className='d-flex justify-content-center'>
-                    <Button variant="primary"
-                        onClick={() => navigate('/books')}
-                    >
+                    <Button variant="primary" onClick={() => navigate('/books')}>
                         Lihat Semua
                     </Button>
                 </div>
-        
             </Container>
 
             <Container className="my-5">
-                <h2 className="text-center mb-4">Rekomendasi untuk Anda</h2>
-        
+                <h2 className="text-center mb-4">Buku Terpopuler</h2>
+                
                 <Row className='mb-4'>
-                    <Col className='d-flex flex-wrap justify-content-center gap-4'>
-                        {books.slice(0, 5).map((book, index) => (
+                    {books.slice(0, 4).map((book, index) => (
+                        <Col xs={6} md={4} lg={3} key={index} className='d-flex flex-wrap justify-content-center gap-4'>
                             <Card as='a'
-                                className='hoverable'
-                                key={index}
+                                className='hoverable mb-4'
                                 style={{
-                                    width: '12rem',
+                                    width: '100%',
                                     cursor: 'pointer',
                                     textDecoration: 'none',
                                 }}
@@ -96,14 +91,14 @@ const Home = () => {
                                 <Card.Img
                                     variant="top"
                                     src={book.image}
-                                    style={{ 
+                                    style={{
                                         width: '100%',
                                         height: 'auto',
                                         objectFit: 'cover',
-                                        aspectRatio: '1/1' 
+                                        aspectRatio: '1/1',
                                     }}
                                     className='py-1 pt-3'
-                                    onError= {() => {
+                                    onError={() => {
                                         book.image = 'https://via.placeholder.com/150';
                                     }}
                                 />
@@ -118,18 +113,15 @@ const Home = () => {
                                     <Card.Text>{book.year}</Card.Text>
                                 </Card.Body>
                             </Card>
-                        ))}
-                    </Col>
+                        </Col>
+                    ))}
                 </Row>
 
                 <div className='d-flex justify-content-center'>
-                    <Button variant="primary"
-                        onClick={() => navigate('/books')}
-                    >
+                    <Button variant="primary" onClick={() => navigate('/books')}>
                         Lihat Semua
                     </Button>
                 </div>
-        
             </Container>
         </>
     );
