@@ -9,7 +9,6 @@ import App from './App';
 import { 
     Books,
     Borrow, 
-    Dashboard, 
     Home, 
     Login, 
     Register 
@@ -17,6 +16,9 @@ import {
 import { AuthRequired } from './utils/authRequired';
 import { DetailBook } from './pages/book/detail';
 import AddBook from './pages/book/input';
+import BorrowUser from './pages/dashboard';
+import DebtUser from './pages/dashboard/DebtUser';
+import LikeUser from './pages/dashboard/LikeUser';
 
 export function ErrorBoundary() {
     const error = useRouteError();
@@ -39,7 +41,10 @@ const Router = createBrowserRouter(
             <Route element={<AuthRequired/>}>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/register' element={<Register/>}/>
-                <Route path='/dashboard' element={<Dashboard/>}/>
+                <Route path='/dashboard/user' element={<BorrowUser/>}/>
+                <Route path='/dashboard/user/debt' element={<DebtUser/>}/>
+                <Route path='/dashboard/user/like' element={<LikeUser/>}/>
+
             </Route>
         </Route>
     )

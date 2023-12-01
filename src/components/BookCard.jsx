@@ -17,7 +17,7 @@ export const BookCard = ({ book }) => {
         >
             <Card.Img 
                 variant="top" 
-                src={`http://20.2.89.234:5000/api/books/${book?.poster}/poster`} 
+                src='/book-1.png' 
                 className='py-1 pt-3'
                 style={{ 
                     width: '100%',

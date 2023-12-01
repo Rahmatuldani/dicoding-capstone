@@ -8,7 +8,7 @@ import { fetchBooksStart } from '../../store/books/action';
 
 import { Loading } from '../../components';
 import { SearchInput } from './components/SearchInput';
-import { BookCard } from './components/BookCard';
+import { BookCard } from '../../components/BookCard';
 
 import './style.css';
 

@@ -2,21 +2,21 @@ import SlideBar from './SlideBar';
 import './style.css';
 import { Badge, ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 
-const BorrowUser  = () => {
+const DebtUser  = () => {
     return (
         <div className="container-fluid">
             <div className="row">
-                <SlideBar isActive='borrow'/>
+                <SlideBar isActive='debt'/>
                 <div className='col'>
-                    <h3 className='pt-3'>Daftar Peminjaman Buku </h3>
+                    <h3 className='pt-3'>Daftar Denda Buku </h3>
                     <div>
                         <table className="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Id</th>
+                                    <th scope="col">Buku</th>
                                     <th scope="col">Tanggal Pinjam</th>
-                                    <th scope="col">Tanggal Kembali</th>
+                                    <th scope="col">Telat</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -61,7 +61,7 @@ const BorrowUser  = () => {
                                     <td >LB-00003</td>
                                     <td>14-11-2023</td>
                                     <td>19-11-2023</td>
-                                    <td><Badge bg="primary">Primary</Badge></td>
+                                    <td><Badge bg="primary">paid</Badge></td>
                                     <td>
                                         <DropdownButton
                                             as={ButtonGroup}
@@ -82,4 +82,4 @@ const BorrowUser  = () => {
     );
 };
 
-export default BorrowUser;
+export default DebtUser;
