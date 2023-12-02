@@ -1,7 +1,7 @@
 import { Avatar } from '@mui/material';
 import PropTypes from 'prop-types';
 
-function Avatar1({name}) {
+function Avatar1({name, sx}) {
     function stringToColor(string) {
         let hash = 0;
         let i;
@@ -42,30 +42,32 @@ function Avatar1({name}) {
     }
 
     return (
-        <Avatar {...stringAvatar(name)}/>
+        <Avatar {...stringAvatar(name)} sx={sx}/>
     );
 }
 
 Avatar1.propTypes = {
-    name: PropTypes.string
+    name: PropTypes.string,
+    sx: PropTypes.object
 };
 
-function AvatarComponent({name, image}) {
-    if (image === null) {
-        return <Avatar1 name={name}/>;
+function AvatarComponent({name, image, sx}) {
+    if (!image) {
+        return <Avatar1 name={name} sx={sx}/>;
     }
 
     return (
-        <Avatar1 name={name}/>
+        <Avatar alt={name} src={`http://localhost:5001/api/users/${image}/avatar`} sx={sx}/>
     );
 }
 
 AvatarComponent.propTypes = {
     name: PropTypes.string,
     image: PropTypes.oneOfType([
+        PropTypes.oneOf([null]),
         PropTypes.string,
-        null
     ]),
+    sx: PropTypes.object
 };
 
 export default AvatarComponent;

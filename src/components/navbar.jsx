@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
@@ -162,9 +161,9 @@ function Navbar() {
                     aria-haspopup="true"
                     color="inherit"
                 >
-                    <AccountCircle />
+                    <AvatarComponent name={currentUser.name} image={currentUser.image} sx={{ width: '35px', height: '35px', fontSize: '16px' }}/>
                 </IconButton>
-                <p>Profile</p>
+                <p>Account</p>
             </MenuItem>
         </Menu>
     );
@@ -233,7 +232,7 @@ function Navbar() {
                                         onClick={handleProfileMenuOpen}
                                         color="inherit"
                                     >
-                                        <AvatarComponent name={currentUser.name} image={currentUser.image} />
+                                        <AvatarComponent name={currentUser.name} image={currentUser.image} sx={{ width: '35px', height: '35px', fontSize: '16px' }}/>
                                     </IconButton>
                                     :
                                     <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>
@@ -257,7 +256,7 @@ function Navbar() {
                 {renderMobileMenu}
                 {renderMenu}
             </Box>
-            <Sidebar isOpen={isOpen} menus={MenuLink} />
+            <Sidebar isOpen={isOpen} menus={MenuLink} handleSidebar={handleSidebar}/>
         </React.Fragment>
     );
 }
