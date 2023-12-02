@@ -4,6 +4,7 @@ import Home from './home';
 import Login from './auth/login';
 import Register from './auth/register';
 import DashboardUser from './dashboard/users';
+import DashboardAdmin from './dashboard/admin';
 
 export {
     Login,
@@ -11,5 +12,7 @@ export {
     Home,
     Books,
     Borrow,
-    DashboardUser
+    DashboardUser,
+    DashboardAdmin,
+
 };

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import MenuUser from './users/MenuUser';
+import MenuAdmin from './admin/MenuAdmin';
 
 const SlideBar = ({ isActive, role }) => {
     const navigate = useNavigate();
@@ -14,7 +15,15 @@ const SlideBar = ({ isActive, role }) => {
                     isActive={isActive}
                     role={role}
                 />
-                : ''}
+                :
+                <MenuAdmin
+                    onClickBookList={() => navigate('/dashboard/admin/admin')}
+                    onClickAddBook={() => navigate('/dashboard/admin/addbook/admin')}
+                    onClickBorrowList={() => navigate('/dashboard/admin/borrow/admin')}
+                    isActive={isActive}
+                    role={role}
+                />
+            }
         </div>
     );
 };
