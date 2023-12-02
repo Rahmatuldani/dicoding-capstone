@@ -54,7 +54,7 @@ const api = (() => {
   
     async function getAllBooks() {
         //const response = await axios.get(`${BASE_URL}/books`);
-        const response = await librify.get('/books');
+        const response = await librify.get('/books?page=1');
         return response.data.data.books;
     }
 
