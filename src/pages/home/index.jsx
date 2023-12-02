@@ -39,7 +39,7 @@ const Home = () => {
                             >
                                 <Card.Img
                                     variant="top"
-                                    src={book.image}
+                                    src={`http://20.2.89.234:5000/api/books/${book?.poster}/poster`}
                                     style={{
                                         width: '100%',
                                         height: 'auto',
@@ -71,6 +71,7 @@ const Home = () => {
                         Lihat Semua
                     </Button>
                 </div>
+
             </Container>
 
             <Container className="my-5">
@@ -90,7 +91,7 @@ const Home = () => {
                             >
                                 <Card.Img
                                     variant="top"
-                                    src={book.image}
+                                    src={`http://20.2.89.234:5000/api/books/${book?.poster}/poster`}
                                     style={{
                                         width: '100%',
                                         height: 'auto',
@@ -122,6 +123,7 @@ const Home = () => {
                         Lihat Semua
                     </Button>
                 </div>
+
             </Container>
         </>
     );
