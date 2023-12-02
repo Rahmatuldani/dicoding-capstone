@@ -1,36 +1,27 @@
-/* eslint-disable react/prop-types */
-import { BsExclamationTriangleFill, 
-    BsFillCalendar2PlusFill, 
-    BsFillHeartFill 
-} from 'react-icons/bs';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import MenuUser from './users/MenuUser';
 
-const SlideBar = ({isActive}) => {
+const SlideBar = ({ isActive, role }) => {
     const navigate = useNavigate();
     return (
         <div className='col-auto min-vh-100 bg-light p-0'>
-            <div className="list-group list-group-flush">
-                <a 
-                    className={`list-group-item list-group-item-action list-group-item-light p-3 text-primary ${isActive === 'borrow' ? 'active' : ''}`}
-                    onClick={() => navigate('/dashboard/user')}
-                >
-                    <BsFillCalendar2PlusFill /> <span className='md-1 d-none d-lg-inline'>Peminjaman</span>
-                </a>
-                <a 
-                    className={`list-group-item list-group-item-action list-group-item-light p-3 text-primary ${isActive === 'debt' ? 'active' : ''}`}
-                    onClick={() => navigate('/dashboard/user/debt')}
-                >
-                    <BsExclamationTriangleFill /> <span className='md-1 d-none d-lg-inline'>Denda</span>
-                </a>
-                <a 
-                    className={`list-group-item list-group-item-action list-group-item-light p-3 text-primary ${isActive === 'like' ? 'active' : ''}`}
-                    onClick={() => navigate('/dashboard/user/like')}
-                >
-                    <BsFillHeartFill /> <span className='md-1 d-none d-lg-inline'>LIke</span>
-                </a>
-            </div>
+            {role === 'user' ?
+                <MenuUser 
+                    onClickBorrow={() => navigate('/dashboard/user/user')}
+                    onClickDebt={() => navigate('/dashboard/user/debt/user')}
+                    onClickLike={() => navigate('/dashboard/user/like/user')}
+                    isActive={isActive}
+                    role={role}
+                />
+                : ''}
         </div>
     );
+};
+
+SlideBar.propTypes = {
+    isActive: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired
 };
 
 export default SlideBar;
