@@ -65,7 +65,7 @@ const AddBookAdmin = () => {
         <div>
             <div className="container-fluid">
                 <div className="row">
-                    <SlideBar isActive='Admin' role={role}/>
+                    <SlideBar isActive='addBook' role={role}/>
                     <div className='col '>
                         <div className='mt-3'>
                             <h3>Tambah Buku</h3>

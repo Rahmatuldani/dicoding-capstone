@@ -2,86 +2,84 @@ import { useParams } from 'react-router-dom';
 import SlideBar from '../SlideBar';
 import '../style.css';
 import { 
-    Badge, 
-    ButtonGroup, 
-    Dropdown, 
-    DropdownButton 
+    Badge
 } from 'react-bootstrap';
+import DataTable from 'react-data-table-component';
+import { useState } from 'react';
 
 const DebtUser  = () => {
     const { role } = useParams();
+    const columns = [
+        {
+            name: 'Buku',
+            selector: row => row.title,
+            sortable: true,
+        },
+        {
+            name: 'Tanggal Pinjam',
+            selector: row => row.dateBorrwo,
+            sortable: true,
+        },
+        {
+            name: 'Telat',
+            selector: row => row.telat,
+            sortable: true,
+        },
+        {
+            name: 'status',
+            selector: row => row.status,
+            sortable: true,
+        },
+    ];
+    const datas = [
+        {
+            
+            title: 'Cantik Itu Luka',
+            dateBorrwo: '20-11-2023',
+            telat:'0',
+            status: <Badge bg="primary">succes</Badge>
+        },
+        {
+            
+            title: 'Atomic Habits',
+            dateBorrwo: '20-11-2023',
+            telat:'1',
+            status: <Badge bg="warning">warning</Badge>
+        },
+        {
+            
+            title: 'Merawat Luka Batin ',
+            dateBorrwo: '20-11-2023',
+            telat:'10',
+            status: <Badge bg="danger">danger</Badge>
+        },
+    ];
+    const [dataFilter, setDataFilter] = useState(datas);
+    const handlerChange = (event) => {
+        const filter =  datas.filter((book) => {
+            return book.title.toLowerCase().includes(event.target.value.toLowerCase());
+        });
+        setDataFilter(filter);
+    };
     return (
         <div className="container-fluid">
             <div className="row">
                 <SlideBar isActive='debt' role={role}/>
                 <div className='col'>
-                    <h3 className='pt-3'>Daftar Denda Buku </h3>
-                    <div>
-                        <table className="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Buku</th>
-                                    <th scope="col">Tanggal Pinjam</th>
-                                    <th scope="col">Telat</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>LB-00001</td>
-                                    <td>12-11-2023</td>
-                                    <td>17-11-2023</td>
-                                    <td><Badge bg="danger">Danger</Badge></td>
-                                    <td>
-                                        <DropdownButton
-                                            as={ButtonGroup}
-                                            title="Action"
-                                            id="bg-vertical-dropdown-1"
-                                        >
-                                            <Dropdown.Item eventKey="1">Kembalikan</Dropdown.Item>
-                                            <Dropdown.Item eventKey="2">Perpanjang</Dropdown.Item>
-                                        </DropdownButton>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>LB-00002</td>
-                                    <td>13-11-2023</td>
-                                    <td>18-11-2023</td>
-                                    <td><Badge bg="warning">Warning</Badge></td>
-                                    <td>
-                                        <DropdownButton
-                                            as={ButtonGroup}
-                                            title="Action"
-                                            id="bg-vertical-dropdown-1"
-                                        >
-                                            <Dropdown.Item eventKey="1">Kembalikan</Dropdown.Item>
-                                            <Dropdown.Item eventKey="2">Perpanjang</Dropdown.Item>
-                                        </DropdownButton>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td >LB-00003</td>
-                                    <td>14-11-2023</td>
-                                    <td>19-11-2023</td>
-                                    <td><Badge bg="primary">paid</Badge></td>
-                                    <td>
-                                        <DropdownButton
-                                            as={ButtonGroup}
-                                            title="Action"
-                                            id="bg-vertical-dropdown-1"
-                                        >
-                                            <Dropdown.Item eventKey="1">Kembalikan</Dropdown.Item>
-                                            <Dropdown.Item eventKey="2">Perpanjang</Dropdown.Item>
-                                        </DropdownButton>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div className='mt-3'>
+                        <div className='d-flex justify-content-end mb-1'>
+                            <input type="search" className="form-control w-25 d-lg-inline" onChange={handlerChange} placeholder="Search" />
+                        </div>
+                        <DataTable
+                            title="Daftar Denda Buku"
+                            columns={columns}
+                            data={dataFilter}
+                            fixedHeader
+                            pagination
+                            highlightOnHover
+                            responsive={true}
+                            pointerOnHover
+                        />
                     </div>
                 </div>
             </div>

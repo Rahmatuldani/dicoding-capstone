@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { BsFillCalendar2PlusFill, } from 'react-icons/bs';
+import { BsBookFill, BsFillPlusSquareFill, BsLayersFill, } from 'react-icons/bs';
 
 const MenuUser = ({
     onClickBookList,
@@ -14,21 +14,21 @@ const MenuUser = ({
                     onClick={onClickBookList}
                     style={{cursor: 'pointer'}}
                 >
-                    <BsFillCalendar2PlusFill /> <span className='lg-1 d-none d-lg-inline'>Buku</span>
+                    <BsBookFill /> <span className='lg-1 d-none d-lg-inline'>Buku</span>
                 </a>
                 <a
                     className={`list-group-item list-group-item-action list-group-item-light p-3 text-primary ${isActive === 'addBook' ? 'active' : ''}`}
                     onClick={onClickAddBook}
                     style={{cursor: 'pointer'}}
                 >
-                    <BsFillCalendar2PlusFill /> <span className='lg-1 d-none d-lg-inline'>Tambah Buku</span>
+                    <BsFillPlusSquareFill /> <span className='lg-1 d-none d-lg-inline'>Tambah Buku</span>
                 </a>
                 <a
                     className={`list-group-item list-group-item-action list-group-item-light p-3 text-primary ${isActive === 'borrow' ? 'active' : ''}`}
                     onClick={onClickBorrowList}
                     style={{cursor: 'pointer'}}
                 >
-                    <BsFillCalendar2PlusFill /> <span className='lg-1 d-none d-lg-inline'>Peminjam</span>
+                    <BsLayersFill /> <span className='lg-1 d-none d-lg-inline'>Peminjam</span>
                 </a>
             </div>
         </div>

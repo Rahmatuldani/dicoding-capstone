@@ -41,7 +41,7 @@ const api = (() => {
             desc,
         };
         const token = 'secretpassword';
-        const response = await librify.post('/books', 
+        const response = await librify.post('/books?page=1', 
             data, 
             { headers: {
                 'Content-Type': 'multipart/form-data',
