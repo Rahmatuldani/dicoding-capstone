@@ -41,7 +41,7 @@ const api = (() => {
             desc,
         };
         const token = 'secretpassword';
-        const response = await librify.post('/books?page=1', 
+        const response = await librify.post('/books', 
             data, 
             { headers: {
                 'Content-Type': 'multipart/form-data',
@@ -51,10 +51,15 @@ const api = (() => {
 
         return response;
     }
-  
-    async function getAllBooks() {
-        //const response = await axios.get(`${BASE_URL}/books`);
-        const response = await librify.get('/books');
+    // http://20.2.89.234:5000/api/books/pages
+    async function getBooksPages() {
+        const response = await librify.get('/books/pages');
+        //return response.data.data.pages;
+        
+    }
+    async function getAllBooks({page}) {
+        console.log(page);
+        const response = await librify.get(`/books?page=${page}`);
         return response.data.data.books;
     }
 

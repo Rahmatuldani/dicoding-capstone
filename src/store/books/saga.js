@@ -3,9 +3,9 @@ import { BOOKS_ACTION_TYPES } from './types';
 import { isSuccess, isFailed } from './action';
 import api from '../../data/api';
 
-export function* fetchBooks() {
+export function* fetchBooks({payload: {page}}) {
     try {
-        const result = yield* call(api.getAllBooks);
+        const result = yield* call(api.getAllBooks, {page});
 
         yield* put(isSuccess(BOOKS_ACTION_TYPES.FETCH_BOOKS_SUCCESS, result));
     } catch (error) {

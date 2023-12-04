@@ -9,8 +9,8 @@ function  isSuccess(action ,books) {
 function isFailed(action ,error) {
     return createAction(action, error);
 }
-function fetchBooksStart() {
-    return createAction(BOOKS_ACTION_TYPES.FETCH_BOOKS_START);
+function fetchBooksStart({page}) {
+    return createAction(BOOKS_ACTION_TYPES.FETCH_BOOKS_START, {page});
 }
 
 function insertBooksStart({

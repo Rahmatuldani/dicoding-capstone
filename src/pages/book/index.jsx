@@ -16,6 +16,8 @@ import './style.css';
 const Books = () => {
     const { books } = useSelector(selectBooks);
 
+    
+
     const [titleFilter, setTitleFilter] = useState('');
     const [debouncedTitleFilter, setDebouncedTitleFilter] = useState(titleFilter);
 
@@ -47,7 +49,8 @@ const Books = () => {
     }, [titleFilter]);
 
     useEffect(() => {
-        dispatch(fetchBooksStart());
+        const page = 1;
+        dispatch(fetchBooksStart({page}));
     }, [dispatch]);
     
     const isLoading = () => {
