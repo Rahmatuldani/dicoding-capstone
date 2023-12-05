@@ -13,6 +13,10 @@ function fetchBooksStart({page}) {
     return createAction(BOOKS_ACTION_TYPES.FETCH_BOOKS_START, {page});
 }
 
+function fetchBooksPageStart(){
+    return createAction(BOOKS_ACTION_TYPES.FETCH_BOOKS_PAGE_START);
+}
+
 function insertBooksStart({
     isbn,
     title,
@@ -41,5 +45,6 @@ export {
     isSuccess,
     isFailed,
     fetchBooksStart,
+    fetchBooksPageStart,
     insertBooksStart,
 };

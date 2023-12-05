@@ -51,20 +51,17 @@ const api = (() => {
 
         return response;
     }
-    // http://20.2.89.234:5000/api/books/pages
+
     async function getBooksPages() {
         const response = await librify.get('/books/pages');
-        //return response.data.data.pages;
-        
+
+        return response.data.data.pages;
     }
+
     async function getAllBooks({page}) {
-        console.log(page);
         const response = await librify.get(`/books?page=${page}`);
+
         return response.data.data.books;
-    }
-
-    async function getBookById(id) {
-
     }
 
     async function createBorrow({bookTitle, bookAuthor, startDate, endDate}) {
@@ -87,6 +84,7 @@ const api = (() => {
         login,
         createBook,
         getAllBooks,
+        getBooksPages,
         createBorrow,
         getAllBorrowed,
     };

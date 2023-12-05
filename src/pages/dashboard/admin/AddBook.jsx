@@ -25,8 +25,8 @@ const AddBookAdmin = () => {
             poster: formik.values.poster
         };
         dispatch(insertBooksStart(newBook));
-        formRef.current.reset();
-        formik.resetForm();
+        /* formRef.current.reset();
+        formik.resetForm(); */
     }
 
     const formik = useFormik({
