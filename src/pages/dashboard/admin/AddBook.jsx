@@ -43,7 +43,7 @@ const AddBookAdmin = () => {
         },
         onSubmit: addNewBook,
         validationSchema: yup.object().shape({
-            'isbn': yup.number().required('ISBN harus diisi'),
+            'isbn': yup.string().required('ISBN harus diisi'),
             'title': yup.string().required('Nama buku harus diisi').min(3, 'Nama buku minial 3 karakter').max(50, 'Nama buku maksimal 50 karakter'),
             'year': yup.number().required('Tahun terbit harus diisi'),
             'genre': yup.string().required('Genre harus diisi'),
@@ -76,7 +76,7 @@ const AddBookAdmin = () => {
                                     <Form.Control
                                         className='border-primary-subtle'
                                         name='isbn'
-                                        type='number' 
+                                        type='text' 
                                         placeholder='ISBN' 
                                         onChange={ handleForm }
                                         isInvalid={formik.errors.isbn}

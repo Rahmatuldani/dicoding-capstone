@@ -49,11 +49,9 @@ export function* insertBook({payload: {
             poster,
             desc,
         });
-
-        console.log(book);
         yield* put(isSuccess(BOOKS_ACTION_TYPES.INSERT_BOOKS_SUCCESS, book));
     } catch (error) {
-        yield* put(isFailed(BOOKS_ACTION_TYPES.INSERT_BOOKS_FAILED, error));
+        yield* put(isFailed(error.response.data.message));
     }
 }
 

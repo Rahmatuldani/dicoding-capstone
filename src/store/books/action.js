@@ -1,13 +1,15 @@
 import { createAction } from '../../utils/reducer';
 import { BOOKS_ACTION_TYPES } from './types';
+import AlertUtil from '../../utils/alert';
 
 
 function  isSuccess(action ,books) {
     return createAction(action, books);
 }
 
-function isFailed(action ,error) {
-    return createAction(action, error);
+function isFailed(error) {
+    AlertUtil('error', error);
+    return createAction(BOOKS_ACTION_TYPES.SET_ERROR, error);
 }
 function fetchBooksStart({page}) {
     return createAction(BOOKS_ACTION_TYPES.FETCH_BOOKS_START, {page});

@@ -24,9 +24,9 @@ export function booksReducer(state = INITIAL_STATE, action = {}) {
     case BOOKS_ACTION_TYPES.FETCH_BOOKS_PAGE_SUCCESS:
         return {...state, isLoading: false, pages: action.payload, error: null};
     
-    case BOOKS_ACTION_TYPES.FETCH_BOOKS_PAGE_FAILED:
+    case BOOKS_ACTION_TYPES.SET_ERROR:
         return {...state, isLoading: false, error: action.payload};
-
+        
     case BOOKS_ACTION_TYPES.INSERT_BOOKS_START:
         return {...state, isLoading: true};
     
