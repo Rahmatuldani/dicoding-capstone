@@ -1,40 +1,25 @@
 import useInput from '../../hooks/useInput';
 import { useDispatch } from 'react-redux';
-import { signUp } from '../../store/auth/action';
+import { forgotPassword } from '../../store/auth/action';
 import { 
     Paper,
     Typography,
     TextField,
 } from '@mui/material';
-import {
-    Form
-} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import React from 'react';
 
-const Register = () => {
+const ForgotPassword = () => {
     const dispatch = useDispatch();
-    const [name, setName] = useInput('');
     const [email, setEmail] = useInput('');
-    const [password, setPassword] = useInput('');
-    const [confirmPassword, setConfirmPassword] = useInput('');
-    const [ktp, setKtp] = React.useState(null);
 
     function handleSubmit(event) {
         event.preventDefault();
-        if (confirmPassword === password) {  
-            const formData = new FormData();
-            formData.append('name', name); 
-            formData.append('email', email); 
-            formData.append('password', password); 
-            formData.append('ktp', ktp); 
-            dispatch(signUp(formData));
-        }
+        dispatch(forgotPassword({email}));
     }
 
     return (
         <section
-            className='register-page'
+            className='login-page'
             style={{
                 width: '100%',
                 height: '90vh',
@@ -62,20 +47,12 @@ const Register = () => {
                 }}
             >
                 <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
-                    SIGN UP
+                    FORGOT PASSWORD
                 </Typography>
                 <form onSubmit={handleSubmit}>
-                    <TextField sx={{ marginY: '8px' }} fullWidth value={name} onChange={setName} id='name' label='Name' variant='standard' required/>
-                    <TextField sx={{ marginY: '8px' }} fullWidth value={email} onChange={setEmail} type='email' id='email' label='Email' variant='standard' required/>
-                    <TextField sx={{ marginY: '8px' }} fullWidth value={password} onChange={setPassword} type='password' id='password' label='Password' variant='standard' required/>
-                    <TextField sx={{ marginTop: '8px' }} fullWidth value={confirmPassword} onChange={setConfirmPassword} type='password' id='confirmPass' label='Confirm Password' variant='standard' required/>
-                    { confirmPassword !== password ? <Typography variant='subtitle2' sx={{ color: 'red' }}>Confirm password not same</Typography> : ''}
-                    <Form.Group className='test' style={{ marginTop: '15px', marginBottom: '10px' }}>
-                        <Form.Label style={{ margin: '1px 0' }}>KTP</Form.Label>
-                        <Form.Control type="file" onChange={(e) => setKtp(e.target.files[0])} required/>
-                    </Form.Group>
+                    <TextField value={email} onChange={setEmail} sx={{ marginY: '8px' }} fullWidth type='email' id='email' label='Email' variant='standard' required/>
                     <div className='d-grid mt-4'>
-                        <button className='btn btn-primary' type='submit'>Sign Up</button>
+                        <button className='btn btn-primary' type='submit'>Send Reset Password Link</button>
                     </div>
                 </form>
             </Paper>
@@ -97,10 +74,10 @@ const Register = () => {
                 <p style={{
                     margin: 0,
                     fontSize: '14px',
-                }}>Already have account? <Link to='/login'>Sign in here!</Link></p>
+                }}><Link to='/login'>Return to Login Page</Link></p>
             </Paper>
         </section>
     );
 };
 
-export default Register;
+export default ForgotPassword;

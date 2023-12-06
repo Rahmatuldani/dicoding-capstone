@@ -3,4 +3,6 @@ export const AUTH_ACTION_TYPES = {
     SET_ERROR: 'currentUser/SET_ERROR',
     SIGN_IN_START: 'currentUser/SIGN_IN_START',
     SIGN_UP_START: 'currentUser/SIGN_UP_START',
+    FORGOT_PASSWORD_START: 'currentUser/FORGOT_PASSWORD_START',
+    RESET_PASSWORD_START: 'currentUser/RESET_PASSWORD_START'
 };

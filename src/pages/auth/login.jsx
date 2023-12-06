@@ -5,7 +5,6 @@ import {
     Paper,
     Typography,
     TextField,
-    Button
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -21,12 +20,13 @@ const Login = () => {
 
     return (
         <section
-            className='login-page'
+            className='forgot-password-page'
             style={{
                 width: '100%',
                 height: '90vh',
                 padding: '2rem',
                 display: 'flex',
+                flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center'
             }}
@@ -37,11 +37,14 @@ const Login = () => {
                 sx={{ 
                     width: '100%',
                     maxWidth: '400px' ,
+                    margin: '1rem',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '2rem'
+                    padding: '2rem',
+                    boxShadow: 'none',
+                    border: '1px solid #ccc'
                 }}
             >
                 <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
@@ -50,12 +53,35 @@ const Login = () => {
                 <form onSubmit={handleSubmit}>
                     <TextField value={email} onChange={setEmail} sx={{ marginY: '8px' }} fullWidth type='email' id='email' label='Email' variant='standard' required/>
                     <TextField value={password} onChange={setPassword} sx={{ marginY: '8px' }} fullWidth type='password' id='password' label='Password' variant='standard' required/>
-                    <Button variant='contained' sx={{ marginTop: '1rem' }} type='submit'>Sign In</Button>
+                    <div className='d-grid mt-4'>
+                        <button className='btn btn-primary' type='submit'>Sign In</button>
+                    </div>
                 </form>
                 <p style={{
                     margin: 0,
-                    marginTop: '1rem'
-                }}>Don&apos;t have account? <Link to='/register'>Sign up here!</Link></p>
+                    marginTop: '1rem',
+                    fontSize: '12px',
+                }}><Link to='/forgotpassword'>Forgotten your password?</Link></p>
+            </Paper>
+            <Paper 
+                elevation={3}
+                square
+                sx={{ 
+                    width: '100%',
+                    maxWidth: '400px' ,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '2rem',
+                    boxShadow: 'none',
+                    border: '1px solid #ccc'
+                }}
+            >
+                <p style={{
+                    margin: 0,
+                    fontSize: '14px',
+                }}>Don&apos;t have an account? <Link to='/register'>Create an account</Link></p>
             </Paper>
         </section>
     );

@@ -22,6 +22,8 @@ import LikeUser from './pages/dashboard/users/LikeUser'; */
 import BooksList from './pages/dashboard/admin';
 import BorrowList from './pages/dashboard/admin/BorrowList';
 import AddBookAdmin from './pages/dashboard/admin/AddBook';
+import ForgotPassword from './pages/auth/forgotpassword';
+import ResetPassword from './pages/auth/resetpassword';
 
 export function ErrorBoundary() {
     const error = useRouteError();
@@ -48,6 +50,8 @@ const Router = createBrowserRouter(
             <Route element={<AuthRequired/>}>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/register' element={<Register/>}/>
+                <Route path='/forgotpassword' element={<ForgotPassword/>}/>
+                <Route path='/resetpassword' element={<ResetPassword/>}/>
             </Route>
         </Route>
     )
