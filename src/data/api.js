@@ -32,6 +32,7 @@ const api = (() => {
         genre,
         author,
         publisher,
+        stock,
         price,
         poster,
         desc,
@@ -43,10 +44,10 @@ const api = (() => {
             genre,
             author,
             publisher,
+            stock,
             price,
             poster,
             desc,
-            stock: 20
         };
         console.log(data);
         const token = 'secretpassword';

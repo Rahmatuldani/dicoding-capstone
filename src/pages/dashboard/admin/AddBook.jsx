@@ -5,7 +5,6 @@ import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useRef } from 'react';
 import SlideBar from '../SlideBar';
-import { useParams } from 'react-router-dom';
 
 const AddBookAdmin = () => {
     const dispatch = useDispatch();
@@ -20,6 +19,7 @@ const AddBookAdmin = () => {
             author: formik.values.author,
             publisher: formik.values.publisher,
             desc: formik.values.desc,
+            stock: formik.values.stock,
             price: formik.values.price,
             poster: formik.values.poster
         };
@@ -37,6 +37,7 @@ const AddBookAdmin = () => {
             author: '',
             publisher: '',
             desc: '',
+            stock: '',
             price: '',
             poster: null,
         },
@@ -50,6 +51,7 @@ const AddBookAdmin = () => {
             'publisher': yup.string().required('Penerbit harus diisi').min(3, 'Penerbit minimal 3 karakter').max(50, 'Penerbit maksimal 50 karakter'),
             'desc': yup.string().required('Deskripsi harus diisi').min(10, 'Deskripsi minimal 10 karakter').max(250, 'Deskripsi maksimal 250 karakter'),
             'price': yup.number().required('Harga harus diisi'),
+            'stock': yup.number().required('Harga harus diisi'),
             'poster': yup.mixed().required()
         })
     });
@@ -126,12 +128,12 @@ const AddBookAdmin = () => {
                                     </Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="validationFormik05">
-                                    <Form.Label>Author</Form.Label>
+                                    <Form.Label>Penulis</Form.Label>
                                     <Form.Control
                                         className='border-primary-subtle'
                                         name='author'
                                         type='text'
-                                        placeholder='Author buku'
+                                        placeholder='Penulis buku'
                                         onChange={ handleForm }
                                         isInvalid={formik.errors.author}
                                     />
@@ -140,12 +142,12 @@ const AddBookAdmin = () => {
                                     </Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="validationFormik06">
-                                    <Form.Label>Publisher</Form.Label>
+                                    <Form.Label>Penerbit</Form.Label>
                                     <Form.Control
                                         className='border-primary-subtle'
                                         name='publisher'
                                         type='text'
-                                        placeholder='Publisher buku'
+                                        placeholder='Penerbit buku'
                                         onChange={ handleForm }
                                         isInvalid={formik.errors.publisher}
                                     />
@@ -154,6 +156,20 @@ const AddBookAdmin = () => {
                                     </Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="validationFormik07">
+                                    <Form.Label>Stok</Form.Label>
+                                    <Form.Control
+                                        className='border-primary-subtle'
+                                        name='stock'
+                                        type='number'
+                                        placeholder='Stok buku'
+                                        onChange={ handleForm }
+                                        isInvalid={formik.errors.stock}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {formik.errors.stock}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="validationFormik08">
                                     <Form.Label>Price</Form.Label>
                                     <Form.Control
                                         className='border-primary-subtle'
@@ -186,8 +202,6 @@ const AddBookAdmin = () => {
                                             name='desc'
                                             placeholder="Deskripsi buku"
                                             style={{ height: '100px' }}
-
-
                                             onChange={ handleForm }
                                             isInvalid={formik.errors.desc}
                                         />
