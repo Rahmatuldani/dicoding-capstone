@@ -43,8 +43,8 @@ const Router = createBrowserRouter(
             <Route path='/borrows' element={<Borrow/>}/>
             <Route path='/dashboard/user' element={<DashboardUser/>}/>
             <Route path='/dashboard/admin' element={<BooksList/>}/>
-            <Route path='/dashboard/admin/borrow/:role' element={<BorrowList/>}/>
-            <Route path='/dashboard/admin/addbook/:role' element={<AddBookAdmin/>}/>
+            <Route path='/dashboard/admin/borrow' element={<BorrowList/>}/>
+            <Route path='/dashboard/admin/addbook' element={<AddBookAdmin/>}/>
             <Route element={<AuthRequired/>}>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/register' element={<Register/>}/>

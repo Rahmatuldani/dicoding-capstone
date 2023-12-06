@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom';
 const AddBookAdmin = () => {
     const dispatch = useDispatch();
     const formRef = useRef(null);
-    const { role } = useParams();
 
     function addNewBook() {
         const newBook = {
@@ -65,7 +64,7 @@ const AddBookAdmin = () => {
         <div>
             <div className="container-fluid">
                 <div className="row">
-                    <SlideBar isActive='addBook' role={role}/>
+                    <SlideBar isActive='addBook'/>
                     <div className='col '>
                         <div className='mt-3'>
                             <h3>Tambah Buku</h3>

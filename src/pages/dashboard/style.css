@@ -6,3 +6,9 @@
 .datatables_wrapper .rdt_tablecell{
     font-size:25px;
   }
+
+  @media screen and (min-width: 768px) {
+    .slidebar {
+        display: none;
+    }
+  }

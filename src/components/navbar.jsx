@@ -90,6 +90,10 @@ function Navbar() {
         setAnchorEl(null);
         handleMobileMenuClose();
     };
+    const handleSignOut = () => {
+        dispatch(signOut());
+        navigate('/login');
+    };
 
     const handleNavigationRole = () => {
         if (currentUser.role === 'user') {
@@ -134,7 +138,7 @@ function Navbar() {
             }}>
                 Dashboard
             </MenuItem>
-            <MenuItem onClick={() => { dispatch(signOut()); handleMenuClose();}}>Logout</MenuItem>
+            <MenuItem onClick={() => { handleSignOut(); handleMenuClose();}}>Logout</MenuItem>
         </Menu>
     );
 

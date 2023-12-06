@@ -1,25 +1,24 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import SlideBar from '../SlideBar';
 import { Badge} from 'react-bootstrap';
 import { useState } from 'react';
+import { BsEyeFill } from 'react-icons/bs';
 
 const BorrowList = () => {
-    const { role } = useParams();
+    const navigate = useNavigate();
+    const ButtonViewBook = (id) => {
+        
+        return (
+            <div className='d-flex justify-content-center'>
+                <button className='btn btn-primary mr-3' onClick={() => navigate(`/books/${id.id}`)}><BsEyeFill /></button>
+            </div>
+        );
+    };
     const columns = [
         {
-            name: 'Id User',
+            name: 'Id Pinjam',
             selector: row => row.id,
-            sortable: true,
-        },
-        {
-            name: 'Buku',
-            selector: row => row.title,
-            sortable: true,
-        },
-        {
-            name: 'Tanggal Pinjam',
-            selector: row => row.dateBorrwo,
             sortable: true,
         },
         {
@@ -28,32 +27,34 @@ const BorrowList = () => {
             sortable: true,
         },
         {
-            name: 'status',
-            selector: row => row.status,
+            name: 'Denda',
+            selector: row => row.denda,
+            sortable: true,
+        },
+        {
+            name: 'action',
+            selector: row => row.action,
             sortable: true,
         },
     ];
     const datas = [
         {
             id: 'LB-00001',
-            title: 'Cantik Itu Luka',
-            dateBorrwo: '20-11-2023',
             dateBack:'27-11-2023',
-            status: <Badge bg="primary">succes</Badge>
+            denda: 20000,
+            action: <ButtonViewBook id={'657059e93bcc3f13fdf5f0c6'} />
         },
         {
             id: 'LB-00002',
-            title: 'Atomic Habits',
-            dateBorrwo: '20-11-2023',
             dateBack:'27-11-2023',
-            status: <Badge bg="warning">warning</Badge>
+            denda: 20000,
+            action: <ButtonViewBook id={'657059e93bcc3f13fdf5f0c6'} />
         },
         {
             id: 'LB-00003',
-            title: 'Merawat Luka Batin ',
-            dateBorrwo: '20-11-2023',
             dateBack:'27-11-2023',
-            status: <Badge bg="danger">danger</Badge>
+            denda: 20000,
+            action: <ButtonViewBook id={'657059e93bcc3f13fdf5f0c6'} />
         },
     ];
     const [dataFilter, setDataFilter] = useState(datas);
@@ -67,7 +68,7 @@ const BorrowList = () => {
         <div>
             <div className="container-fluid">
                 <div className="row">
-                    <SlideBar isActive='borrow' role={role}/>
+                    <SlideBar isActive='borrow'/>
                     <div className='col'>
                         <div className='mt-3'>
                             <div className='d-flex justify-content-end mb-1'>

@@ -1,14 +1,13 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SlideBar from '../SlideBar';
 import DataTable from 'react-data-table-component';
 import { selectBooks } from '../../../store/books/selector';
 import { useState } from 'react';
 import '../style.css';
-import { Badge } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { BsEyeFill, BsPencilSquare } from 'react-icons/bs';
 
 const BooksList = () => {
-    const { role } = useParams();
     const { books } = useSelector(selectBooks);
     const navigate = useNavigate();
     const columns = [
@@ -33,8 +32,8 @@ const BooksList = () => {
             sortable: true,
         },
         {
-            name: 'Status',
-            selector: row => row.status,
+            name: 'Stok',
+            selector: row => row.stock,
         },
         {
             name: 'Action',
@@ -42,48 +41,49 @@ const BooksList = () => {
         },
     ];
     
-    const AvailableBadge = () => (
-        <Badge bg="primary">tersedia</Badge>
-    );
     const ButtonViewBook = (id) => {
-        console.log(id);
+        return (
+            <button className='btn btn-primary mr-3' onClick={() => navigate(`/books/${id.id}`)}><BsEyeFill /></button>
+        );
+    };
+    
+    const ButtonEditBook = (id) => {
+        return (
+            <button className='btn btn-warning mr-3' onClick={() => navigate(`/books/${id.id}`)}><BsPencilSquare /></button>
+        );
+    };
+
+    const GroupButtonAction = (id) => {
         return (
             <div className='d-flex justify-content-center'>
-                <button className='btn btn-primary mr-3' onClick={() => navigate(`/books/${id.id}`)}>View</button>
+                <div className='btn-group'>
+                    <ButtonViewBook id={id.id} />
+                    <ButtonEditBook id={id.id} />
+                </div>
             </div>
         );
     };
-    const booksFilter = books.map(({_id, title, genre, author, year}) => ({
+
+    const booksFilter = books.map(({_id, title, genre, author, year, stock}) => ({
         title,
         genre,
         author,
         year,
-        status: <AvailableBadge />,
-        action: <ButtonViewBook id={_id} />
+        stock,
+        action: <GroupButtonAction id={_id} />
     }));
-
-    const [dataFilter, setDataFilter] = useState(booksFilter);
-    const handlerChange = (event) => {
-        const filter =  booksFilter.filter((book) => {
-            return book.title.toLowerCase().includes(event.target.value.toLowerCase());
-        });
-        setDataFilter(filter);
-    };
 
     return (
         <div>
             <div className="container-fluid">
                 <div className="row">
-                    <SlideBar isActive='books' role={role}/>
+                    <SlideBar isActive='books'/>
                     <div className='col'>
                         <div className='mt-3'>
-                            <div className='d-flex justify-content-end mb-1'>
-                                <input type="search" className="form-control w-25 d-lg-inline" onChange={handlerChange} placeholder="Search" />
-                            </div>
                             <DataTable
                                 title="Daftar Buku"
                                 columns={columns}
-                                data={dataFilter}
+                                data={booksFilter}
                                 fixedHeader
                                 pagination
                                 highlightOnHover

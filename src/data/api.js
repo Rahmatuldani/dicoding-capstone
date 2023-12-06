@@ -46,7 +46,9 @@ const api = (() => {
             price,
             poster,
             desc,
+            stock: 20
         };
+        console.log(data);
         const token = 'secretpassword';
         const response = await librify.post('/books', 
             data, 

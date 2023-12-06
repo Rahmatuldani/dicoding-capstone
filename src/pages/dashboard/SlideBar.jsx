@@ -1,37 +1,48 @@
 import PropTypes from 'prop-types';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import MenuAdmin from './admin/MenuAdmin';
-/* import { useSelector } from 'react-redux';
-import { selectAuth } from '../../store/auth/selector'; */
-
-const SlideBar = ({ isActive, role }) => {
+import { BsBookFill, BsFillPlusSquareFill, BsLayersFill } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import { selectAuth } from '../../store/auth/selector';
+const SlideBar = ({ isActive }) => {
     
     const navigate = useNavigate();
-    //const { currentUser } = useSelector(selectAuth);
-    const currentUser = {
+    const { currentUser } = useSelector(selectAuth);
+    /* const currentUser = {
         _id: '657038669e225d6388109061',
-        name: 'Samuel Eto ',
-        role: 'user',
+        name: 'Ahmad Zakaria ',
+        role: 'admin',
         email: 'user@gmail.com',
         avatar: null,
         verified: false,
         adminVerified: false,
         verificationToken: '87ec0a35-1483-441d-985b-598cc06fc373'
-    };
+    }; */
     return (
-        <div className='col-auto min-vh-100 bg-light p-0'>
-            {currentUser.role === 'admin' ?
-                <MenuAdmin
-                    onClickBookList={() => navigate('/dashboard/admin/admin')}
-                    onClickAddBook={() => navigate('/dashboard/admin/addbook/admin')}
-                    onClickBorrowList={() => navigate('/dashboard/admin/borrow/admin')}
-                    isActive={isActive}
-                    role={role}
-                />
-                :
-                <Navigate to={'/'} replace/>
-            }
-        </div>
+        <>
+            <div className="slidebar col-auto min-vw-100 bg-light p-0 pt-2 pb-2">
+                {/* <button className="btn btn-dark d-block d-md-none" onClick={() => navigate('/dashboard/admin')}>Buku</button> */}
+                <div className='d-flex flex-column align-items-center'>
+                    <div className="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" className="btn btn-primary" onClick={() => navigate('/dashboard/admin')}><BsBookFill /> </button>
+                        <button type="button" className="btn btn-primary" onClick={() => navigate('/dashboard/admin/addbook')}><BsFillPlusSquareFill /></button>
+                        <button type="button" className="btn btn-primary" onClick={() => navigate('/dashboard/admin/borrow')}> <BsLayersFill /></button>
+                    </div>
+                </div>
+            </div>
+            <div className='col-auto min-vh-100 bg-light p-0 d-none d-md-inline'>
+                {currentUser.role === 'admin' ?
+                    <MenuAdmin
+                        onClickBookList={() => navigate('/dashboard/admin')}
+                        onClickAddBook={() => navigate('/dashboard/admin/addbook')}
+                        onClickBorrowList={() => navigate('/dashboard/admin/borrow')}
+                        isActive={isActive}
+                    />
+                    :
+                    <Navigate to={'/'} replace/>
+                }
+            </div>
+        </>
     );
 };
 
