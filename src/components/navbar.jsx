@@ -161,7 +161,7 @@ function Navbar() {
                     aria-haspopup="true"
                     color="inherit"
                 >
-                    <AvatarComponent name={currentUser.name} image={currentUser.image} sx={{ width: '35px', height: '35px', fontSize: '16px' }}/>
+                    {/* <AvatarComponent name={currentUser.name} image={currentUser.image} sx={{ width: '35px', height: '35px', fontSize: '16px' }}/> */}
                 </IconButton>
                 <p>Account</p>
             </MenuItem>

@@ -12,7 +12,7 @@ const api = (() => {
         console.log(formData);
         const user = await axios({
             method: 'post',
-            url: 'http://localhost:5001/api/auth/register',
+            url: 'http://20.2.89.234:5000/api/auth/register',
             data: formData,
             headers: { 'Content-Type': 'multipart/form-data' }});
         const result = user;
@@ -20,7 +20,7 @@ const api = (() => {
     }
   
     async function login({ email, password }) {
-        const user = await axios.post('http://localhost:5001/api/auth/login', {email, password});
+        const user = await axios.post('http://20.2.89.234:5000/api/auth/login', {email, password});
         const result = user.data;
         return result;
     }

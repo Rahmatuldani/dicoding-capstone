@@ -55,6 +55,10 @@ function AvatarComponent({name, image, sx}) {
     if (!image) {
         return <Avatar1 name={name} sx={sx}/>;
     }
+    
+    if (!name) {
+        return <Avatar1 name={'Testing'} sx={sx}/>;
+    }
 
     return (
         <Avatar alt={name} src={`http://localhost:5001/api/users/${image}/avatar`} sx={sx}/>
