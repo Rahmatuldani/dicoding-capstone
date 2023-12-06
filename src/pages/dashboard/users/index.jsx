@@ -1,13 +1,13 @@
 import { Navigate } from 'react-router-dom';
 import '../style.css';
 // import { Badge } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { selectAuth } from '../../../store/auth/selector';
+/* import { useSelector } from 'react-redux';
+import { selectAuth } from '../../../store/auth/selector'; */
 import { Table } from 'react-bootstrap';
 
 const DashboardUser  = () => {
-    const { currentUser } = useSelector(selectAuth);
-    /*     const currentUser = {
+    //const { currentUser } = useSelector(selectAuth);
+    const currentUser = {
         _id: '657038669e225d6388109061',
         name: 'Samuel Eto ',
         role: 'user',
@@ -16,7 +16,7 @@ const DashboardUser  = () => {
         verified: false,
         adminVerified: false,
         verificationToken: '87ec0a35-1483-441d-985b-598cc06fc373'
-    }; */
+    };
     return (
         <>
             {
