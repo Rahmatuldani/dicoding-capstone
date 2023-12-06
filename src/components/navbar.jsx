@@ -10,6 +10,8 @@ import {
     MenuItem,
     Toolbar,
     Typography,
+    ListItemIcon,
+    ListItemText,
 } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
@@ -71,6 +73,7 @@ const MenuLink = [
 function Navbar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+    const [notificationsAnchorEl, setNotificationsAnchorEl] = React.useState(null);
     const [isOpen, setIsOpen] = React.useState(false);
     const navigate = useNavigate();
     const { currentUser } = useSelector(selectAuth);
@@ -98,6 +101,19 @@ function Navbar() {
 
     const handleSidebar = () => {
         setIsOpen(!isOpen);
+    };
+
+    const [notifications] = React.useState([
+        { id: 0, title: 'Pengembalian Buku', message: 'Besok batas waktu pengembalian buku' },
+        { id: 1, title: 'Selamat Datang', message: 'Selamat Datang di Librify' },
+    ]);
+
+    const handleNotificationsOpen = (event) => {
+        setNotificationsAnchorEl(event.currentTarget);
+    };
+
+    const handleNotificationsClose = () => {
+        setNotificationsAnchorEl(null);
     };
 
     const menuId = 'primary-search-account-menu';
@@ -144,11 +160,12 @@ function Navbar() {
         >
             <MenuItem>
                 <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
+                    size='large'
+                    aria-label='show notifications'
+                    color='inherit'
+                    onClick={handleNotificationsOpen}
                 >
-                    <Badge badgeContent={17} color="error">
+                    <Badge badgeContent={notifications.length} color="error">
                         <NotificationsIcon />
                     </Badge>
                 </IconButton>
@@ -166,6 +183,33 @@ function Navbar() {
                 </IconButton>
                 <p>Profile</p>
             </MenuItem>
+        </Menu>
+    );
+
+    const renderNotificationMenu = (
+        <Menu
+            anchorEl={notificationsAnchorEl}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}
+            id="notifications-menu"
+            keepMounted
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+            }}
+            open={Boolean(notificationsAnchorEl)}
+            onClose={handleNotificationsClose}
+        >
+            {notifications.map((notification) => (
+                <MenuItem key={notification.id} onClick={handleNotificationsClose}>
+                    <ListItemIcon>
+                        <NotificationsIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={notification.title} secondary={notification.message} />
+                </MenuItem>
+            ))}
         </Menu>
     );
 
@@ -215,11 +259,12 @@ function Navbar() {
                             <Box sx={{ flexGrow: 1 }} />
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                                 <IconButton
-                                    size="large"
-                                    aria-label="show 17 new notifications"
-                                    color="inherit"
+                                    size='large'
+                                    aria-label='show notifications'
+                                    color='inherit'
+                                    onClick={handleNotificationsOpen}
                                 >
-                                    <Badge badgeContent={17} color="error">
+                                    <Badge badgeContent={notifications.length} color="error">
                                         <NotificationsIcon />
                                     </Badge>
                                 </IconButton>
@@ -256,6 +301,7 @@ function Navbar() {
                 </AppBar>
                 {renderMobileMenu}
                 {renderMenu}
+                {renderNotificationMenu}
             </Box>
             <Sidebar isOpen={isOpen} menus={MenuLink} />
         </React.Fragment>
