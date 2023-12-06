@@ -1,21 +1,15 @@
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
-import MenuUser from './users/MenuUser';
+import { Navigate, useNavigate } from 'react-router-dom';
 import MenuAdmin from './admin/MenuAdmin';
+import { useSelector } from 'react-redux';
+import { selectAuth } from '../../store/auth/selector';
 
 const SlideBar = ({ isActive, role }) => {
     const navigate = useNavigate();
+    const { currentUser } = useSelector(selectAuth);
     return (
         <div className='col-auto min-vh-100 bg-light p-0'>
-            {role === 'user' ?
-                <MenuUser 
-                    onClickBorrow={() => navigate('/dashboard/user/user')}
-                    onClickDebt={() => navigate('/dashboard/user/debt/user')}
-                    onClickLike={() => navigate('/dashboard/user/like/user')}
-                    isActive={isActive}
-                    role={role}
-                />
-                :
+            {currentUser.role === 'admin' ?
                 <MenuAdmin
                     onClickBookList={() => navigate('/dashboard/admin/admin')}
                     onClickAddBook={() => navigate('/dashboard/admin/addbook/admin')}
@@ -23,6 +17,8 @@ const SlideBar = ({ isActive, role }) => {
                     isActive={isActive}
                     role={role}
                 />
+                :
+                <Navigate to={'/'} replace/>
             }
         </div>
     );

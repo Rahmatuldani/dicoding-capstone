@@ -91,6 +91,16 @@ function Navbar() {
         handleMobileMenuClose();
     };
 
+    const handleNavigationRole = () => {
+        if (currentUser.role === 'user') {
+            navigate('/dashboard/user');
+        }
+
+        if (currentUser.role === 'admin') {
+            return navigate('/dashboard/admin');
+        } 
+    };
+
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
@@ -118,7 +128,12 @@ function Navbar() {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Dashboard</MenuItem>
+            <MenuItem onClick={() => {
+                handleNavigationRole();
+                handleMenuClose();
+            }}>
+                Dashboard
+            </MenuItem>
             <MenuItem onClick={() => { dispatch(signOut()); handleMenuClose();}}>Logout</MenuItem>
         </Menu>
     );
