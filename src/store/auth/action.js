@@ -15,6 +15,10 @@ function signIn({email, password}) {
     return createAction(AUTH_ACTION_TYPES.SIGN_IN_START, {email, password});
 }
 
+function signUp(formData) {
+    return createAction(AUTH_ACTION_TYPES.SIGN_UP_START, formData);
+}
+
 function signOut() {
     return createAction(AUTH_ACTION_TYPES.SET_CURRENT_USER, null);
 }
@@ -23,5 +27,6 @@ export {
     setCurrentUser,
     setError,
     signIn,
+    signUp,
     signOut
 };
