@@ -2,14 +2,31 @@ import { useNavigate } from 'react-router-dom';
 import SlideBar from '../SlideBar';
 import DataTable from 'react-data-table-component';
 import { selectBooks } from '../../../store/books/selector';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../style.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BsEyeFill, BsPencilSquare } from 'react-icons/bs';
+import { fetchBooksPageStart, fetchBooksStart } from '../../../store/books/action';
 
 const BooksList = () => {
-    const { books } = useSelector(selectBooks);
+    const { books, pages, isLoading } = useSelector(selectBooks);
+    const [currentPage, setCurrentPage] = useState(1);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const currentItems = books;
+    const totalPages = pages * 10;
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    useEffect(() => {
+        const page = currentPage;
+        dispatch(fetchBooksStart({page}));
+        dispatch(fetchBooksPageStart());
+    }, [currentPage, dispatch]);
+
     const columns = [
         {
             name: 'Title',
@@ -64,7 +81,7 @@ const BooksList = () => {
         );
     };
 
-    const booksFilter = books.map(({_id, title, genre, author, year, stock}) => ({
+    const booksFilter = currentItems.map(({_id, title, genre, author, year, stock}) => ({
         title,
         genre,
         author,
@@ -85,10 +102,14 @@ const BooksList = () => {
                                 columns={columns}
                                 data={booksFilter}
                                 fixedHeader
-                                pagination
                                 highlightOnHover
                                 responsive={true}
                                 pointerOnHover
+                                progressPending={isLoading}
+                                pagination
+                                paginationServer
+                                paginationTotalRows={totalPages}
+                                onChangePage={handlePageChange}
                             />
 
                         </div>

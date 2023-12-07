@@ -30,7 +30,7 @@ export const DetailBook = () => {
                             <Col lg={3} className='d-flex justify-content-center mb-4'>
                                 <div className='img-section'>
                                     <Zoom>
-                                        <Image src={`http://20.2.89.234:5000/api/books/${book?.poster}/poster`} thumbnail />
+                                        <Image src={`http://localhost:5000/api/books/${book?.poster}/poster`} thumbnail />
                                     </Zoom>
                                 </div>
 
