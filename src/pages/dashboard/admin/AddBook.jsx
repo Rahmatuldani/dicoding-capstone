@@ -3,14 +3,16 @@ import { insertBooksStart } from '../../../store/books/action';
 import { useFormik } from 'formik';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import * as yup from 'yup';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import SlideBar from '../SlideBar';
 
 const AddBookAdmin = () => {
     const dispatch = useDispatch();
     const formRef = useRef(null);
+    const [isLoading, setLoading] = useState(false);
 
     function addNewBook() {
+        setLoading(true);
         const newBook = {
             isbn: formik.values.isbn,
             title: formik.values.title,
@@ -26,6 +28,7 @@ const AddBookAdmin = () => {
         dispatch(insertBooksStart(newBook));
         /* formRef.current.reset();
         formik.resetForm(); */
+        setLoading(false);
     }
 
     const formik = useFormik({
@@ -213,7 +216,12 @@ const AddBookAdmin = () => {
                                         {formik.errors.desc}
                                     </Form.Control.Feedback>
                                 </Form.Group>
-                                <Button type="submit">Simpan</Button>
+                                <Button 
+                                    type="submit"
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? 'Loading…' : 'Simpan'}
+                                </Button>
                             </Form>
                         </div>
                     </div>
