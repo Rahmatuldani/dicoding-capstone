@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Navigate, useNavigate } from 'react-router-dom';
 import MenuAdmin from './admin/MenuAdmin';
-import { BsBookFill, BsFillPlusSquareFill, BsLayersFill } from 'react-icons/bs';
+import { BsBookFill, BsFillPlusSquareFill, BsLayersFill, BsPeopleFill } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 import { selectAuth } from '../../store/auth/selector';
 const SlideBar = ({ isActive }) => {
@@ -47,15 +47,24 @@ const SlideBar = ({ isActive }) => {
                         >
                             <BsLayersFill />
                         </button>
+                        <button 
+                            type="button" 
+                            className={`btn btn-primary 
+                            ${isActive === 'users' ? 'active' : ''}`} 
+                            onClick={() => navigate('/dashboard/admin/users')}
+                        >
+                            <BsPeopleFill />
+                        </button>
                     </div>
                 </div>
             </div>
-            <div className='col-auto min-vh-100 bg-light p-0 d-none d-md-inline'>
+            <div className='col-auto min-vh-100 bg-light p-0 d-none d-lg-inline'>
                 {currentUser.role === 'admin' ?
                     <MenuAdmin
                         onClickBookList={() => navigate('/dashboard/admin')}
                         onClickAddBook={() => navigate('/dashboard/admin/addbook')}
                         onClickBorrowList={() => navigate('/dashboard/admin/borrow')}
+                        onClickUsersList={() => navigate('/dashboard/admin/users')}
                         isActive={isActive}
                     />
                     :

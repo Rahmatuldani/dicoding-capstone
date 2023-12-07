@@ -25,6 +25,15 @@ const api = (() => {
         return result;
     }
 
+    async function getUsers() {
+        const token = 'secretpassword';
+        const users = await librify.get('/users', { headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`,
+        }});
+        return users.data.data.users;
+    }
+
     async function createBook({
         isbn,
         title,
@@ -49,7 +58,6 @@ const api = (() => {
             poster,
             desc,
         };
-        console.log(data);
         const token = 'secretpassword';
         const response = await librify.post('/books', 
             data, 
@@ -92,6 +100,7 @@ const api = (() => {
     return {
         register,
         login,
+        getUsers,
         createBook,
         getAllBooks,
         getBooksPages,

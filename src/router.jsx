@@ -22,6 +22,7 @@ import LikeUser from './pages/dashboard/users/LikeUser'; */
 import BooksList from './pages/dashboard/admin';
 import BorrowList from './pages/dashboard/admin/BorrowList';
 import AddBookAdmin from './pages/dashboard/admin/AddBook';
+import UsersList from './pages/dashboard/admin/Users';
 
 export function ErrorBoundary() {
     const error = useRouteError();
@@ -45,6 +46,7 @@ const Router = createBrowserRouter(
             <Route path='/dashboard/admin' element={<BooksList/>}/>
             <Route path='/dashboard/admin/borrow' element={<BorrowList/>}/>
             <Route path='/dashboard/admin/addbook' element={<AddBookAdmin/>}/>
+            <Route path='/dashboard/admin/users' element={<UsersList/>}/>
             <Route element={<AuthRequired/>}>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/register' element={<Register/>}/>

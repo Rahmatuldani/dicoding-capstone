@@ -75,7 +75,7 @@ const AddBookAdmin = () => {
                     <SlideBar isActive='addBook'/>
                     <div className='col '>
                         <div className='mt-3'>
-                            <h3>Tambah Buku</h3>
+                            <h4>Tambah Buku</h4>
                             <Form ref={formRef} onSubmit={ formik.handleSubmit }>
                                 <Form.Group className="mb-3" controlId="validationFormik01">
                                     <Form.Label>ISBN</Form.Label>
