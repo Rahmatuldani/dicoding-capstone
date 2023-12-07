@@ -39,7 +39,7 @@ const AddBookAdmin = () => {
             desc: '',
             stock: '',
             price: '',
-            poster: null,
+            poster: 'index.png',
         },
         onSubmit: addNewBook,
         validationSchema: yup.object().shape({
@@ -58,8 +58,11 @@ const AddBookAdmin = () => {
 
     const handleForm = (event) => {
         const { target } = event;
-        formik.setFieldValue(target.name, target.value);
-        formik.setFieldValue('poster', target.files[0]);
+        if(target.name === 'poster') {
+            formik.setFieldValue('poster', target.files[0]);
+        } else {
+            formik.setFieldValue(target.name, target.value); 
+        }
     };
 
     return (
@@ -76,7 +79,7 @@ const AddBookAdmin = () => {
                                     <Form.Control
                                         className='border-primary-subtle'
                                         name='isbn'
-                                        type='text' 
+                                        type='number' 
                                         placeholder='ISBN' 
                                         onChange={ handleForm }
                                         isInvalid={formik.errors.isbn}
