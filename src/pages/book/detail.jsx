@@ -74,8 +74,11 @@ export const DetailBook = () => {
                                             </div>
                                             <div className='mb-3'>
                                                 <h4 className='fs-6'>Penerbit</h4>
-                                                <p className='mb-0'>{book.publisher
-                                                }</p>
+                                                <p className='mb-0'>{book.publisher}</p>
+                                            </div>
+                                            <div className='mb-3'>
+                                                <h4 className='fs-6'>Stok</h4>
+                                                <p className='mb-0'>{book.stock}</p>
                                             </div>
                                         </Col>
                                     </Row>
