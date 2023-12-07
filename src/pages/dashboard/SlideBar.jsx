@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import MenuAdmin from './admin/MenuAdmin';
 import { BsBookFill, BsFillPlusSquareFill, BsLayersFill } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
@@ -21,12 +21,32 @@ const SlideBar = ({ isActive }) => {
     return (
         <>
             <div className="slidebar col-auto min-vw-100 bg-light p-0 pt-2 pb-2">
-                {/* <button className="btn btn-dark d-block d-md-none" onClick={() => navigate('/dashboard/admin')}>Buku</button> */}
                 <div className='d-flex flex-column align-items-center'>
                     <div className="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" className="btn btn-primary" onClick={() => navigate('/dashboard/admin')}><BsBookFill /> </button>
-                        <button type="button" className="btn btn-primary" onClick={() => navigate('/dashboard/admin/addbook')}><BsFillPlusSquareFill /></button>
-                        <button type="button" className="btn btn-primary" onClick={() => navigate('/dashboard/admin/borrow')}> <BsLayersFill /></button>
+                        <button 
+                            type="button" 
+                            className={`btn btn-primary 
+                            ${isActive === 'books' ? 'active' : ''}`} 
+                            onClick={() => navigate('/dashboard/admin')}
+                        >
+                            <BsBookFill />
+                        </button>
+                        <button 
+                            type="button" 
+                            className={`btn btn-primary 
+                            ${isActive === 'addBook' ? 'active' : ''}`} 
+                            onClick={() => navigate('/dashboard/admin/addbook')}
+                        >
+                            <BsFillPlusSquareFill />
+                        </button>
+                        <button 
+                            type="button" 
+                            className={`btn btn-primary 
+                            ${isActive === 'borrow' ? 'active' : ''}`} 
+                            onClick={() => navigate('/dashboard/admin/borrow')}
+                        >
+                            <BsLayersFill />
+                        </button>
                     </div>
                 </div>
             </div>
