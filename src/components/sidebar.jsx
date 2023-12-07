@@ -1,8 +1,18 @@
-import { Box, Fade, ListItem, Paper, Slide, ListItemText, List, Typography } from '@mui/material';
+import { 
+    Box, 
+    Fade, ListItem, 
+    Paper, 
+    Slide, ListItemText, List, Typography,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText,
+} from '@mui/material';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function Sidebar({isOpen, menus}) {
+function Sidebar({isOpen, menus, handleSidebar}) {
+    const navigate = useNavigate();
     return (
         <Fade
             in={isOpen}
@@ -27,7 +37,8 @@ function Sidebar({isOpen, menus}) {
                         square
                         sx={{
                             width: '60%',
-                            height: '100%'
+                            height: '100%',
+                            paddingTop: '1rem'
                         }}
                     >
                         <List>
@@ -52,6 +63,22 @@ function Sidebar({isOpen, menus}) {
                                 </ListItem>
                             ))}
                         </List>
+                        <List>
+                            <ListItem disablePadding>
+                                <ListItemButton sx={{ padding: '0 1rem' }}>
+                                    <ListItemText primary='Home' onClick={() => { handleSidebar(!isOpen); navigate('/');}}/>
+                                </ListItemButton>
+                            </ListItem>
+                        </List>
+                        {menus.map((menu, i) => (
+                            <List key={i}>
+                                <ListItem disablePadding>
+                                    <ListItemButton sx={{ padding: '0 1rem' }}>
+                                        <ListItemText primary={menu.title} onClick={() => { handleSidebar(!isOpen); navigate(menu.path);}}/>
+                                    </ListItemButton>
+                                </ListItem>
+                            </List>
+                        ))}
                     </Paper>
                 </Slide>
             </Box>
@@ -61,7 +88,8 @@ function Sidebar({isOpen, menus}) {
 
 Sidebar.propTypes = {
     isOpen: PropTypes.bool.isRequired,
-    menus: PropTypes.array.isRequired
+    menus: PropTypes.array.isRequired,
+    handleSidebar: PropTypes.func
 };
 
 export default Sidebar;
