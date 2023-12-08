@@ -66,7 +66,7 @@ const BooksList = () => {
     
     const ButtonEditBook = (id) => {
         return (
-            <button className='btn btn-warning mr-3' onClick={() => navigate(`/books/${id.id}`)}><BsPencilSquare /></button>
+            <button className='btn btn-warning mr-3' onClick={() => navigate(`/dashboard/admin/editbook/${id.id}`)}><BsPencilSquare /></button>
         );
     };
 
