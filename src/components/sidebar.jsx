@@ -1,3 +1,4 @@
+import { Home, LibraryBooks } from '@mui/icons-material';
 import { 
     Box, 
     Fade, 
@@ -7,6 +8,7 @@ import {
     ListItem,
     ListItemButton,
     ListItemText,
+    ListItemIcon,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
@@ -43,16 +45,43 @@ function Sidebar({isOpen, menus, handleSidebar}) {
                     >
                         <List>
                             <ListItem disablePadding>
-                                <ListItemButton sx={{ padding: '0 1rem' }}>
-                                    <ListItemText primary='Home' onClick={() => { handleSidebar(!isOpen); navigate('/');}}/>
+                                <ListItemButton sx={{ padding: '0 2rem' }} onClick={() => { handleSidebar(!isOpen); navigate('/');}}>
+                                    <ListItemIcon sx={{ minWidth: 0, marginRight: 2 }}>
+                                        <Home color='primary' />
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        primary='Beranda'
+                                        primaryTypographyProps={{
+                                            variant: 'h6',
+                                            color: 'primary',
+                                            sx: {
+                                                '&:hover': {
+                                                    cursor: 'pointer',
+                                                },
+                                            },
+                                        }}/>
                                 </ListItemButton>
                             </ListItem>
                         </List>
                         {menus.map((menu, i) => (
                             <List key={i}>
                                 <ListItem disablePadding>
-                                    <ListItemButton sx={{ padding: '0 1rem' }}>
-                                        <ListItemText primary={menu.title} onClick={() => { handleSidebar(!isOpen); navigate(menu.path);}}/>
+                                    <ListItemButton sx={{ padding: '0 2rem' }} onClick={() => { handleSidebar(!isOpen); navigate(menu.path);}}>
+                                        <ListItemIcon sx={{ minWidth: 0, marginRight: 2 }}>
+                                            <LibraryBooks color='primary' />
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary={menu.title}
+                                            primaryTypographyProps={{
+                                                variant: 'h6',
+                                                color: 'primary',
+                                                sx: {
+                                                    '&:hover': {
+                                                        cursor: 'pointer',
+                                                    },
+                                                },
+                                            }}
+                                        />
                                     </ListItemButton>
                                 </ListItem>
                             </List>
