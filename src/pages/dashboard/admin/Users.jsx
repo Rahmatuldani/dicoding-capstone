@@ -128,6 +128,9 @@ const UsersList = () => {
                     <SlideBar isActive='users'/>
                     <div className='col'>
                         <div className='mt-3'>
+                            <div className='d-flex justify-content-end mb-1'>
+                                <input type="search" className="form-control d-lg-inline" placeholder="Search" />
+                            </div>
                             <DataTable
                                 title="Daftar Anggota"
                                 columns={columns}
