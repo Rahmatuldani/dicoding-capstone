@@ -1,8 +1,7 @@
 import { useSelector } from 'react-redux';
 import Zoom from 'react-medium-image-zoom';
-import { useParams } from 'react-router-dom';
-import { BsHeart, BsCartPlus, BsFillStarFill } from 'react-icons/bs';
-
+import { useParams   } from 'react-router-dom';
+import { BsHeart, BsCartPlus, BsHeartFill } from 'react-icons/bs';
 import { selectBooks } from '../../store/books/selector';
 
 import {
@@ -31,7 +30,7 @@ export const DetailBook = () => {
                             <Col lg={3} className='d-flex justify-content-center mb-4'>
                                 <div className='img-section'>
                                     <Zoom>
-                                        <Image src={`http://20.2.89.234:5000/api/books/${book?.poster}/poster`} thumbnail />
+                                        <Image src={`http://localhost:5000/api/books/${book?.poster}/poster`} thumbnail />
                                     </Zoom>
                                 </div>
 
@@ -41,7 +40,7 @@ export const DetailBook = () => {
                                     <p className='mb-0 text-muted'>{book.author}</p>
                                     <h2>{book.title}</h2>
                                     <div className='d-flex align-items-center gap-1'>
-                                        <BsFillStarFill className='text-warning' />
+                                        <BsHeartFill className='icon-pink' />
                                         <small className="text-danger">
                                             {book.rate}
                                         </small>
@@ -75,8 +74,11 @@ export const DetailBook = () => {
                                             </div>
                                             <div className='mb-3'>
                                                 <h4 className='fs-6'>Penerbit</h4>
-                                                <p className='mb-0'>{book.publisher
-                                                }</p>
+                                                <p className='mb-0'>{book.publisher}</p>
+                                            </div>
+                                            <div className='mb-3'>
+                                                <h4 className='fs-6'>Stok</h4>
+                                                <p className='mb-0'>{book.stock}</p>
                                             </div>
                                         </Col>
                                     </Row>

@@ -1,14 +1,13 @@
 import { useDispatch } from 'react-redux';
-import { insertBooksStart, isSuccess, isFailed } from '../../store/books/action';
+import { insertBooksStart } from '../../store/books/action';
 import { useFormik } from 'formik';
 import { Button, Container, FloatingLabel, Form } from 'react-bootstrap';
 import * as yup from 'yup';
-import { useContext, useRef } from 'react';
+import { useRef } from 'react';
 
 const AddBook = () => {
     const dispatch = useDispatch();
     const formRef = useRef(null);
-    const context = useContext(isSuccess);
 
 
     function addNewBook() {
@@ -24,8 +23,7 @@ const AddBook = () => {
             poster: formik.values.poster
         };
         dispatch(insertBooksStart(newBook));
-        console.log(context);
-        //formRef.current.reset();
+        formRef.current.reset();
         formik.resetForm();
     }
 
@@ -58,7 +56,7 @@ const AddBook = () => {
     const handleForm = (event) => {
         const { target } = event;
         formik.setFieldValue(target.name, target.value);
-        //formik.setFieldValue('poster', target.files[0]);
+        formik.setFieldValue('poster', target.files[0]);
     };
 
     return (

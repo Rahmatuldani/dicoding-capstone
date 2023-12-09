@@ -1,0 +1,14 @@
+.list-group-item.active {
+    color: white !important;
+    background-color: #0d6efd !important;
+}
+
+.datatables_wrapper .rdt_tablecell{
+    font-size:25px;
+  }
+
+  @media screen and (min-width: 992px) {
+    .slidebar {
+        display: none;
+    }
+  }

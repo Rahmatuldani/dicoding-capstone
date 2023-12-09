@@ -9,7 +9,6 @@ import App from './App';
 import { 
     Books,
     Borrow, 
-    Dashboard, 
     Home, 
     Login, 
     Register 
@@ -17,6 +16,14 @@ import {
 import { AuthRequired } from './utils/authRequired';
 import { DetailBook } from './pages/book/detail';
 import AddBook from './pages/book/input';
+import DashboardUser from './pages/dashboard/users';
+/* import DebtUser from './pages/dashboard/users/DebtUser';
+import LikeUser from './pages/dashboard/users/LikeUser'; */
+import BooksList from './pages/dashboard/admin';
+import BorrowList from './pages/dashboard/admin/BorrowList';
+import AddBookAdmin from './pages/dashboard/admin/AddBook';
+import UsersList from './pages/dashboard/admin/Users';
+import EditBookAdmin from './pages/dashboard/admin/EditBook';
 
 export function ErrorBoundary() {
     const error = useRouteError();
@@ -36,10 +43,15 @@ const Router = createBrowserRouter(
             <Route path='/books/:id' element={<DetailBook/>}/>
             <Route path='/books/add' element={<AddBook/>}/>
             <Route path='/borrows' element={<Borrow/>}/>
+            <Route path='/dashboard/user' element={<DashboardUser/>}/>
+            <Route path='/dashboard/admin' element={<BooksList/>}/>
+            <Route path='/dashboard/admin/borrow' element={<BorrowList/>}/>
+            <Route path='/dashboard/admin/addbook' element={<AddBookAdmin/>}/>
+            <Route path='/dashboard/admin/editbook/:id' element={<EditBookAdmin/>}/>
+            <Route path='/dashboard/admin/users' element={<UsersList/>}/>
             <Route element={<AuthRequired/>}>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/register' element={<Register/>}/>
-                <Route path='/dashboard' element={<Dashboard/>}/>
             </Route>
         </Route>
     )
