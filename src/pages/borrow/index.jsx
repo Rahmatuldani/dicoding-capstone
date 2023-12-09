@@ -5,21 +5,25 @@ import { addBorrowStart, fetchBorrowStart } from '../../store/borrow/action';
 import { Loading } from '../../components';
 import useInput from '../../hooks/useInput';
 import FormBorrow from './formBorrow';
-import { Card, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 const Borrow = () => {
     const { borrow, isLoading } = useSelector(selectBorrow);
     const dispatch = useDispatch();
+    const [isBookChecked, setIsBookChecked] = useState(false);
     const [bookTitle, setBookTitle] = useInput('');
     const [bookAuthor, setBookAuthor] = useInput('');
+    const [bookQuantity, setBookQuantity] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
 
     function handleSubmit(event) {
         event.preventDefault();
         dispatch(addBorrowStart({
+            isBookChecked,
             bookTitle,
             bookAuthor,
+            bookQuantity,
             startDate,
             endDate,
         }));
@@ -35,10 +39,14 @@ const Borrow = () => {
             <section className='d-flex flex-wrap justify-content-center gap-4'>
                 <FormBorrow
                     onInputSubmit={handleSubmit}
+                    isBookChecked={isBookChecked}
+                    setIsBookChecked={setIsBookChecked}
                     bookTitle={bookTitle}
                     setBookTitle={setBookTitle}
                     bookAuthor={bookAuthor}
                     setBookAuthor={setBookAuthor}
+                    bookQuantity={bookQuantity}
+                    setBookQuantity={setBookQuantity}
                     startDate={startDate}
                     setStartDate={setStartDate}
                     endDate={endDate}
@@ -50,23 +58,27 @@ const Borrow = () => {
                 {isLoading ? (
                     <Loading />
                 ) : (
-                    <section className='d-flex flex-wrap justify-content-start gap-4'>
-                        {borrow.map((item, index) => (
-                            <Card key={index} style={{ width: '18rem' }}>
-                                <Card.Body>
-                                    <Card.Title className='mb-2'>{item.bookTitle}</Card.Title>
-                                    <Card.Subtitle className='mb-3 text-muted'>
-                                        {item.bookAuthor}
-                                    </Card.Subtitle>
-                                    <Card.Text className='mb-1 text-muted'>
-                                        Tanggal Peminjaman: {item.startDate}
-                                    </Card.Text>
-                                    <Card.Text className='text-muted'>
-                                        Tanggal Pengembalian: {item.endDate}
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        ))}
+                    <section>
+                        <table className='table'>
+                            <thead>
+                                <tr>
+                                    <th>Judul Buku</th>
+                                    <th>Jumlah Buku</th>
+                                    <th>Tanggal Peminjaman</th>
+                                    <th>Tanggal Pengembalian</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {borrow.map((item, index) => (
+                                    <tr key={index}>
+                                        <td>{item.bookTitle}</td>
+                                        <td>{item.bookQuantity}</td>
+                                        <td>{item.startDate}</td>
+                                        <td>{item.endDate}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </section>
                 )}
             </Container>
