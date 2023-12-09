@@ -1,23 +1,30 @@
 import useInput from '../../hooks/useInput';
 import { useDispatch } from 'react-redux';
-import { resetPassword } from '../../store/auth/action';
+import { changePassword } from '../../store/auth/action';
 import { 
     Paper,
     Typography,
     TextField,
 } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
-const ResetPassword = () => {
+const ChangePassword = () => {
     const dispatch = useDispatch();
+    const { token } = useParams;
     const [password, setPassword] = useInput('');
     const [confirmPassword, setConfirmPassword] = useInput('');
 
     function handleSubmit(event) {
         event.preventDefault();
-        if (confirmPassword === password) {  
+        if (confirmPassword === password) { 
+            const oldPassword = password;
+            const newPassword = confirmPassword;
+
             const formData = new FormData();
-            formData.append('password', password); 
-            dispatch(resetPassword(formData));
+            formData.append('oldPassword', oldPassword);
+            formData.append('newPassword', newPassword);
+
+            dispatch(changePassword({ token, oldPassword, newPassword }));
         }
     }
 
@@ -65,4 +72,4 @@ const ResetPassword = () => {
     );
 };
 
-export default ResetPassword;
+export default ChangePassword;

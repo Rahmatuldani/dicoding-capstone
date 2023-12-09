@@ -1,32 +1,42 @@
+import AlertUtil from '../../utils/alert';
 import { all, call, takeLatest, put } from 'typed-redux-saga';
 import api from '../../data/api';
-import { resetPassword, setCurrentUser, setError } from './action';
+import { setCurrentUser, setError } from './action';
 import { AUTH_ACTION_TYPES } from './types';
-
-export function* signUpStart({payload: {name, email, password, ktp}}) {
-    try {
-        const currentUser = yield*call(api.register, {name, email, password, ktp});
-        yield* put(setCurrentUser(currentUser));
-    } catch (error) {
-        yield* put(setError(error));
-    }
-}
 
 export function* signInStart({payload: {email, password}}) {
     try {
         const currentUser = yield* call(api.login, {email, password});
-        yield* put(setCurrentUser(currentUser));
+        yield* put(setCurrentUser(currentUser.data.user));
     } catch (error) {
-        yield* put(setError(error));
+        yield* put(setError(error.response.data.message));
+    }
+}
+
+export function* signUpStart({payload: formData}) {
+    try {
+        const result = yield* call(api.register, formData);
+        AlertUtil('success', result.data.message);
+    } catch (error) {
+        yield* put(setError(error.response.data.message));
     }
 }
 
 export function* forgotPassword({payload: {email}}) {
     try {
-        const currentUser = yield* call(api.login, {email});
+        const currentUser = yield* call(api.forgotPassword, {email});
         yield* put(setCurrentUser(currentUser));
     } catch (error) {
         yield* put(setError(error));
+    }
+}
+
+export function* changePassword({ payload: formData }) {
+    try {
+        const currentUser = yield* call(api.changePassword, formData);
+        yield* put(setCurrentUser(currentUser));
+    } catch (error) {
+        yield* (setError(error));
     }
 }
 
@@ -42,14 +52,15 @@ export function* onForgotPassword() {
     yield* takeLatest(AUTH_ACTION_TYPES.FORGOT_PASSWORD_START, forgotPassword);
 }
 
-export function* onResetPassword() {
-    yield* takeLatest(AUTH_ACTION_TYPES.RESET_PASSWORD_START, resetPassword);
+export function* onChangePassword() {
+    yield* takeLatest(AUTH_ACTION_TYPES.CHANGE_PASSWORD_START, changePassword);
 }
 
 export function* authSagas() {
     yield* all([
         call(onSignInStart),
         call(onSignUpStart),
-        call(onForgotPassword)
+        call(onForgotPassword),
+        call(onChangePassword),
     ]);
 }

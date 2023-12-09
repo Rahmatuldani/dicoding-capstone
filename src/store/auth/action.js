@@ -27,8 +27,8 @@ function forgotPassword({email}) {
     return createAction(AUTH_ACTION_TYPES.FORGOT_PASSWORD_START, {email});
 }
 
-function resetPassword(formData) {
-    return createAction(AUTH_ACTION_TYPES.RESET_PASSWORD_START, formData);
+function changePassword(formData) {
+    return createAction(AUTH_ACTION_TYPES.CHANGE_PASSWORD_START, formData);
 }
 export {
     setCurrentUser,
@@ -37,5 +37,5 @@ export {
     signOut,
     signUp,
     forgotPassword,
-    resetPassword
+    changePassword
 };

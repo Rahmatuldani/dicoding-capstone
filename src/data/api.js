@@ -25,6 +25,27 @@ const api = (() => {
         return result;
     }
 
+    async function forgotPassword({ email }) {
+        const user = await axios.put('http://20.2.89.234:5000/api/auth/forgotpassword', { email });
+        const result = user.data;
+        return result;
+    }
+
+    async function changePassword({ oldPassword, newPassword }) {
+        const data = {
+            oldPassword,
+            newPassword,
+        };
+
+        const token = '';
+        const response = await librify.put('/auth/changepassword', data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+    }
+
     async function createBook({
         isbn,
         title,
@@ -89,6 +110,8 @@ const api = (() => {
     return {
         register,
         login,
+        forgotPassword,
+        changePassword,
         createBook,
         getAllBooks,
         getBooksPages,
