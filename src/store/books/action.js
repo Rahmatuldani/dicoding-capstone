@@ -3,7 +3,7 @@ import { BOOKS_ACTION_TYPES } from './types';
 import AlertUtil from '../../utils/alert';
 
 
-function  isSuccess(action ,books) {
+function  isSuccess(action, books) {
     return createAction(action, books);
 }
 
@@ -45,10 +45,37 @@ function insertBooksStart({
     });
 }
 
+function editBooksStart({
+    isbn,
+    title,
+    year,
+    genre,
+    author,
+    publisher,
+    stock,
+    price,
+    desc,
+    id,
+}) {
+    return createAction(BOOKS_ACTION_TYPES.EDIT_BOOKS_START, {
+        isbn,
+        title,
+        year,
+        genre,
+        author,
+        publisher,
+        stock,
+        price,
+        desc,
+        id,
+    });
+}
+
 export {
     isSuccess,
     isFailed,
     fetchBooksStart,
     fetchBooksPageStart,
     insertBooksStart,
+    editBooksStart,
 };

@@ -89,7 +89,6 @@ const BooksList = () => {
         stock,
         action: <GroupButtonAction id={_id} />
     }));
-
     return (
         <div>
             <div className="container-fluid">

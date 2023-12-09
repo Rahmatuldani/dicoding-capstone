@@ -77,7 +77,6 @@ const SlideBar = ({ isActive }) => {
 
 SlideBar.propTypes = {
     isActive: PropTypes.string.isRequired,
-    role: PropTypes.string.isRequired
 };
 
 export default SlideBar;

@@ -70,9 +70,43 @@ const api = (() => {
         return response;
     }
 
+    async function updateBook({
+        isbn,
+        title,
+        year,
+        genre,
+        author,
+        publisher,
+        stock,
+        price,
+        desc,
+        id,
+    }) {
+        const data = {
+            isbn,
+            title,
+            year,
+            genre,
+            author,
+            publisher,
+            stock,
+            price,
+            desc,
+        };
+        const token = 'secretpassword';
+        const response = await librify.put(`/books/${id}`,
+            data, 
+            { headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+            });
+
+        return response;
+    }
+
     async function getBooksPages() {
         const response = await librify.get('/books/pages');
-
         return response.data.data.pages;
     }
 
@@ -102,6 +136,7 @@ const api = (() => {
         login,
         getUsers,
         createBook,
+        updateBook,
         getAllBooks,
         getBooksPages,
         createBorrow,

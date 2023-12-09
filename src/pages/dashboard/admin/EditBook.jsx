@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { insertBooksStart } from '../../../store/books/action';
+import { editBooksStart } from '../../../store/books/action';
 import { useFormik } from 'formik';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import * as yup from 'yup';
@@ -12,6 +12,7 @@ const EditBookAdmin = () => {
     const formRef = useRef(null);
     const { id } = useParams();
     const { books } = useSelector(selectBooks);
+    const dispatch = useDispatch();
     const filteredBooks = books.filter((book) =>
         book._id.toLowerCase().includes(id.toLowerCase())
     );
@@ -30,8 +31,9 @@ const EditBookAdmin = () => {
             desc: formik.values.desc,
             stock: formik.values.stock,
             price: formik.values.price,
+            id,
         };
-        console.log(newBook);
+        dispatch(editBooksStart(newBook));
         /* formRef.current.reset();
         formik.resetForm(); */
         setLoading(false);
@@ -73,10 +75,10 @@ const EditBookAdmin = () => {
         <div>
             <div className="container-fluid">
                 <div className="row">
-                    <SlideBar isActive='addBook'/>
+                    <SlideBar isActive='books'/>
                     <div className='col '>
                         <div className='mt-3'>
-                            <h4>Tambah Buku</h4>
+                            <h4>Ubah Buku</h4>
                             <Form ref={formRef} onSubmit={ formik.handleSubmit }>
                                 <Form.Group className="mb-3" controlId="validationFormik01">
                                     <Form.Label>ISBN</Form.Label>
