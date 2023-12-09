@@ -21,6 +21,7 @@ export const DetailBook = () => {
         book._id.toLowerCase().includes(id.toLowerCase())
     );
     const [book] = filteredBooks;
+    const isDisabled = book?.stock <= 0 ? true : false;
     return (
         <section className='detail-book-page mt-4'>
             <Container>
@@ -92,8 +93,8 @@ export const DetailBook = () => {
                                 <Button className="btn-pink" size="lg">
                                     Like <BsHeart />
                                 </Button>
-                                <Button variant="primary" size="lg">
-                                    Pinjam <BsCartPlus />
+                                <Button disabled={isDisabled} variant="primary" size="lg">
+                                    Keranjang <BsCartPlus />
                                 </Button>
                             </div>
                         </div>

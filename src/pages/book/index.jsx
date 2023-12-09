@@ -16,7 +16,7 @@ const Books = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const dispatch = useDispatch();
 
-    const currentItems = books;
+    const currentItems = books.filter((book) => book.stock > 0);
     const totalPages = pages;
 
     const handlePageChange = (page) => {

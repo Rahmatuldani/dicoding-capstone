@@ -14,7 +14,6 @@ const BooksList = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const currentItems = books;
     const totalPages = pages * 10;
 
     const handlePageChange = (page) => {
@@ -81,7 +80,8 @@ const BooksList = () => {
         );
     };
 
-    const booksFilter = currentItems.map(({_id, title, genre, author, year, stock}) => ({
+    const booksFilter = books.filter((book) => book.stock > 0);
+    const dataBook = booksFilter.map(({_id, title, genre, author, year, stock}) => ({
         title,
         genre,
         author,
@@ -102,7 +102,7 @@ const BooksList = () => {
                             <DataTable
                                 title="Daftar Buku"
                                 columns={columns}
-                                data={booksFilter}
+                                data={dataBook}
                                 fixedHeader
                                 highlightOnHover
                                 responsive={true}
