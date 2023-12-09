@@ -1,16 +1,22 @@
 import { createAction } from '../../utils/reducer';
 import { BOOKS_ACTION_TYPES } from './types';
+import AlertUtil from '../../utils/alert';
 
 
-function  isSuccess(action ,books) {
+function  isSuccess(action, books) {
     return createAction(action, books);
 }
 
-function isFailed(action ,error) {
-    return createAction(action, error);
+function isFailed(error) {
+    AlertUtil('error', error);
+    return createAction(BOOKS_ACTION_TYPES.SET_ERROR, error);
 }
-function fetchBooksStart() {
-    return createAction(BOOKS_ACTION_TYPES.FETCH_BOOKS_START);
+function fetchBooksStart({page}) {
+    return createAction(BOOKS_ACTION_TYPES.FETCH_BOOKS_START, {page});
+}
+
+function fetchBooksPageStart(){
+    return createAction(BOOKS_ACTION_TYPES.FETCH_BOOKS_PAGE_START);
 }
 
 function insertBooksStart({
@@ -20,6 +26,7 @@ function insertBooksStart({
     genre,
     author,
     publisher,
+    stock,
     price,
     poster,
     desc,
@@ -31,9 +38,36 @@ function insertBooksStart({
         genre,
         author,
         publisher,
+        stock,
         price,
         poster,
         desc,
+    });
+}
+
+function editBooksStart({
+    isbn,
+    title,
+    year,
+    genre,
+    author,
+    publisher,
+    stock,
+    price,
+    desc,
+    id,
+}) {
+    return createAction(BOOKS_ACTION_TYPES.EDIT_BOOKS_START, {
+        isbn,
+        title,
+        year,
+        genre,
+        author,
+        publisher,
+        stock,
+        price,
+        desc,
+        id,
     });
 }
 
@@ -41,5 +75,7 @@ export {
     isSuccess,
     isFailed,
     fetchBooksStart,
+    fetchBooksPageStart,
     insertBooksStart,
+    editBooksStart,
 };

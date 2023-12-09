@@ -3,7 +3,8 @@ import Borrow from './borrow';
 import Home from './home';
 import Login from './auth/login';
 import Register from './auth/register';
-import Dashboard from './dashboard';
+import DashboardUser from './dashboard/users';
+import DashboardAdmin from './dashboard/admin';
 
 export {
     Login,
@@ -11,5 +12,7 @@ export {
     Home,
     Books,
     Borrow,
-    Dashboard
+    DashboardUser,
+    DashboardAdmin,
+
 };

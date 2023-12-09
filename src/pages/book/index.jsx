@@ -1,87 +1,65 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Alert, Container, Pagination } from 'react-bootstrap';
+import { Alert, Container, Pagination, Spinner } from 'react-bootstrap';
 
 import { selectBooks } from '../../store/books/selector';
-import { fetchBooksStart } from '../../store/books/action';
+import { fetchBooksPageStart, fetchBooksStart } from '../../store/books/action';
 
-import { Loading } from '../../components';
-import { SearchInput } from './components/SearchInput';
-import { BookCard } from './components/BookCard';
+import { BookCard } from '../../components/BookCard';
 
 import './style.css';
 
 
 const Books = () => {
-    const { books } = useSelector(selectBooks);
-
-    const [titleFilter, setTitleFilter] = useState('');
-    const [debouncedTitleFilter, setDebouncedTitleFilter] = useState(titleFilter);
-
+    const { books, pages, isLoading } = useSelector(selectBooks);
     const [currentPage, setCurrentPage] = useState(1);
-    
     const dispatch = useDispatch();
-    
-    const filteredBooks = books.filter((book) =>
-        book.title.toLowerCase().includes(debouncedTitleFilter.toLowerCase())
-    );
 
-    const itemsPerPage = 5;
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = filteredBooks.slice(indexOfFirstItem, indexOfLastItem);
-
-    const totalPages = Math.ceil(filteredBooks.length / itemsPerPage);
+    const currentItems = books;
+    const totalPages = pages;
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
 
     useEffect(() => {
-        const delay = setTimeout(() => {
-            setDebouncedTitleFilter(titleFilter);
-        }, 500);
-    
-        return () => clearTimeout(delay);
-    }, [titleFilter]);
+        const page = currentPage;
+        dispatch(fetchBooksStart({page}));
+        dispatch(fetchBooksPageStart());
+    }, [currentPage, dispatch]);
 
-    useEffect(() => {
-        dispatch(fetchBooksStart());
-    }, [dispatch]);
-    
-    const isLoading = () => {
-        if (currentItems.length === 0) {
-            return false;
-        }
-        return <Loading/>;
+    const alretNotFound = () => {
+        return (
+            <Alert  variant='danger'>
+                <h5>Data buku tidak ada</h5>
+            </Alert>
+        );
     };
 
     return (
         <section className='books-page mt-4'>
             <h1 className='text-center mb-4'>Daftar Buku</h1>
             <Container>
-                <div className='container-md'>
-                    <SearchInput 
-                        value={titleFilter}
-                        onChange={(e) => setTitleFilter(e.target.value)}
-                    />
-                </div>
                 <div className='d-flex flex-wrap justify-content-center gap-4'>
                     {
-                        !currentItems || currentItems.length === 0
-                            ? 
-                            isLoading() || 
-                            <Alert  variant='danger'>
-                                <h5>Buku tidak ada</h5>
+                        isLoading ?
+                            <Alert  variant='primary'>
+                                <div className='d-flex flex-column gap-1 justify-content-center align-items-center'>
+                                    <Spinner animation="border" variant="primary" /> 
+                                    <h5> Loading...</h5>
+                                </div>
                             </Alert>
                             : 
-                            currentItems.map((book, index) => (
-                                <BookCard
-                                    key={index}
-                                    book={book}
-                                />
-                            ))
+                            books.length === 0 ?
+                                alretNotFound()
+                                : 
+                                currentItems.map((book, index) => (
+                                    <BookCard
+                                        key={index}
+                                        book={book}
+                                    />
+                                ))
                     }
                 </div>
                 <Pagination className='pt-5 d-flex justify-content-center align-items-center'>

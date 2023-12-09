@@ -12,7 +12,8 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(fetchBooksStart());
+        const page = 1;
+        dispatch(fetchBooksStart({page}));
     }, [dispatch]);
 
     return (

@@ -5,14 +5,14 @@ import axios from 'axios';
 const api = (() => { 
     
     const librify = axios.create({
-        baseURL: 'http://20.2.89.234:5000/api',
+        baseURL: 'http://localhost:5000/api',
     });
 
     async function register(formData) {
         console.log(formData);
         const user = await axios({
             method: 'post',
-            url: 'http://20.2.89.234:5000/api/auth/register',
+            url: 'http://localhost:5000/api/auth/register',
             data: formData,
             headers: { 'Content-Type': 'multipart/form-data' }});
         const result = user;
@@ -20,9 +20,18 @@ const api = (() => {
     }
   
     async function login({ email, password }) {
-        const user = await axios.post('http://20.2.89.234:5000/api/auth/login', {email, password});
+        const user = await axios.post('http://localhost:5000/api/auth/login', {email, password});
         const result = user.data;
         return result;
+    }
+
+    async function getUsers() {
+        const token = 'secretpassword';
+        const users = await librify.get('/users', { headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`,
+        }});
+        return users.data.data.users;
     }
 
     async function createBook({
@@ -32,6 +41,7 @@ const api = (() => {
         genre,
         author,
         publisher,
+        stock,
         price,
         poster,
         desc,
@@ -43,6 +53,7 @@ const api = (() => {
             genre,
             author,
             publisher,
+            stock,
             price,
             poster,
             desc,
@@ -58,15 +69,51 @@ const api = (() => {
 
         return response;
     }
-  
-    async function getAllBooks() {
-        //const response = await axios.get(`${BASE_URL}/books`);
-        const response = await librify.get('/books?page=1');
-        return response.data.data.books;
+    async function updateBook({
+        isbn,
+        title,
+        year,
+        genre,
+        author,
+        publisher,
+        stock,
+        price,
+        desc,
+        id,
+    }) {
+        const data = {
+            isbn,
+            title,
+            year,
+            genre,
+            author,
+            publisher,
+            stock,
+            price,
+            desc,
+        };
+        const token = 'secretpassword';
+        const response = await librify.put(`/books/${id}`,
+            data, 
+            { headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+            });
+
+        return response;
     }
 
-    async function getBookById(id) {
+    async function getBooksPages() {
+        const response = await librify.get('/books/pages');
+        return response.data.data.pages;
 
+    }
+
+    async function getAllBooks({page}) {
+        const response = await librify.get(`/books?page=${page}`);
+
+        return response.data.data.books;
     }
 
     async function createBorrow({bookTitle, bookAuthor, startDate, endDate}) {
@@ -87,8 +134,11 @@ const api = (() => {
     return {
         register,
         login,
+        getUsers,
         createBook,
+        updateBook,
         getAllBooks,
+        getBooksPages,
         createBorrow,
         getAllBorrowed,
     };
