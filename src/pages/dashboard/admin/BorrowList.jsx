@@ -1,7 +1,6 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import SlideBar from '../SlideBar';
-import { Badge} from 'react-bootstrap';
 import { useState } from 'react';
 import { BsEyeFill } from 'react-icons/bs';
 
