@@ -28,7 +28,7 @@ const FormBorrow = (params) => {
                                     required
                                     type='text'
                                     placeholder='Masukkan Judul Buku'
-                                    value={params.bookTitle || (params.isBookChecked? params.selectedBook.title : '')}
+                                    value={params.bookTitle}
                                     onChange={params.setBookTitle}
                                 />
                             </td>

@@ -24,11 +24,13 @@ const Borrow = () => {
     }
 
     function handleSubmit() {
-        dispatch(addBorrowStart({
-            isBookChecked,
-            bookTitle,
-            bookQuantity,
-        }));
+        if (isBookChecked) {
+            dispatch(addBorrowStart({
+                isBookChecked,
+                bookTitle,
+                bookQuantity,
+            }));
+        }
         handleCloseModal();
     }
 
@@ -67,6 +69,7 @@ const Borrow = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+            
             <Container>
                 <h2 className='mb-3 mt-3'>Riwayat Peminjaman</h2>
                 {isLoading ? (
