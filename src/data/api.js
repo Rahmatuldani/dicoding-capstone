@@ -34,6 +34,12 @@ const api = (() => {
         return users.data.data.users;
     }
 
+    async function verifyAdmin({id}) {
+        console.log(id);
+        const verify = await librify.get(`/users/verifyAdmin/${id}`);
+        return verify;
+    }
+
     async function createBook({
         isbn,
         title,
@@ -69,7 +75,6 @@ const api = (() => {
 
         return response;
     }
-
     async function updateBook({
         isbn,
         title,
@@ -108,6 +113,7 @@ const api = (() => {
     async function getBooksPages() {
         const response = await librify.get('/books/pages');
         return response.data.data.pages;
+
     }
 
     async function getAllBooks({page}) {
@@ -135,6 +141,7 @@ const api = (() => {
         register,
         login,
         getUsers,
+        verifyAdmin,
         createBook,
         updateBook,
         getAllBooks,

@@ -14,7 +14,6 @@ const BooksList = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const currentItems = books;
     const totalPages = pages * 10;
 
     const handlePageChange = (page) => {
@@ -81,7 +80,8 @@ const BooksList = () => {
         );
     };
 
-    const booksFilter = currentItems.map(({_id, title, genre, author, year, stock}) => ({
+    const booksFilter = books.filter((book) => book.stock > 0);
+    const dataBook = booksFilter.map(({_id, title, genre, author, year, stock}) => ({
         title,
         genre,
         author,
@@ -96,10 +96,13 @@ const BooksList = () => {
                     <SlideBar isActive='books'/>
                     <div className='col'>
                         <div className='mt-3'>
+                            <div className='d-flex justify-content-end mb-1'>
+                                <input type="search" className="form-control d-lg-inline" placeholder="Search" />
+                            </div>
                             <DataTable
                                 title="Daftar Buku"
                                 columns={columns}
-                                data={booksFilter}
+                                data={dataBook}
                                 fixedHeader
                                 highlightOnHover
                                 responsive={true}

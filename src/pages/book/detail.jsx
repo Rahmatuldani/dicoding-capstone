@@ -13,6 +13,8 @@ import {
 } from 'react-bootstrap';
 
 import 'react-medium-image-zoom/dist/styles.css';
+import { selectAuth } from '../../store/auth/selector';
+import AlertUtil from '../../utils/alert';
 
 export const DetailBook = () => {
     const { id } = useParams();
@@ -21,6 +23,32 @@ export const DetailBook = () => {
         book._id.toLowerCase().includes(id.toLowerCase())
     );
     const [book] = filteredBooks;
+    const isDisabled = book?.stock <= 0 ? true : false;
+
+    const { currentUser } = useSelector(selectAuth);
+
+    const handleAddToCart = (book) => {
+        if (!currentUser) {
+            AlertUtil('error', 'Silahkan login terlebih dahulu');
+            return;
+        }
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const isExist = cart.find((item) => item._id === book._id);
+        if (isExist) {
+            AlertUtil('error', 'Buku sudah ada di keranjang');
+        } else {
+            const bookCart = {
+                user: currentUser._id,
+                idBook: book._id,
+                title: book.title,
+                stock: book.stock,
+                qty: 1,
+            };
+            cart.push(bookCart);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            AlertUtil('success', 'Buku berhasil ditambahkan ke keranjang');
+        }
+    }
     return (
         <section className='detail-book-page mt-4'>
             <Container>
@@ -92,8 +120,11 @@ export const DetailBook = () => {
                                 <Button className="btn-pink" size="lg">
                                     Like <BsHeart />
                                 </Button>
-                                <Button variant="primary" size="lg">
-                                    Pinjam <BsCartPlus />
+                                <Button 
+                                    disabled={isDisabled} 
+                                    onClick={() => handleAddToCart(book)}
+                                    variant="primary" size="lg">
+                                    Keranjang <BsCartPlus />
                                 </Button>
                             </div>
                         </div>

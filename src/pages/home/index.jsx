@@ -19,20 +19,20 @@ const Home = () => {
     return (
         <>
             <section className="home">
-                <Image src="/hero.png" fluid />
+                <Image src="/hero.png" className="d-none d-md-block img-fluid" style={{width: '100%'}} />
+                <Image src="/hero-mobile.png" className="d-block d-md-none img-fluid" style={{ width: '100%', aspectRatio: '1/1' }} />
             </section>
 
             <Container className="my-5">
                 <h2 className="text-center mb-4">Buku Terbaru</h2>
 
                 <Row className='mb-4'>
-                    <Col className='d-flex flex-wrap justify-content-center gap-4'>
-                        {books.slice(0, 5).map((book, index) => (
+                    {books.slice(0, 4).map((book, index) => (
+                        <Col xs={6} md={4} lg={3} key={index} className='d-flex flex-wrap justify-content-center gap-4'>
                             <Card as='a'
-                                className='hoverable'
-                                key={index}
+                                className='hoverable mb-4'
                                 style={{
-                                    width: '12rem',
+                                    width: '100%',
                                     cursor: 'pointer',
                                     textDecoration: 'none',
                                 }}
@@ -45,7 +45,7 @@ const Home = () => {
                                         width: '100%',
                                         height: 'auto',
                                         objectFit: 'cover',
-                                        aspectRatio: '1/1'
+                                        aspectRatio: '1/1',
                                     }}
                                     className='py-1 pt-3'
                                     onError={() => {
@@ -63,14 +63,12 @@ const Home = () => {
                                     <Card.Text>{book.year}</Card.Text>
                                 </Card.Body>
                             </Card>
-                        ))}
-                    </Col>
+                        </Col>
+                    ))}
                 </Row>
 
                 <div className='d-flex justify-content-center'>
-                    <Button variant="primary"
-                        onClick={() => navigate('/books')}
-                    >
+                    <Button variant="primary" onClick={() => navigate('/books')}>
                         Lihat Semua
                     </Button>
                 </div>
@@ -78,16 +76,15 @@ const Home = () => {
             </Container>
 
             <Container className="my-5">
-                <h2 className="text-center mb-4">Rekomendasi untuk Anda</h2>
-
+                <h2 className="text-center mb-4">Buku Terpopuler</h2>
+                
                 <Row className='mb-4'>
-                    <Col className='d-flex flex-wrap justify-content-center gap-4'>
-                        {books.slice(0, 5).map((book, index) => (
+                    {books.slice(0, 4).map((book, index) => (
+                        <Col xs={6} md={4} lg={3} key={index} className='d-flex flex-wrap justify-content-center gap-4'>
                             <Card as='a'
-                                className='hoverable'
-                                key={index}
+                                className='hoverable mb-4'
                                 style={{
-                                    width: '12rem',
+                                    width: '100%',
                                     cursor: 'pointer',
                                     textDecoration: 'none',
                                 }}
@@ -100,7 +97,7 @@ const Home = () => {
                                         width: '100%',
                                         height: 'auto',
                                         objectFit: 'cover',
-                                        aspectRatio: '1/1'
+                                        aspectRatio: '1/1',
                                     }}
                                     className='py-1 pt-3'
                                     onError={() => {
@@ -118,14 +115,12 @@ const Home = () => {
                                     <Card.Text>{book.year}</Card.Text>
                                 </Card.Body>
                             </Card>
-                        ))}
-                    </Col>
+                        </Col>
+                    ))}
                 </Row>
 
                 <div className='d-flex justify-content-center'>
-                    <Button variant="primary"
-                        onClick={() => navigate('/books')}
-                    >
+                    <Button variant="primary" onClick={() => navigate('/books')}>
                         Lihat Semua
                     </Button>
                 </div>
