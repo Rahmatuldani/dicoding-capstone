@@ -5,27 +5,21 @@ import { addBorrowStart, fetchBorrowStart } from '../../store/borrow/action';
 import { Loading } from '../../components';
 import useInput from '../../hooks/useInput';
 import FormBorrow from './formBorrow';
-import { Container } from 'react-bootstrap';
+import { Container, Table } from 'react-bootstrap';
 
 const Borrow = () => {
     const { borrow, isLoading } = useSelector(selectBorrow);
     const dispatch = useDispatch();
     const [isBookChecked, setIsBookChecked] = useState(false);
     const [bookTitle, setBookTitle] = useInput('');
-    const [bookAuthor, setBookAuthor] = useInput('');
     const [bookQuantity, setBookQuantity] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
 
     function handleSubmit(event) {
         event.preventDefault();
         dispatch(addBorrowStart({
             isBookChecked,
             bookTitle,
-            bookAuthor,
             bookQuantity,
-            startDate,
-            endDate,
         }));
     }
 
@@ -43,14 +37,8 @@ const Borrow = () => {
                     setIsBookChecked={setIsBookChecked}
                     bookTitle={bookTitle}
                     setBookTitle={setBookTitle}
-                    bookAuthor={bookAuthor}
-                    setBookAuthor={setBookAuthor}
                     bookQuantity={bookQuantity}
                     setBookQuantity={setBookQuantity}
-                    startDate={startDate}
-                    setStartDate={setStartDate}
-                    endDate={endDate}
-                    setEndDate={setEndDate}
                 />
             </section>
             <Container>
@@ -59,13 +47,11 @@ const Borrow = () => {
                     <Loading />
                 ) : (
                     <section>
-                        <table className='table'>
+                        <Table striped bordered>
                             <thead>
                                 <tr>
                                     <th>Judul Buku</th>
                                     <th>Jumlah Buku</th>
-                                    <th>Tanggal Peminjaman</th>
-                                    <th>Tanggal Pengembalian</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,12 +59,10 @@ const Borrow = () => {
                                     <tr key={index}>
                                         <td>{item.bookTitle}</td>
                                         <td>{item.bookQuantity}</td>
-                                        <td>{item.startDate}</td>
-                                        <td>{item.endDate}</td>
                                     </tr>
                                 ))}
                             </tbody>
-                        </table>
+                        </Table>
                     </section>
                 )}
             </Container>

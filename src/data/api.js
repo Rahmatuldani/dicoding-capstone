@@ -69,13 +69,10 @@ const api = (() => {
 
     }
 
-    async function createBorrow({bookTitle, bookAuthor, bookQuantity, startDate, endDate}) {
+    async function createBorrow({bookTitle, bookQuantity}) {
         const result = {
             bookTitle: bookTitle,
-            bookAuthor: bookAuthor,
             bookQuantity: bookQuantity,
-            startDate: startDate,
-            endDate: endDate
         };
         return await result;
     }

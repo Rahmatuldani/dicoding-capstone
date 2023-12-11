@@ -12,8 +12,6 @@ const FormBorrow = (params) => {
                             <th>Pilih</th>
                             <th>Judul Buku</th>
                             <th>Jumlah Buku</th>
-                            <th>Tanggal Peminjaman</th>
-                            <th>Tanggal Pengembalian</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,24 +39,6 @@ const FormBorrow = (params) => {
                                     placeholder='Jumlah Buku'
                                     value={params.bookQuantity}
                                     onChange={(e) => params.setBookQuantity(e.target.value)}
-                                />
-                            </td>
-                            <td>
-                                <Form.Control
-                                    required
-                                    type='date'
-                                    placeholder='Tanggal Peminjaman'
-                                    value={params.startDate}
-                                    onChange={(e) => params.setStartDate(e.target.value)}
-                                />
-                            </td>
-                            <td>
-                                <Form.Control
-                                    required
-                                    type='date'
-                                    placeholder='Tanggal Pengembalian'
-                                    value={params.endDate}
-                                    onChange={(e) => params.setEndDate(e.target.value)}
                                 />
                             </td>
                         </tr>
