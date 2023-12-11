@@ -3,17 +3,20 @@ import DataTable from 'react-data-table-component';
 import { useEffect, useState } from 'react';
 
 import Zoom from 'react-medium-image-zoom';
-import { BsCheckCircleFill, BsPencilSquare, BsSearch, BsXCircleFill } from 'react-icons/bs';
+import { BsCheckCircleFill, BsXCircleFill } from 'react-icons/bs';
 
 import api from '../../../data/api';
 import SlideBar from '../SlideBar';
 import '../style.css';
 import { Button, Image } from 'react-bootstrap';
+import AlertUtil from '../../../utils/alert';
 
 const UsersList = () => {
+    const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
+
+    const endPointUrlUsers = 'http://localhost:5000/api/users';
 
     const fetchUsers = async () => {
         try {
@@ -33,7 +36,7 @@ const UsersList = () => {
     useEffect(() => {
         fetchUsers();
     }, []);
-    console.log(users);
+
     const columns = [
         {
             name: 'KTP',
@@ -65,24 +68,31 @@ const UsersList = () => {
             selector: row => row.adminVerified,
             sortable: true,
         },
-        {
-            name: 'Action',
-            selector: row => row.action,
-        },
     ];
     
-    
-    const ButtonEditBook = (id) => {
-        return (
-            <button className='btn btn-warning mr-3' onClick={() => navigate(`/books/${id.id}`)}><BsPencilSquare /></button>
-        );
+    const handleVerify = async (id) => {
+        try {
+            const result = await api.verifyAdmin({id});
+            fetchUsers();
+            AlertUtil('success', result.message);
+        } catch (error) {
+            AlertUtil('error', error);
+        }
     };
 
     const Verified = (prop) => {
-        console.log(prop.verified);
         if (prop.verified) {
             return (
                 <Button disabled variant="primary"> <BsCheckCircleFill/></Button>
+            );
+        }else if(prop.type === 'admin' && prop.verified === false){
+            return (
+                <Button 
+                    variant="danger" 
+                    onClick={() => handleVerify(prop.id)}
+                > 
+                    <BsXCircleFill />
+                </Button>
             );
         }else {
             return (
@@ -96,7 +106,7 @@ const UsersList = () => {
             return (
                 <div className='d-flex justify-content-center'>
                     <Zoom>
-                        <Image src={`http://localhost:5000/api/users/${ktp.ktp}/ktp`} width='40px' height='40px' />
+                        <Image src={`${endPointUrlUsers}/${ktp.ktp}/ktp`} width='40px' height='40px' />
                     </Zoom>
                 </div>
             );
@@ -111,24 +121,22 @@ const UsersList = () => {
         );
     };
 
-    const GroupButtonAction = (id) => {
-        return (
-            <div className='d-flex justify-content-center'>
-                <div className='btn-group'>
-                    <ButtonEditBook id={id.id} />
-                </div>
-            </div>
-        );
-    };
-
-    const usersFilter = users.map(({_id, ktp, name, email, role, verified, adminVerified}) => ({
+    const usersFilter = users.map((
+        {
+            _id, 
+            ktp, 
+            name, 
+            email, 
+            role, 
+            verified, 
+            adminVerified
+        }) => ({
         ktp: <ImageKTP ktp={ktp}/>,
         name,
         email,
         role,
-        verified: <Verified verified={verified} />,
-        adminVerified: <Verified verified={adminVerified} />,
-        action: <GroupButtonAction id={_id} />
+        verified: <Verified verified={verified} type='user'/>,
+        adminVerified: <Verified verified={adminVerified} type='admin' id={_id}/>,
     }));
 
     return (
