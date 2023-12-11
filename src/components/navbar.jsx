@@ -154,6 +154,7 @@ function Navbar() {
             }}>
                 Dashboard
             </MenuItem>
+            <MenuItem onClick={() => { navigate('/borrows'); handleMenuClose(); }}>Peminjaman</MenuItem>
             <MenuItem onClick={() => { handleSignOut(); handleMenuClose();}}>Logout</MenuItem>
         </Menu>
     );
