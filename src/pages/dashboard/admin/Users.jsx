@@ -90,12 +90,22 @@ const UsersList = () => {
             );
         }
     };
+    
+    const ImageKTP = (ktp) => {
+        if (ktp.ktp) {
+            return (
+                <div className='d-flex justify-content-center'>
+                    <Zoom>
+                        <Image src={`http://localhost:5000/api/users/${ktp.ktp}/ktp`} width='40px' height='40px' />
+                    </Zoom>
+                </div>
+            );
+        }
 
-    const ImageKTP = () => {
         return (
             <div className='d-flex justify-content-center'>
                 <Zoom>
-                    <Image src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png' width='40px' height='40px' />
+                    <Image src='../../src/assets/blank-ktp.png' width='40px' height='40px' />
                 </Zoom>
             </div>
         );
@@ -111,8 +121,8 @@ const UsersList = () => {
         );
     };
 
-    const usersFilter = users.map(({_id, name, email, role, verified, adminVerified}) => ({
-        ktp: <ImageKTP />,
+    const usersFilter = users.map(({_id, ktp, name, email, role, verified, adminVerified}) => ({
+        ktp: <ImageKTP ktp={ktp}/>,
         name,
         email,
         role,
