@@ -5,7 +5,7 @@ import { addBorrowStart, fetchBorrowStart } from '../../store/borrow/action';
 import { Loading } from '../../components';
 import useInput from '../../hooks/useInput';
 import FormBorrow from './formBorrow';
-import { Container, Table } from 'react-bootstrap';
+import { Container, Modal, Table, Button } from 'react-bootstrap';
 
 const Borrow = () => {
     const { borrow, isLoading } = useSelector(selectBorrow);
@@ -13,14 +13,23 @@ const Borrow = () => {
     const [isBookChecked, setIsBookChecked] = useState(false);
     const [bookTitle, setBookTitle] = useInput('');
     const [bookQuantity, setBookQuantity] = useState('');
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
-    function handleSubmit(event) {
-        event.preventDefault();
+    function handleShowModal() {
+        setShowConfirmationModal(true);
+    }
+
+    function handleCloseModal() {
+        setShowConfirmationModal(false);
+    }
+
+    function handleSubmit() {
         dispatch(addBorrowStart({
             isBookChecked,
             bookTitle,
             bookQuantity,
         }));
+        handleCloseModal();
     }
 
     React.useEffect(() => {
@@ -32,7 +41,7 @@ const Borrow = () => {
             <h1 className='text-center mb-4'>Peminjaman Buku</h1>
             <section className='d-flex flex-wrap justify-content-center gap-4'>
                 <FormBorrow
-                    onInputSubmit={handleSubmit}
+                    onInputSubmit={handleShowModal}
                     isBookChecked={isBookChecked}
                     setIsBookChecked={setIsBookChecked}
                     bookTitle={bookTitle}
@@ -41,6 +50,23 @@ const Borrow = () => {
                     setBookQuantity={setBookQuantity}
                 />
             </section>
+
+            <Modal show={showConfirmationModal} onHide={handleCloseModal} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Konfirmasi Peminjaman</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Apakah Anda yakin ingin membuat pinjaman?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Batal
+                    </Button>
+                    <Button variant="primary" onClick={handleSubmit}>
+                        Buat Pinjaman
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <Container>
                 <h2 className='mb-3 mt-3'>Riwayat Peminjaman</h2>
                 {isLoading ? (

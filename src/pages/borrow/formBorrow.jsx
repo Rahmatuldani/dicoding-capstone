@@ -28,7 +28,7 @@ const FormBorrow = (params) => {
                                     required
                                     type='text'
                                     placeholder='Masukkan Judul Buku'
-                                    value={params.bookTitle}
+                                    value={params.bookTitle || (params.isBookChecked? params.selectedBook.title : '')}
                                     onChange={params.setBookTitle}
                                 />
                             </td>
@@ -44,7 +44,7 @@ const FormBorrow = (params) => {
                         </tr>
                     </tbody>
                 </Table>
-                <Button type='submit'>Buat Pinjaman</Button>
+                <Button type='button' onClick={params.onInputSubmit}>Pinjam</Button>
             </Form>
         </Container>
     );
