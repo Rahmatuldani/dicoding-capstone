@@ -1,8 +1,13 @@
 import { useSelector } from 'react-redux';
-import Zoom from 'react-medium-image-zoom';
 import { useParams   } from 'react-router-dom';
-import { BsHeart, BsCartPlus, BsHeartFill } from 'react-icons/bs';
+import { useEffect, useState } from 'react';
+
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
+
 import { selectBooks } from '../../store/books/selector';
+import { selectAuth } from '../../store/auth/selector';
+import AlertUtil from '../../utils/alert';
 
 import {
     Button,
@@ -11,29 +16,71 @@ import {
     Image,
     Row
 } from 'react-bootstrap';
+import { BsHeart, BsCartPlus, BsHeartFill } from 'react-icons/bs';
+import api from '../../data/api';
 
-import 'react-medium-image-zoom/dist/styles.css';
-import { selectAuth } from '../../store/auth/selector';
-import AlertUtil from '../../utils/alert';
 
 export const DetailBook = () => {
     const { id } = useParams();
     const { books } = useSelector(selectBooks);
+    const { currentUser } = useSelector(selectAuth);
+    const [ like, setLike ] = useState(false);
     const filteredBooks = books.filter((book) =>
         book._id.toLowerCase().includes(id.toLowerCase())
     );
     const [book] = filteredBooks;
     const isDisabled = book?.stock <= 0 ? true : false;
 
-    const { currentUser } = useSelector(selectAuth);
+    useEffect(() => {
+        if (book?.likes?.length > 0 && currentUser?._id === book.likes[0].userId) {
+            setLike(true);
+        }
+    }, [book, currentUser]);
+
+    const ButtonLikes = () => {
+        const buttonText = like ? 'Unlike' : 'Like';
+        const buttonIcon = like ? <BsHeartFill /> : <BsHeart />;
+    
+        return (
+            <Button 
+                onClick={() => handleLikes(buttonText)} 
+                className="btn-pink" 
+                size="lg">
+                {buttonText} {buttonIcon}
+            </Button>
+        );
+    };
+
+    const handleLikes = async (type) => {
+        if (!currentUser) {
+            AlertUtil('error', 'Silahkan login terlebih dahulu');
+            return;
+        }
+    
+        const data = {
+            type: type.toLowerCase(),
+            idBook: book._id,
+            user: currentUser._id,
+        };
+    
+        try {
+            await api.createLike(data);
+            
+            setLike(type.toLowerCase() !== 'unlike');
+        } catch (error) {
+            AlertUtil('error', error.message || 'An error occurred');
+        }
+    };
 
     const handleAddToCart = (book) => {
         if (!currentUser) {
             AlertUtil('error', 'Silahkan login terlebih dahulu');
             return;
         }
+
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const isExist = cart.find((item) => item._id === book._id);
+        const isExist = cart.find((item) => item.idBook === book._id);
+
         if (isExist) {
             AlertUtil('error', 'Buku sudah ada di keranjang');
         } else {
@@ -44,11 +91,13 @@ export const DetailBook = () => {
                 stock: book.stock,
                 qty: 1,
             };
-            cart.push(bookCart);
-            localStorage.setItem('cart', JSON.stringify(cart));
+
+            const newCart = cart.concat(bookCart);
+            localStorage.setItem('cart', JSON.stringify(newCart));
             AlertUtil('success', 'Buku berhasil ditambahkan ke keranjang');
         }
-    }
+    };
+    
     return (
         <section className='detail-book-page mt-4'>
             <Container>
@@ -68,7 +117,13 @@ export const DetailBook = () => {
                                     <p className='mb-0 text-muted'>{book.author}</p>
                                     <h2>{book.title}</h2>
                                     <div className='d-flex align-items-center gap-1'>
-                                        <BsHeartFill className='icon-pink' />
+                                        {
+                                            like ? (
+                                                <BsHeartFill className='icon-pink' />
+                                            ) : (
+                                                <BsHeart className='icon-pink' />
+                                            )
+                                        }
                                         <small className="text-danger">
                                             {book.rate}
                                         </small>
@@ -117,9 +172,7 @@ export const DetailBook = () => {
                     <Col lg={3} className='d-flex justify-content-center mb-4'>
                         <div className='box-button w-100'>
                             <div className="d-grid gap-2 p-4 bg-white rounded">
-                                <Button className="btn-pink" size="lg">
-                                    Like <BsHeart />
-                                </Button>
+                                <ButtonLikes />
                                 <Button 
                                     disabled={isDisabled} 
                                     onClick={() => handleAddToCart(book)}

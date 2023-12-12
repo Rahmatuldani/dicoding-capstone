@@ -8,6 +8,8 @@ const api = (() => {
         baseURL: 'http://localhost:5000/api',
     });
 
+    const token = 'secretpassword';
+
     async function register(formData) {
         console.log(formData);
         const user = await axios({
@@ -26,7 +28,6 @@ const api = (() => {
     }
 
     async function getUsers() {
-        const token = 'secretpassword';
         const users = await librify.get('/users', { headers: {
             'Content-Type': 'multipart/form-data',
             'Authorization': `Bearer ${token}`,
@@ -64,7 +65,6 @@ const api = (() => {
             poster,
             desc,
         };
-        const token = 'secretpassword';
         const response = await librify.post('/books', 
             data, 
             { headers: {
@@ -98,7 +98,7 @@ const api = (() => {
             price,
             desc,
         };
-        const token = 'secretpassword';
+        
         const response = await librify.put(`/books/${id}`,
             data, 
             { headers: {
@@ -122,8 +122,16 @@ const api = (() => {
         return response.data.data.books;
     }
 
-    async function getBookById(id) {
+    async function createLike(data) {
+        const response = await librify.post(`/books/${data.idBook}/${data.type}`, {userId: data.user});
 
+        return await response.data;
+    }
+
+    async function createLike(data) {
+        const response = await librify.post(`/books/${data.idBook}/${data.type}`, {userId: data.user});
+
+        return await response.data;
     }
 
     async function createBorrow({bookTitle, bookQuantity}) {
@@ -146,6 +154,7 @@ const api = (() => {
         verifyAdmin,
         createBook,
         updateBook,
+        createLike,
         getAllBooks,
         getBooksPages,
         createBorrow,

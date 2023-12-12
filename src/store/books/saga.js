@@ -49,8 +49,8 @@ export function* insertBook({payload: {
             poster,
             desc,
         });
-        yield* put(isSuccess(BOOKS_ACTION_TYPES.INSERT_BOOKS_SUCCESS, book));
-
+        const result = yield* put(isSuccess(BOOKS_ACTION_TYPES.INSERT_BOOKS_SUCCESS, book));
+        AlertUtil('success', result.payload.data.message);
     } catch (error) {
         yield* put(isFailed(error.response.data.message));
     }
