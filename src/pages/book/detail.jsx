@@ -38,13 +38,8 @@ export const DetailBook = () => {
     }, [book, currentUser]);
 
     const ButtonLikes = () => {
-        let buttonText = 'Like';
-        let buttonIcon = <BsHeart />;
-        
-        if (book?.likes?.length > 0 && currentUser?._id === book.likes[0].userId || like) {
-            buttonText = 'Unlike';
-            buttonIcon = <BsHeartFill />;
-        }
+        const buttonText = like ? 'Unlike' : 'Like';
+        const buttonIcon = like ? <BsHeartFill /> : <BsHeart />;
     
         return (
             <Button 
@@ -177,7 +172,7 @@ export const DetailBook = () => {
                     <Col lg={3} className='d-flex justify-content-center mb-4'>
                         <div className='box-button w-100'>
                             <div className="d-grid gap-2 p-4 bg-white rounded">
-                                {ButtonLikes()}
+                                <ButtonLikes />
                                 <Button 
                                     disabled={isDisabled} 
                                     onClick={() => handleAddToCart(book)}
