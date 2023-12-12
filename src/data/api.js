@@ -128,12 +128,6 @@ const api = (() => {
         return await response.data;
     }
 
-    async function createLike(data) {
-        const response = await librify.post(`/books/${data.idBook}/${data.type}`, {userId: data.user});
-
-        return await response.data;
-    }
-
     async function createBorrow({bookTitle, bookQuantity}) {
         const result = {
             bookTitle: bookTitle,
