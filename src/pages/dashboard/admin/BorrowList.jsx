@@ -3,6 +3,7 @@ import DataTable from 'react-data-table-component';
 import SlideBar from '../SlideBar';
 import { useState } from 'react';
 import { BsEyeFill } from 'react-icons/bs';
+import { Badge } from 'react-bootstrap';
 
 const BorrowList = () => {
     const navigate = useNavigate();
