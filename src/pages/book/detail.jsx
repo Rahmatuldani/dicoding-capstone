@@ -82,8 +82,10 @@ export const DetailBook = () => {
             AlertUtil('error', 'Silahkan login terlebih dahulu');
             return;
         }
+
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const isExist = cart.find((item) => item._id === book._id);
+        const isExist = cart.find((item) => item.idBook === book._id);
+
         if (isExist) {
             AlertUtil('error', 'Buku sudah ada di keranjang');
         } else {
@@ -94,8 +96,9 @@ export const DetailBook = () => {
                 stock: book.stock,
                 qty: 1,
             };
-            cart.push(bookCart);
-            localStorage.setItem('cart', JSON.stringify(cart));
+
+            const newCart = cart.concat(bookCart);
+            localStorage.setItem('cart', JSON.stringify(newCart));
             AlertUtil('success', 'Buku berhasil ditambahkan ke keranjang');
         }
     };
