@@ -48,7 +48,7 @@ export const DetailBook = () => {
             localStorage.setItem('cart', JSON.stringify(cart));
             AlertUtil('success', 'Buku berhasil ditambahkan ke keranjang');
         }
-    }
+    };
     return (
         <section className='detail-book-page mt-4'>
             <Container>
