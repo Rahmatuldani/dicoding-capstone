@@ -24,7 +24,7 @@ const Borrow = () => {
     }
 
     function handleSubmit() {
-        if (isBookChecked) {
+        if (isBookChecked && bookTitle && bookQuantity) {
             dispatch(addBorrowStart({
                 isBookChecked,
                 bookTitle,
