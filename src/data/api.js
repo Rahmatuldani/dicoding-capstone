@@ -122,6 +122,12 @@ const api = (() => {
         return response.data.data.books;
     }
 
+    async function createLike(data) {
+        const response = await librify.post(`/books/${data.idBook}/${data.type}`, {userId: data.user});
+
+        return await response.data;
+    }
+
     async function createBorrow({bookTitle, bookAuthor, startDate, endDate}) {
         const result = {
             bookTitle: bookTitle,
@@ -144,6 +150,7 @@ const api = (() => {
         verifyAdmin,
         createBook,
         updateBook,
+        createLike,
         getAllBooks,
         getBooksPages,
         createBorrow,
