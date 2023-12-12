@@ -1,10 +1,29 @@
 /* eslint-disable react/prop-types */
 import { Card } from 'react-bootstrap';
-import { BsHeartFill  } from 'react-icons/bs';
+import { BsHeart, BsHeartFill  } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { selectAuth } from '../store/auth/selector';
 
 export const BookCard = ({ book }) => {
     const navigate = useNavigate();
+    const { currentUser } = useSelector(selectAuth);
+
+    const handleFavorite = () => {
+        if (book?.likes?.length > 0 && currentUser?._id === book.likes[0].userId) {
+            return (
+                <Card.Text>
+                    <BsHeartFill className='icon-pink' />
+                </Card.Text>
+            );
+        }
+        return (
+            <Card.Text>
+                <BsHeart className='icon-pink' />
+            </Card.Text>
+        );
+    };
+
     return (
         <Card as='a'
             className='hoverable' 
@@ -28,7 +47,7 @@ export const BookCard = ({ book }) => {
             />
             <Card.Body className='d-flex flex-column gap-2'>
                 <div className='d-flex align-items-center gap-1'>
-                    <BsHeartFill className='icon-pink' />
+                    {handleFavorite()}
                     <small className="text-danger">
                         {book.rate}
                     </small> 

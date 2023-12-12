@@ -1,12 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import SlideBar from '../SlideBar';
-import DataTable from 'react-data-table-component';
-import { selectBooks } from '../../../store/books/selector';
 import { useEffect, useState } from 'react';
-import '../style.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { BsEyeFill, BsPencilSquare } from 'react-icons/bs';
+import PropTypes from 'prop-types';
+
+import DataTable from 'react-data-table-component';
+
+import { selectBooks } from '../../../store/books/selector';
 import { fetchBooksPageStart, fetchBooksStart } from '../../../store/books/action';
+
+import SlideBar from '../SlideBar';
+import { BsEyeFill, BsPencilSquare } from 'react-icons/bs';
+
+import '../style.css';
 
 const BooksList = () => {
     const { books, pages, isLoading } = useSelector(selectBooks);
@@ -14,7 +19,11 @@ const BooksList = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const totalPages = pages * 10;
+    const totalPages = pages * 5;
+
+    const buttonPropTypes = {
+        id: PropTypes.string.isRequired,
+    };
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -57,38 +66,33 @@ const BooksList = () => {
         },
     ];
     
-    const ButtonViewBook = (id) => {
-        return (
-            <button className='btn btn-primary mr-3' onClick={() => navigate(`/books/${id.id}`)}><BsEyeFill /></button>
-        );
-    };
-    
-    const ButtonEditBook = (id) => {
-        return (
-            <button className='btn btn-warning mr-3' onClick={() => navigate(`/dashboard/admin/editbook/${id.id}`)}><BsPencilSquare /></button>
-        );
-    };
+    const ViewBookButton = ({ id }) => (
+        <button className='btn btn-primary mr-3' onClick={() => navigate(`/books/${id}`)}><BsEyeFill /></button>
+    );
 
-    const GroupButtonAction = (id) => {
-        return (
-            <div className='d-flex justify-content-center'>
-                <div className='btn-group'>
-                    <ButtonViewBook id={id.id} />
-                    <ButtonEditBook id={id.id} />
-                </div>
+    ViewBookButton.propTypes = buttonPropTypes;
+    
+    const EditBookButton = ({ id }) => (
+        <button className='btn btn-warning mr-3' onClick={() => navigate(`/dashboard/admin/editbook/${id}`)}><BsPencilSquare /></button>
+    );
+
+    EditBookButton.propTypes = buttonPropTypes;
+
+    const GroupButtonAction = (book) => (
+        <div className='d-flex justify-content-center'>
+            <div className='btn-group'>
+                <ViewBookButton id={book._id} />
+                <EditBookButton id={book._id} />
             </div>
-        );
-    };
+        </div>
+    );
 
     const booksFilter = books.filter((book) => book.stock > 0);
-    const dataBook = booksFilter.map(({_id, title, genre, author, year, stock}) => ({
-        title,
-        genre,
-        author,
-        year,
-        stock,
-        action: <GroupButtonAction id={_id} />
+    const dataBook = booksFilter.map((book) => ({
+        ...book,
+        action: <GroupButtonAction {...book} />
     }));
+
     return (
         <div>
             <div className="container-fluid">
