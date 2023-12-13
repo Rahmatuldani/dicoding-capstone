@@ -146,6 +146,12 @@ const api = (() => {
         return result.data.data;
     }
 
+    async function getBorrowById({id}) {
+        const response = await librify.get(`/borrows/${id}`);
+
+        return response.data.data.books;
+    }
+
     async function changeStatus(data) {
         const response = await librify.post(`/borrows/${data.id}/changeStatus`, {status: data.status});
 

@@ -62,11 +62,20 @@ const BorrowList = () => {
         },
     ];
 
-    const ViewBookButton = ({ id }) => (
-        <button className='btn btn-primary mr-3' onClick={() => navigate(`/books/${id}`)}><BsEyeFill /></button>
-    );
+    const ViewBorrowButton = ({ id }) => {
+        const [show, setShow] = useState(false);
+    
+        const handleClose = () => setShow(false);
+        const handleShow = () => setShow(true);
+        return (
+            <>
+                <button className='btn btn-primary mr-3' onClick={handleShow}><BsEyeFill /></button>
+                <DetailBorowModal show={show} handleClose={handleClose} id={id} />
+            </>
+        );
+    };
 
-    ViewBookButton.propTypes = buttonPropTypes;
+    ViewBorrowButton.propTypes = buttonPropTypes;
     
     const ChangeStatusButton = ({ id }) => {
         const [show, setShow] = useState(false);
@@ -77,7 +86,7 @@ const BorrowList = () => {
         return (
             <>
                 <button className='btn btn-warning mr-3' onClick={handleShow}><BsPencilSquare /></button>
-                <ChangeStatus show={show} handleClose={handleClose} id={id} />
+                <ChangeStatusModal show={show} handleClose={handleClose} id={id} />
             </>
         );
     };
@@ -101,7 +110,7 @@ const BorrowList = () => {
 
     };
 
-    const ChangeStatus = ({show, handleClose, id}) => {
+    const ChangeStatusModal = ({show, handleClose, id}) => {
         const [status, setStatus] = useState('dibuat');
 
         const handleSelectStatus = (event) => {
@@ -132,7 +141,34 @@ const BorrowList = () => {
         );
     };
 
-    ChangeStatus.propTypes = {
+    ChangeStatusModal.propTypes = {
+        show: PropTypes.bool.isRequired,
+        handleClose: PropTypes.func.isRequired,
+        id: PropTypes.string.isRequired,
+    };
+
+    const DetailBorowModal = ({show, handleClose, id}) => {
+
+
+        return (
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Detail Borrow</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Buku A</p>
+                    <p>Quantiti: 2</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    };
+
+    DetailBorowModal.propTypes = {
         show: PropTypes.bool.isRequired,
         handleClose: PropTypes.func.isRequired,
         id: PropTypes.string.isRequired,
@@ -142,7 +178,7 @@ const BorrowList = () => {
         <div className='d-flex justify-content-center'>
             <div className='btn-group'>
                 { (borrow.status === 'dibuat' || borrow.status === 'dipinjam') && <ChangeStatusButton id={borrow._id} /> }
-                <ViewBookButton id={borrow._id} />
+                <ViewBorrowButton id={borrow._id} />
             </div>
         </div>
     );
