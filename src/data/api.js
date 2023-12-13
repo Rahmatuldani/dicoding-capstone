@@ -36,7 +36,6 @@ const api = (() => {
     }
 
     async function verifyAdmin({id}) {
-        console.log(id);
         const verify = await librify.get(`/users/verifyAdmin/${id}`);
         return verify;
     }
@@ -147,6 +146,12 @@ const api = (() => {
         return result.data.data;
     }
 
+    async function changeStatus(data) {
+        const response = await librify.post(`/borrows/${data.id}/changeStatus`, {status: data.status});
+
+        return await response.data;
+    }
+
     return {
         register,
         login,
@@ -159,6 +164,7 @@ const api = (() => {
         getBooksPages,
         createBorrow,
         getAllBorrowed,
+        changeStatus,
     };
 })();
   

@@ -1,45 +1,28 @@
 import { useNavigate } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import SlideBar from '../SlideBar';
-import { Badge, Dropdown } from 'react-bootstrap';
-import { useEffect } from 'react';
-import { BsEyeFill } from 'react-icons/bs';
+import { Badge, Button, Modal, Form } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { BsEyeFill, BsPencilSquare } from 'react-icons/bs';
 import { selectBorrow } from '../../../store/borrow/selector';
 import { fetchBorrowStart } from '../../../store/borrow/action';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-
-import { nanoid } from 'nanoid';
+import AlertUtil from '../../../utils/alert';
+import api from '../../../data/api';
 
 const BorrowList = () => {
     const { borrow, isLoading } = useSelector(selectBorrow);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    console.log(borrow);
+    const buttonPropTypes = {
+        id: PropTypes.string.isRequired,
+    };
+
     useEffect(() => {
         dispatch(fetchBorrowStart());
     }, [dispatch]);
-
-    const ButtonViewBook = (id) => {
-        
-        return (
-            <div className='d-flex justify-content-center'>
-                <button className='btn btn-primary mr-3' onClick={() => navigate(`/books/${id.id}`)}><BsEyeFill /></button>
-                <button className='btn btn-primary mr-3' onClick={() => navigate(`/books/${id.id}`)}><BsEyeFill /></button>
-            </div>
-        );
-    };
-
-    const Status = ({status}) => {
-        let bg = 'primary';
-
-        return (
-            <Badge bg={bg}>{status}</Badge>
-        );
-    };
-
-    Status.propTypes = {status: PropTypes.string.isRequired};
 
     const columns = [
         {
@@ -68,37 +51,142 @@ const BorrowList = () => {
             sortable: true,
         },
         {
-            name: 'action',
-            selector: row => row.action,
-            sortable: true,
-        },
-        {
             name: 'Status',
             selector: row => row.status,
             sortable: true,
         },
+        {
+            name: 'action',
+            selector: row => row.action,
+            
+        },
     ];
 
-    const ActionButton = () => (
-        <Dropdown>
-            <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                +
-            </Dropdown.Toggle>
-    
-            <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Dropdown link</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Dropdown link</Dropdown.Item>
-            </Dropdown.Menu>
-        </Dropdown>
+    const ViewBookButton = ({ id }) => (
+        <button className='btn btn-primary mr-3' onClick={() => navigate(`/books/${id}`)}><BsEyeFill /></button>
     );
 
-    const dataBorrow = borrow.map((item) => ({
-        ...item,
-        id: `LB-${nanoid(5)}`,
-        name: item.user.name,
-        status: <Status  status={item.status} />,
-        action: <ActionButton />
+    ViewBookButton.propTypes = buttonPropTypes;
+    
+    const ChangeStatusButton = ({ id }) => {
+        const [show, setShow] = useState(false);
+    
+        const handleClose = () => setShow(false);
+        const handleShow = () => setShow(true);
         
+        return (
+            <>
+                <button className='btn btn-warning mr-3' onClick={handleShow}><BsPencilSquare /></button>
+                <ChangeStatus show={show} handleClose={handleClose} id={id} />
+            </>
+        );
+    };
+
+    ChangeStatusButton.propTypes = buttonPropTypes;
+
+    const handleChangeStatus = async (id, status) => {
+        const data = {
+            id,
+            status
+        };
+
+        try {
+            const result = await api.changeStatus(data);
+
+            dispatch(fetchBorrowStart());
+            AlertUtil('success', result.message);
+        } catch (error) {
+            AlertUtil('error', error);
+        }
+
+    };
+
+    const ChangeStatus = ({show, handleClose, id}) => {
+        const [status, setStatus] = useState('dibuat');
+
+        const handleSelectStatus = (event) => {
+            setStatus(event.target.value);
+        };
+        return (
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Ubah Status Peminjaman</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form.Select aria-label="Default select example" value={status} onChange={handleSelectStatus}>
+                        <option>Jenis Status</option>
+                        <option value="dipinjam">Dipinjam</option>
+                        <option value="dikembalikan">Dikembalikan</option>
+                        <option value="batal">Batal</option>
+                    </Form.Select>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={() => {handleClose(); handleChangeStatus(id, status);}}>
+                        Simpan
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    };
+
+    ChangeStatus.propTypes = {
+        show: PropTypes.bool.isRequired,
+        handleClose: PropTypes.func.isRequired,
+        id: PropTypes.string.isRequired,
+    };
+
+    const GroupButtonAction = (borrow) => (
+        <div className='d-flex justify-content-center'>
+            <div className='btn-group'>
+                { (borrow.status === 'dibuat' || borrow.status === 'dipinjam') && <ChangeStatusButton id={borrow._id} /> }
+                <ViewBookButton id={borrow._id} />
+            </div>
+        </div>
+    );
+
+    GroupButtonAction.propTypes = {
+        borrow: PropTypes.shape({
+            status: PropTypes.string.isRequired,
+            _id: PropTypes.string.isRequired,
+        }).isRequired,
+    };
+
+    const Status = ({status}) => {
+        const statusColors = {
+            'dipinjam': 'primary',
+            'dikembalikan': 'success',
+            'batal': 'danger'
+        };
+    
+        const bg = statusColors[status] || 'secondary';
+
+        return (
+            <Badge bg={bg}>{status}</Badge>
+        );
+    };
+
+    Status.propTypes = {status: PropTypes.string.isRequired};
+
+    const convertDate = (date) => {
+        const dateObj = new Date(date);
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed in JavaScript
+        const day = String(dateObj.getDate()).padStart(2, '0');
+
+        return `${day}-${month}-${year}`;
+    };
+    
+    const dataBorrow = borrow.map((borrowItem, index) => ({
+        ...borrowItem,
+        id: `LB-000${index + 1}`,
+        startDate: convertDate(borrowItem.startDate),
+        endDate: convertDate(borrowItem.endDate),
+        name: borrowItem.user.name,
+        status: <Status  status={borrowItem.status} />,
+        action: <GroupButtonAction {...borrowItem} />
     }));
 
 
@@ -110,7 +198,6 @@ const BorrowList = () => {
                     <SlideBar isActive='borrow'/>
                     <div className='col'>
                         <div className='mt-3'>
-                            <ActionButton />
                             <DataTable
                                 title="Daftar Peminjaman Buku"
                                 columns={columns}
