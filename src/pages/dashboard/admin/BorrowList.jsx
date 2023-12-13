@@ -1,12 +1,26 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import SlideBar from '../SlideBar';
-import { Badge} from 'react-bootstrap';
-import { useState } from 'react';
+import { Badge, Dropdown } from 'react-bootstrap';
+import { useEffect } from 'react';
 import { BsEyeFill } from 'react-icons/bs';
+import { selectBorrow } from '../../../store/borrow/selector';
+import { fetchBorrowStart } from '../../../store/borrow/action';
+import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { nanoid } from 'nanoid';
 
 const BorrowList = () => {
+    const { borrow, isLoading } = useSelector(selectBorrow);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    console.log(borrow);
+    useEffect(() => {
+        dispatch(fetchBorrowStart());
+    }, [dispatch]);
+
     const ButtonViewBook = (id) => {
         
         return (
@@ -16,6 +30,17 @@ const BorrowList = () => {
             </div>
         );
     };
+
+    const Status = ({status}) => {
+        let bg = 'primary';
+
+        return (
+            <Badge bg={bg}>{status}</Badge>
+        );
+    };
+
+    Status.propTypes = {status: PropTypes.string.isRequired};
+
     const columns = [
         {
             name: 'Id Pinjam',
@@ -29,12 +54,12 @@ const BorrowList = () => {
         },
         {
             name: 'Tanggal Pinjam',
-            selector: row => row.dateBorrow,
+            selector: row => row.startDate,
             sortable: true,
         },
         {
             name: 'Tanggal Kembali',
-            selector: row => row.dateBack,
+            selector: row => row.endDate,
             sortable: true,
         },
         {
@@ -43,61 +68,41 @@ const BorrowList = () => {
             sortable: true,
         },
         {
-            name: 'Status',
-            selector: row => row.status,
-            sortable: true,
-        },
-        {
             name: 'action',
             selector: row => row.action,
             sortable: true,
         },
-    ];
-    const datas = [
         {
-            id: 'LB-00001',
-            name: 'Rizky',
-            dateBorrow:'09-12-2023',
-            dateBack:'16-12-2023',
-            denda: 0,
-            status: <Badge bg="primary">Dibuat</Badge>,
-            action: <ButtonViewBook id={'657059e93bcc3f13fdf5f0c6'} />
-        },
-        {
-            id: 'LB-00002',
-            name: 'Ahmad',
-            dateBorrow:'08-12-2023',
-            dateBack:'16-12-2023',
-            denda: 0,
-            status: <Badge bg="success">Dipinjam</Badge>,
-            action: <ButtonViewBook id={'657059e93bcc3f13fdf5f0c6'} />
-        },
-        {
-            id: 'LB-00003',
-            name: 'Agus',
-            dateBorrow:'20-11-2023',
-            dateBack:'27-11-2023',
-            denda: 20000,
-            status: <Badge bg="danger">Denda</Badge>,
-            action: <ButtonViewBook id={'657059e93bcc3f13fdf5f0c6'} />
-        },
-        {
-            id: 'LB-00003',
-            name: 'Dini',
-            dateBorrow:'20-11-2023',
-            dateBack:'27-11-2023',
-            denda: 0,
-            status: <Badge bg="warning">Batal</Badge>,
-            action: <ButtonViewBook id={'657059e93bcc3f13fdf5f0c6'} />
+            name: 'Status',
+            selector: row => row.status,
+            sortable: true,
         },
     ];
-    const [dataFilter, setDataFilter] = useState(datas);
-    const handlerChange = (event) => {
-        const filter =  datas.filter((data) => {
-            return data.title.toLowerCase().includes(event.target.value.toLowerCase());
-        });
-        setDataFilter(filter);
-    };
+
+    const ActionButton = () => (
+        <Dropdown>
+            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                +
+            </Dropdown.Toggle>
+    
+            <Dropdown.Menu>
+                <Dropdown.Item href="#/action-1">Dropdown link</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">Dropdown link</Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
+    );
+
+    const dataBorrow = borrow.map((item) => ({
+        ...item,
+        id: `LB-${nanoid(5)}`,
+        name: item.user.name,
+        status: <Status  status={item.status} />,
+        action: <ActionButton />
+        
+    }));
+
+
+
     return (
         <div>
             <div className="container-fluid">
@@ -105,13 +110,12 @@ const BorrowList = () => {
                     <SlideBar isActive='borrow'/>
                     <div className='col'>
                         <div className='mt-3'>
-                            <div className='d-flex justify-content-end mb-1'>
-                                <input type="search" className="form-control d-lg-inline" placeholder="Search" />
-                            </div>
+                            <ActionButton />
                             <DataTable
                                 title="Daftar Peminjaman Buku"
                                 columns={columns}
-                                data={dataFilter}
+                                data={dataBorrow}
+                                progressPending={isLoading}
                                 fixedHeader
                                 pagination
                                 highlightOnHover

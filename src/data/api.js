@@ -139,8 +139,12 @@ const api = (() => {
     }
 
     async function getAllBorrowed() {
-        const result = [];
-        return await result;
+        const result = await librify.get('/borrows',
+            { headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }});
+        return result.data.data;
     }
 
     return {
