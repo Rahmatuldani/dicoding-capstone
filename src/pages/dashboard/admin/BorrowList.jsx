@@ -84,10 +84,11 @@ const BorrowList = () => {
 
     ChangeStatusButton.propTypes = buttonPropTypes;
 
-    const handleChangeStatus = async (id, status) => {
+    const handleChangeStatus = async (id, status, penalty) => {
         const data = {
             id,
-            status
+            status,
+            penalty
         };
 
         try {
@@ -103,10 +104,16 @@ const BorrowList = () => {
 
     const ChangeStatusModal = ({show, handleClose, id}) => {
         const [status, setStatus] = useState('dibuat');
+        const [penalty, setPenalty] = useState('');
 
         const handleSelectStatus = (event) => {
             setStatus(event.target.value);
         };
+
+        const handlePenaltyChange = (event) => {
+            setPenalty(event.target.value);
+        };
+
         return (
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -117,14 +124,18 @@ const BorrowList = () => {
                         <option>Jenis Status</option>
                         <option value="dipinjam">Dipinjam</option>
                         <option value="dikembalikan">Dikembalikan</option>
+                        <option value="denda">Denda</option>
                         <option value="batal">Batal</option>
                     </Form.Select>
+                    {status === 'denda' && (
+                        <Form.Control type="text" placeholder="Enter penalty amount" className="mt-3" value={penalty} onChange={handlePenaltyChange} />
+                    )}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={() => {handleClose(); handleChangeStatus(id, status);}}>
+                    <Button variant="primary" onClick={() => {handleClose(); handleChangeStatus(id, status, penalty);}}>
                         Simpan
                     </Button>
                 </Modal.Footer>
@@ -158,6 +169,7 @@ const BorrowList = () => {
         const statusColors = {
             'dipinjam': 'primary',
             'dikembalikan': 'success',
+            'denda': 'warning',
             'batal': 'danger'
         };
     
@@ -179,9 +191,9 @@ const BorrowList = () => {
         return `${day}-${month}-${year}`;
     };
     
-    const dataBorrow = borrow.map((borrowItem, index) => ({
+    const dataBorrow = borrow.map((borrowItem) => ({
         ...borrowItem,
-        id: `LB-000${index + 1}`,
+        id: `LB-${borrowItem._id.substring(8, 4)}`,
         startDate: convertDate(borrowItem.startDate),
         endDate: convertDate(borrowItem.endDate),
         name: borrowItem.user.name,

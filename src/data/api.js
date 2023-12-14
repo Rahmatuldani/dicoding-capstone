@@ -152,7 +152,11 @@ const api = (() => {
     }
 
     async function changeStatus(data) {
-        const response = await librify.post(`/borrows/${data.id}/changeStatus`, {status: data.status});
+        const response = await librify.post(`/borrows/${data.id}/changeStatus`, 
+            {
+                status: data.status, 
+                denda: data?.penalty || 0,
+            });
 
         return await response.data;
     }
