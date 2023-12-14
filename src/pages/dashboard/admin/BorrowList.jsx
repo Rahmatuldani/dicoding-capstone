@@ -62,18 +62,9 @@ const BorrowList = () => {
         },
     ];
 
-    const ViewBorrowButton = ({ id }) => {
-        const [show, setShow] = useState(false);
-    
-        const handleClose = () => setShow(false);
-        const handleShow = () => setShow(true);
-        return (
-            <>
-                <button className='btn btn-primary mr-3' onClick={handleShow}><BsEyeFill /></button>
-                <DetailBorowModal show={show} handleClose={handleClose} id={id} />
-            </>
-        );
-    };
+    const ViewBorrowButton = ({ id }) => (
+        <button className='btn btn-primary mr-3' onClick={() => navigate(`/dashboard/admin/detailBorrow/${id}`)}><BsEyeFill /></button>
+    );
 
     ViewBorrowButton.propTypes = buttonPropTypes;
     
@@ -142,33 +133,6 @@ const BorrowList = () => {
     };
 
     ChangeStatusModal.propTypes = {
-        show: PropTypes.bool.isRequired,
-        handleClose: PropTypes.func.isRequired,
-        id: PropTypes.string.isRequired,
-    };
-
-    const DetailBorowModal = ({show, handleClose, id}) => {
-
-
-        return (
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Detail Borrow</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>Buku A</p>
-                    <p>Quantiti: 2</p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        );
-    };
-
-    DetailBorowModal.propTypes = {
         show: PropTypes.bool.isRequired,
         handleClose: PropTypes.func.isRequired,
         id: PropTypes.string.isRequired,

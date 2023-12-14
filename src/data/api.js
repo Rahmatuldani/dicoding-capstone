@@ -146,9 +146,9 @@ const api = (() => {
         return result.data.data;
     }
 
-    async function getBorrowById({id}) {
-        const response = await librify.get(`/borrows/${id}`);
-
+    async function getBorrowById({idBorrow}) {
+        const response = await librify.get(`/borrows/${idBorrow.id}`);
+        console.log(response);
         return response.data.data.books;
     }
 
@@ -170,6 +170,7 @@ const api = (() => {
         getBooksPages,
         createBorrow,
         getAllBorrowed,
+        getBorrowById,
         changeStatus,
     };
 })();
