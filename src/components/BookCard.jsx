@@ -10,16 +10,16 @@ export const BookCard = ({ book }) => {
     const { currentUser } = useSelector(selectAuth);
 
     const handleFavorite = () => {
-        if (book?.likes?.length > 0 && currentUser?._id === book.likes[0].userId) {
-            return (
-                <Card.Text>
-                    <BsHeartFill className='icon-pink' />
-                </Card.Text>
-            );
-        }
+        const totalLike = book?.likes?.length;
+        const isLikedByCurrentUser = totalLike > 0 && book.likes.some(like => like.userId === currentUser?._id);
+    
+        const heartIcon = isLikedByCurrentUser ? <BsHeartFill className='icon-pink' /> : <BsHeart className='icon-pink' />;
+        const likesCount = totalLike > 0 && <small className="icon-pink fs-6 ps-1">{totalLike}</small>;
+    
         return (
             <Card.Text>
-                <BsHeart className='icon-pink' />
+                {heartIcon}
+                {likesCount}
             </Card.Text>
         );
     };

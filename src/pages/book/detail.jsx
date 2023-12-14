@@ -22,24 +22,27 @@ import api from '../../data/api';
 
 export const DetailBook = () => {
     const { id } = useParams();
-    const { books } = useSelector(selectBooks);
+    let { books } = useSelector(selectBooks);
     const { currentUser } = useSelector(selectAuth);
     const [ like, setLike ] = useState(false);
+    const [ countLike, setCountLike ] = useState(0);
     const filteredBooks = books.filter((book) =>
         book._id.toLowerCase().includes(id.toLowerCase())
     );
     const [book] = filteredBooks;
     const isDisabled = book?.stock <= 0 ? true : false;
+    console.log(book);
 
     useEffect(() => {
-        if (book?.likes?.length > 0 && currentUser?._id === book.likes[0].userId) {
+        if (book?.likes?.length > 0) {
+            setCountLike(book.likes.length);
             setLike(true);
         }
     }, [book, currentUser]);
 
     const ButtonLikes = () => {
-        const buttonText = like ? 'Unlike' : 'Like';
-        const buttonIcon = like ? <BsHeartFill /> : <BsHeart />;
+        const buttonText = like && book.likes.some(like => like.userId === currentUser?._id) ? 'Unlike' : 'Like';
+        const buttonIcon = like && book.likes.some(like => like.userId === currentUser?._id) ? <BsHeartFill /> : <BsHeart />;
     
         return (
             <Button 
@@ -67,6 +70,8 @@ export const DetailBook = () => {
             await api.createLike(data);
             
             setLike(type.toLowerCase() !== 'unlike');
+            setCountLike(type.toLowerCase() === 'unlike' ? countLike - 1 : countLike + 1);
+            book.likes = type.toLowerCase() === 'unlike' ? book.likes.filter(like => like.userId !== currentUser._id) : book.likes.concat({ userId: currentUser._id });
         } catch (error) {
             AlertUtil('error', error.message || 'An error occurred');
         }
@@ -118,8 +123,19 @@ export const DetailBook = () => {
                                     <h2>{book.title}</h2>
                                     <div className='d-flex align-items-center gap-1'>
                                         {
+                                        
+
                                             like ? (
-                                                <BsHeartFill className='icon-pink' />
+                                                <>
+                                                    <BsHeartFill className='icon-pink' />
+                                                    {
+                                                        countLike > 0 && (
+                                                            <small className="icon-pink fs-6">
+                                                                {countLike}
+                                                            </small>
+                                                        )
+                                                    }
+                                                </>
                                             ) : (
                                                 <BsHeart className='icon-pink' />
                                             )
