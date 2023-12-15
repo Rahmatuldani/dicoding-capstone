@@ -29,6 +29,11 @@ const DetailBorrow = () => {
             sortable: true,
         },
         {
+            name: 'ISBN',
+            selector: row => row.isbn,
+            sortable: true,
+        },
+        {
             name: 'Buku',
             selector: row => row.title,
             sortable: true,
@@ -70,6 +75,7 @@ const DetailBorrow = () => {
         
         dataBooks = books.map((itemBook) => ({
             id: 'LB-0001',
+            isbn: itemBook.book.isbn,
             title: itemBook.book.title,
             action: <GroupButtonAction {...itemBook} />
         }));
