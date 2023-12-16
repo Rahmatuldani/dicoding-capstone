@@ -18,7 +18,7 @@ const FormBorrow = () => {
 
     return (
         <Container>
-            <h2 className='mb-3'>Riwayat Peminjaman</h2>
+            <h2 className='mb-3'>Buku yang Dipinjam</h2>
             <Table striped bordered>
                 <thead>
                     <tr>
