@@ -5,14 +5,14 @@ import axios from 'axios';
 const api = (() => { 
     
     const librify = axios.create({
-        baseURL: 'http://20.2.89.234:5000/api',
+        baseURL: 'http://localhost:3000/api',
     });
 
     async function register(formData) {
         console.log(formData);
         const user = await axios({
             method: 'post',
-            url: 'http://20.2.89.234:5000/api/auth/register',
+            url: 'http://localhost:3000/api/auth/register',
             data: formData,
             headers: { 'Content-Type': 'multipart/form-data' }});
         const result = user;
@@ -20,30 +20,31 @@ const api = (() => {
     }
   
     async function login({ email, password }) {
-        const user = await axios.post('http://20.2.89.234:5000/api/auth/login', {email, password});
+        const user = await axios.post('http://localhost:3000/api/auth/login', {email, password});
         const result = user.data;
         return result;
     }
 
     async function forgotPassword({ email }) {
-        const user = await axios.put('http://20.2.89.234:5000/api/auth/forgotpassword', { email });
+        const user = await axios.put('http://localhost:3000/api/auth/forgotpassword', { email });
         const result = user.data;
         return result;
     }
 
-    async function changePassword({ oldPassword, newPassword }) {
+    async function changePassword({ oldPassword, newPassword , token}) {
         const data = {
-            oldPassword,
-            newPassword,
+            // oldPassword,
+            password: newPassword,
         };
 
-        const token = '';
-        const response = await librify.put('/auth/changepassword', data, {
+        const response = await axios.put('http://localhost:3000/api/auth/changePassword/'+token, data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             }
         });
+
+        return response;
     }
 
     async function createBook({

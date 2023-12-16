@@ -10,12 +10,14 @@ import { useParams } from 'react-router-dom';
 
 const ChangePassword = () => {
     const dispatch = useDispatch();
-    const { token } = useParams;
+    const { token } = useParams();
     const [password, setPassword] = useInput('');
     const [confirmPassword, setConfirmPassword] = useInput('');
 
     function handleSubmit(event) {
+        
         event.preventDefault();
+       
         if (confirmPassword === password) { 
             const oldPassword = password;
             const newPassword = confirmPassword;
@@ -24,7 +26,16 @@ const ChangePassword = () => {
             formData.append('oldPassword', oldPassword);
             formData.append('newPassword', newPassword);
 
-            dispatch(changePassword({ token, oldPassword, newPassword }));
+            dispatch(changePassword({ oldPassword, newPassword, token }));
+
+            
+        } else {
+            return (
+                <div>
+                    
+                </div>
+
+            );
         }
     }
 

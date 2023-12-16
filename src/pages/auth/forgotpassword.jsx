@@ -12,6 +12,7 @@ const ForgotPassword = () => {
     const dispatch = useDispatch();
     const [email, setEmail] = useInput('');
 
+
     function handleSubmit(event) {
         event.preventDefault();
         dispatch(forgotPassword({email}));

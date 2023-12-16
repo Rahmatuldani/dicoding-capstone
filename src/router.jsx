@@ -52,7 +52,9 @@ const Router = createBrowserRouter(
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/register' element={<Register/>}/>
                 <Route path='/forgotpassword' element={<ForgotPassword/>}/>
-                <Route path='/changepassword/:token' element={<ChangePassword/>}/>
+                <Route path='/changepassword/' >
+                    <Route path=':token' element={<ChangePassword/>}/>
+                </Route>
             </Route>
         </Route>
     )
