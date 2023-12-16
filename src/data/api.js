@@ -8,6 +8,8 @@ const api = (() => {
         baseURL: 'http://localhost:5000/api',
     });
 
+    const token = 'secretpassword';
+
     async function register(formData) {
         console.log(formData);
         const user = await axios({
@@ -26,12 +28,16 @@ const api = (() => {
     }
 
     async function getUsers() {
-        const token = 'secretpassword';
         const users = await librify.get('/users', { headers: {
             'Content-Type': 'multipart/form-data',
             'Authorization': `Bearer ${token}`,
         }});
         return users.data.data.users;
+    }
+
+    async function verifyAdmin({id}) {
+        const verify = await librify.get(`/users/verifyAdmin/${id}`);
+        return verify;
     }
 
     async function createBook({
@@ -58,7 +64,6 @@ const api = (() => {
             poster,
             desc,
         };
-        const token = 'secretpassword';
         const response = await librify.post('/books', 
             data, 
             { headers: {
@@ -92,7 +97,7 @@ const api = (() => {
             price,
             desc,
         };
-        const token = 'secretpassword';
+        
         const response = await librify.put(`/books/${id}`,
             data, 
             { headers: {
@@ -116,6 +121,12 @@ const api = (() => {
         return response.data.data.books;
     }
 
+    async function createLike(data) {
+        const response = await librify.post(`/books/${data.idBook}/${data.type}`, {userId: data.user});
+
+        return await response.data;
+    }
+
     async function createBorrow({bookTitle, bookAuthor, startDate, endDate}) {
         const result = {
             bookTitle: bookTitle,
@@ -127,20 +138,43 @@ const api = (() => {
     }
 
     async function getAllBorrowed() {
-        const result = [];
-        return await result;
+        const result = await librify.get('/borrows',
+            { headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }});
+        return result.data.data;
+    }
+
+    async function getBorrowById({id}) {
+        const response = await librify.get(`/borrows/${id}`);
+        return response.data.data;
+    }
+
+    async function changeStatus(data) {
+        const response = await librify.post(`/borrows/${data.id}/changeStatus`, 
+            {
+                status: data.status, 
+                denda: data?.penalty || 0,
+            });
+
+        return await response.data;
     }
 
     return {
         register,
         login,
         getUsers,
+        verifyAdmin,
         createBook,
         updateBook,
+        createLike,
         getAllBooks,
         getBooksPages,
         createBorrow,
         getAllBorrowed,
+        getBorrowById,
+        changeStatus,
     };
 })();
   
