@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useParams   } from 'react-router-dom';
+import { useNavigate, useParams   } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import Zoom from 'react-medium-image-zoom';
@@ -16,12 +16,13 @@ import {
     Image,
     Row
 } from 'react-bootstrap';
-import { BsHeart, BsCartPlus, BsHeartFill } from 'react-icons/bs';
+import { BsHeart, BsCartPlus, BsHeartFill, BsBookmarksFill } from 'react-icons/bs';
 import api from '../../data/api';
 
 
 export const DetailBook = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     let { books } = useSelector(selectBooks);
     const { currentUser } = useSelector(selectAuth);
     const [ like, setLike ] = useState(false);
@@ -74,32 +75,6 @@ export const DetailBook = () => {
             book.likes = type.toLowerCase() === 'unlike' ? book.likes.filter(like => like.userId !== currentUser._id) : book.likes.concat({ userId: currentUser._id });
         } catch (error) {
             AlertUtil('error', error.message || 'An error occurred');
-        }
-    };
-
-    const handleAddToCart = (book) => {
-        if (!currentUser) {
-            AlertUtil('error', 'Silahkan login terlebih dahulu');
-            return;
-        }
-
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const isExist = cart.find((item) => item.idBook === book._id);
-
-        if (isExist) {
-            AlertUtil('error', 'Buku sudah ada di keranjang');
-        } else {
-            const bookCart = {
-                user: currentUser._id,
-                idBook: book._id,
-                title: book.title,
-                stock: book.stock,
-                qty: 1,
-            };
-
-            const newCart = cart.concat(bookCart);
-            localStorage.setItem('cart', JSON.stringify(newCart));
-            AlertUtil('success', 'Buku berhasil ditambahkan ke keranjang');
         }
     };
 
@@ -191,9 +166,9 @@ export const DetailBook = () => {
                                 <ButtonLikes />
                                 <Button 
                                     disabled={isDisabled} 
-                                    onClick={() => handleAddToCart(book)}
+                                    onClick={() => navigate('/borrows')}
                                     variant="primary" size="lg">
-                                    Keranjang <BsCartPlus />
+                                    Pinjam <BsBookmarksFill />
                                 </Button>
                             </div>
                         </div>
