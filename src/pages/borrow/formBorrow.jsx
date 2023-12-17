@@ -6,25 +6,26 @@ import { selectAuth } from '../../store/auth/selector';
 
 const FormBorrow = () => {
     const { currentUser } = useSelector(selectAuth);
-    const [borrowedBooks, setBorrowedBooks] = useState([]);
+    const [borrowedBooks, setBorrows] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const fetchBorrow = async ({id}) => {
+        try {
+            setIsLoading(true);
+
+            const borrow = await api.getBorrowById({id});
+            console.log(borrow);
+            setBorrows(borrow);
+            setIsLoading(false);
+
+        } catch (error) {
+            setIsLoading(true);
+        }
+    };
 
     useEffect(() => {
-        const fetchBorrowedBooks = async () => {
-            try {
-                const userId = currentUser?._id;
-                if (!userId) {
-                    console.error('User ID not available');
-                    return;
-                }
-
-                const borrowedData = await api.getAllBorrowed(userId);
-                setBorrowedBooks(borrowedData.books || []);
-            } catch (error) {
-                console.error('Error fetching borrowed books:', error);
-            }
-        };
-
-        fetchBorrowedBooks();
+        const id = currentUser?._id;
+        fetchBorrow({id});
     }, [currentUser]);
 
     return (
