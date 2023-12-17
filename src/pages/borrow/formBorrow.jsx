@@ -1,20 +1,31 @@
 import { useEffect, useState } from 'react';
 import { Container, Table } from 'react-bootstrap';
+import api from '../../data/api';
+import { useSelector } from 'react-redux';
+import { selectAuth } from '../../store/auth/selector';
 
 const FormBorrow = () => {
+    const { currentUser } = useSelector(selectAuth);
     const [borrowedBooks, setBorrowedBooks] = useState([]);
-    const [bookStates, setBookStates] = useState([]);
 
     useEffect(() => {
-        const storedBooks = JSON.parse(localStorage.getItem('cart')) || [];
-        setBorrowedBooks(storedBooks);
-    }, []);
+        const fetchBorrowedBooks = async () => {
+            try {
+                const userId = currentUser?._id;
+                if (!userId) {
+                    console.error('User ID not available');
+                    return;
+                }
 
-    useEffect(() => {
-        if (borrowedBooks.length > 0) {
-            setBookStates(borrowedBooks.map(() => ({ isBookChecked: false, bookQuantity: 1 })));
-        }
-    }, [borrowedBooks]);
+                const borrowedData = await api.getAllBorrowed(userId);
+                setBorrowedBooks(borrowedData.books || []);
+            } catch (error) {
+                console.error('Error fetching borrowed books:', error);
+            }
+        };
+
+        fetchBorrowedBooks();
+    }, [currentUser]);
 
     return (
         <Container>
@@ -27,17 +38,13 @@ const FormBorrow = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {bookStates.length > 0 &&
-                            borrowedBooks.map((borrowedBook, index) => (
-                                <tr key={index}>
-                                    <td>
-                                        {borrowedBook.title}
-                                    </td>
-                                    <td>
-                                        {bookStates[index].bookQuantity}
-                                    </td>
-                                </tr>
-                            ))}
+                    {borrowedBooks.length > 0 &&
+                        borrowedBooks.map((borrowedBook, index) => (
+                            <tr key={index}>
+                                <td>{borrowedBook.title}</td>
+                                <td>{borrowedBook.quantity}</td>
+                            </tr>
+                        ))}
                 </tbody>
             </Table>
         </Container>

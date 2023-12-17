@@ -72,31 +72,31 @@ export const DetailBook = () => {
         }
     };
 
-    const handleAddToCart = (book) => {
+    const handleAddToCart = async (book) => {
         if (!currentUser) {
             AlertUtil('error', 'Silahkan login terlebih dahulu');
             return;
         }
-
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const isExist = cart.find((item) => item.idBook === book._id);
-
-        if (isExist) {
-            AlertUtil('error', 'Buku sudah ada di keranjang');
-        } else {
-            const bookCart = {
-                user: currentUser._id,
-                idBook: book._id,
-                title: book.title,
-                stock: book.stock,
-                qty: 1,
-            };
-
-            const newCart = cart.concat(bookCart);
-            localStorage.setItem('cart', JSON.stringify(newCart));
+    
+        const data = {
+            user: currentUser._id,
+            books: [
+                {
+                    idBook: book._id,
+                    quantity: 1,
+                },
+            ],
+        };
+    
+        try {
+            await api.createBorrow(data);
             AlertUtil('success', 'Buku berhasil ditambahkan ke keranjang');
+        } catch (error) {
+            AlertUtil('error', error.message || 'An error occurred');
         }
     };
+
+    console.log(currentUser._id);
     
     return (
         <section className='detail-book-page mt-4'>
