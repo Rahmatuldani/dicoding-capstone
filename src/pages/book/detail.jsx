@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams   } from 'react-router-dom';
+import { useParams   } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import Zoom from 'react-medium-image-zoom';
@@ -16,13 +16,12 @@ import {
     Image,
     Row
 } from 'react-bootstrap';
-import { BsHeart, BsCartPlus, BsHeartFill, BsBookmarksFill } from 'react-icons/bs';
+import { BsHeart, BsHeartFill, BsBookmarksFill } from 'react-icons/bs';
 import api from '../../data/api';
 
 
 export const DetailBook = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
     let { books } = useSelector(selectBooks);
     const { currentUser } = useSelector(selectAuth);
     const [ like, setLike ] = useState(false);
@@ -192,7 +191,7 @@ export const DetailBook = () => {
                                 <ButtonLikes />
                                 <Button 
                                     disabled={isDisabled} 
-                                    onClick={() => navigate('/borrows')}
+                                    onClick={() => handleAddToCart(book)}
                                     variant="primary" size="lg">
                                     Pinjam <BsBookmarksFill />
                                 </Button>
