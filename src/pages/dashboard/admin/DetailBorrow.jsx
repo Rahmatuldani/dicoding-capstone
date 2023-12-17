@@ -43,6 +43,11 @@ const DetailBorrow = () => {
             sortable: true,
         },
         {
+            name: 'Qty',
+            selector: row => row.qty,
+            sortable: true,
+        },
+        {
             name: 'action',
             selector: row => row.action,
             
@@ -71,16 +76,17 @@ const DetailBorrow = () => {
             _id: PropTypes.string.isRequired,
         }).isRequired,
     };
-
+    console.log(borrow);
     const filterBorrow = borrow.filter((borrowItem) => borrowItem._id === idBorrow.id);
     let dataBooks = [];
     if (filterBorrow.length > 0) {
         const books = filterBorrow[0].books;
         
         dataBooks = books.map((itemBook) => ({
-            id: 'LB-0001',
+            id: `LB-${idBorrow.id.substring(18, 24)}`,
             isbn: itemBook.book.isbn,
             title: itemBook.book.title,
+            qty: itemBook.quantity,
             action: <GroupButtonAction {...itemBook} />
         }));
     }

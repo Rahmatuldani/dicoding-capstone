@@ -193,7 +193,7 @@ const BorrowList = () => {
     
     const dataBorrow = borrow.map((borrowItem) => ({
         ...borrowItem,
-        id: `LB-${borrowItem._id.substring(8, 4)}`,
+        id: `LB-${borrowItem._id.substring(18, 24)}`,
         startDate: convertDate(borrowItem.startDate),
         endDate: convertDate(borrowItem.endDate),
         name: borrowItem.user.name,

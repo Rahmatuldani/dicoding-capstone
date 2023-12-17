@@ -39,6 +39,11 @@ const DetailBorrow = () => {
             sortable: true,
         },
         {
+            name: 'QTY',
+            selector: row => row.qty,
+            sortable: true,
+        },
+        {
             name: 'action',
             selector: row => row.action,
             
@@ -74,9 +79,10 @@ const DetailBorrow = () => {
         const books = filterBorrow[0].books;
         
         dataBooks = books.map((itemBook) => ({
-            id: 'LB-0001',
+            id: `LB-${idBorrow.id.substring(18, 24)}`,
             isbn: itemBook.book.isbn,
             title: itemBook.book.title,
+            qty: itemBook.quantity,
             action: <GroupButtonAction {...itemBook} />
         }));
     }

@@ -13,6 +13,7 @@ const DashboardUser = () => {
     const [borrows, setBorrows] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { currentUser } = useSelector(selectAuth);
+    console.log(currentUser);
     const navigate = useNavigate();
 
     const buttonPropTypes = {
@@ -73,7 +74,7 @@ const DashboardUser = () => {
 
         try {
             const result = await api.changeStatus(data);
-
+            const id = currentUser?._id;
             fetchBorrow({id});
             AlertUtil('success', result.message);
         } catch (error) {
@@ -198,7 +199,7 @@ const DashboardUser = () => {
     const dataFilter = borrows.map((borrow) => {
         return {
             ...borrow,
-            id: `LB-${borrow._id.substring(8, 4)}`,
+            id: `LB-${borrow._id.substring(18, 24)}`,
             startDate: convertDate(borrow.startDate),
             endDate: convertDate(borrow.endDate),
             status: <Status  status={borrow.status} />,
