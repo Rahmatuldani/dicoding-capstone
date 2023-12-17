@@ -13,7 +13,6 @@ import {
     Login, 
     Register 
 } from './pages';
-import { AuthRequired } from './utils/authRequired';
 import { DetailBook } from './pages/book/detail';
 import AddBook from './pages/book/input';
 import DashboardUser from './pages/dashboard/users';
@@ -55,14 +54,10 @@ const Router = createBrowserRouter(
             <Route path='/dashboard/admin/addbook' element={<AddBookAdmin/>}/>
             <Route path='/dashboard/admin/editbook/:id' element={<EditBookAdmin/>}/>
             <Route path='/dashboard/admin/users' element={<UsersList/>}/>
-            <Route element={<AuthRequired/>}>
-                <Route path='/login' element={<Login/>}/>
-                <Route path='/register' element={<Register/>}/>
-                <Route path='/forgotpassword' element={<ForgotPassword/>}/>
-                <Route path='/changepassword/' >
-                    <Route path=':token' element={<ChangePassword/>}/>
-                </Route>
-            </Route>
+            <Route path='/login' element={<Login/>}/>
+            <Route path='/register' element={<Register/>}/>
+            <Route path='/forgotpassword' element={<ForgotPassword/>}/>
+            <Route path='/changepassword/:token' element={<ChangePassword/>} />
         </Route>
     )
 );

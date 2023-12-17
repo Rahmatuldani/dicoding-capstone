@@ -28,7 +28,7 @@ const api = (() => {
     }
 
     async function forgotPassword({ email }) {
-        const user = await axios.put('http://localhost:3000/api/auth/forgotpassword', { email });
+        const user = await axios.put('http://localhost:5000/api/auth/forgotpassword', { email });
         const result = user.data;
         return result;
     }
@@ -39,7 +39,7 @@ const api = (() => {
             password: newPassword,
         };
 
-        const response = await axios.put('http://localhost:3000/api/auth/changePassword/'+token, data, {
+        const response = await axios.put('http://localhost:5000/api/auth/changePassword/'+token, data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
