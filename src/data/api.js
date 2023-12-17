@@ -167,17 +167,6 @@ const api = (() => {
         return response.data;
     }
 
-<<<<<<< HEAD
-    async function getAllBorrowed(userId) {
-        const headers = {
-            'Authorization': `Bearer ${token}`
-        };
-    
-        const response = await librify.get(`/borrows/user/${userId}`, { headers });
-    
-        return response.data.data;
-    }     
-=======
     async function getAllBorrowed() {
         const result = await librify.get('/borrows',
             { headers: {
@@ -188,7 +177,11 @@ const api = (() => {
     }
 
     async function getBorrowById({id}) {
-        const response = await librify.get(`/borrows/${id}`);
+        const response = await librify.get(`/borrows/${id}`,
+            { headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }});
         return response.data.data;
     }
 
@@ -201,7 +194,6 @@ const api = (() => {
 
         return await response.data;
     }
->>>>>>> 9b627430b508a5ec2ac3701bc57b0cd5c4961d4a
 
     return {
         register,
