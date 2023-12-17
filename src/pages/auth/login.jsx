@@ -57,11 +57,11 @@ const Login = () => {
                         <button className='btn btn-primary' type='submit'>Sign In</button>
                     </div>
                 </form>
-                <p style={{
+                {/* <p style={{
                     margin: 0,
                     marginTop: '1rem',
                     fontSize: '12px',
-                }}><Link to='/forgotpassword'>Forgotten your password?</Link></p>
+                }}><Link to='/forgotpassword'>Forgotten your password?</Link></p> */}
             </Paper>
             <Paper 
                 elevation={3}
