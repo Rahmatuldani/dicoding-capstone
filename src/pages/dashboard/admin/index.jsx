@@ -1,16 +1,40 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import SlideBar from '../SlideBar';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import DataTable from 'react-data-table-component';
+
 import { selectBooks } from '../../../store/books/selector';
-import { useState } from 'react';
+import { fetchBooksPageStart, fetchBooksStart } from '../../../store/books/action';
+
+import SlideBar from '../SlideBar';
+import { BsEyeFill, BsPencilSquare } from 'react-icons/bs';
+
 import '../style.css';
-import { Badge } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
 
 const BooksList = () => {
-    const { role } = useParams();
-    const { books } = useSelector(selectBooks);
+    const { books, pages, isLoading } = useSelector(selectBooks);
+    const [currentPage, setCurrentPage] = useState(1);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const totalPages = pages * 5;
+
+    const buttonPropTypes = {
+        id: PropTypes.string.isRequired,
+    };
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    useEffect(() => {
+        const page = currentPage;
+        dispatch(fetchBooksStart({page}));
+        dispatch(fetchBooksPageStart());
+    }, [currentPage, dispatch]);
+
     const columns = [
         {
             name: 'Title',
@@ -33,8 +57,8 @@ const BooksList = () => {
             sortable: true,
         },
         {
-            name: 'Status',
-            selector: row => row.status,
+            name: 'Stok',
+            selector: row => row.stock,
         },
         {
             name: 'Action',
@@ -42,53 +66,56 @@ const BooksList = () => {
         },
     ];
     
-    const AvailableBadge = () => (
-        <Badge bg="primary">tersedia</Badge>
+    const ViewBookButton = ({ id }) => (
+        <button className='btn btn-primary mr-3' onClick={() => navigate(`/books/${id}`)}><BsEyeFill /></button>
     );
-    const ButtonViewBook = (id) => {
-        console.log(id);
-        return (
-            <div className='d-flex justify-content-center'>
-                <button className='btn btn-primary mr-3' onClick={() => navigate(`/books/${id.id}`)}>View</button>
-            </div>
-        );
-    };
-    const booksFilter = books.map(({_id, title, genre, author, year}) => ({
-        title,
-        genre,
-        author,
-        year,
-        status: <AvailableBadge />,
-        action: <ButtonViewBook id={_id} />
-    }));
 
-    const [dataFilter, setDataFilter] = useState(booksFilter);
-    const handlerChange = (event) => {
-        const filter =  booksFilter.filter((book) => {
-            return book.title.toLowerCase().includes(event.target.value.toLowerCase());
-        });
-        setDataFilter(filter);
-    };
+    ViewBookButton.propTypes = buttonPropTypes;
+    
+    const EditBookButton = ({ id }) => (
+        <button className='btn btn-warning mr-3' onClick={() => navigate(`/dashboard/admin/editbook/${id}`)}><BsPencilSquare /></button>
+    );
+
+    EditBookButton.propTypes = buttonPropTypes;
+
+    const GroupButtonAction = (book) => (
+        <div className='d-flex justify-content-center'>
+            <div className='btn-group'>
+                <ViewBookButton id={book._id} />
+                <EditBookButton id={book._id} />
+            </div>
+        </div>
+    );
+
+    const booksFilter = books.filter((book) => book.stock > 0);
+    const dataBook = booksFilter.map((book) => ({
+        ...book,
+        action: <GroupButtonAction {...book} />
+    }));
 
     return (
         <div>
             <div className="container-fluid">
                 <div className="row">
-                    <SlideBar isActive='books' role={role}/>
+                    <SlideBar isActive='books'/>
                     <div className='col'>
                         <div className='mt-3'>
                             <div className='d-flex justify-content-end mb-1'>
-                                <input type="search" className="form-control w-25 d-lg-inline" onChange={handlerChange} placeholder="Search" />
+                                <input type="search" className="form-control d-lg-inline" placeholder="Search" />
                             </div>
                             <DataTable
                                 title="Daftar Buku"
                                 columns={columns}
-                                data={dataFilter}
+                                data={dataBook}
                                 fixedHeader
-                                pagination
                                 highlightOnHover
                                 responsive={true}
                                 pointerOnHover
+                                progressPending={isLoading}
+                                pagination
+                                paginationServer
+                                paginationTotalRows={totalPages}
+                                onChangePage={handlePageChange}
                             />
 
                         </div>
