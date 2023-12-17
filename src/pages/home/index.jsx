@@ -1,10 +1,10 @@
-import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
+import { Container, Row, Col, Button, Image } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { selectBooks } from '../../store/books/selector';
 import { fetchBooksStart } from '../../store/books/action';
 import { useNavigate } from 'react-router-dom';
-import { BsFillHeartFill } from 'react-icons/bs';
+import { BookCard } from '../../components/BookCard';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -29,40 +29,10 @@ const Home = () => {
                 <Row className='mb-4'>
                     {books.slice(0, 4).map((book, index) => (
                         <Col xs={6} md={4} lg={3} key={index} className='d-flex flex-wrap justify-content-center gap-4'>
-                            <Card as='a'
-                                className='hoverable mb-4'
-                                style={{
-                                    width: '100%',
-                                    cursor: 'pointer',
-                                    textDecoration: 'none',
-                                }}
-                                onClick={() => navigate(`/books/${book._id}`)}
-                            >
-                                <Card.Img
-                                    variant="top"
-                                    src={`http://20.2.89.234:5000/api/books/${book?.poster}/poster`}
-                                    style={{
-                                        width: '100%',
-                                        height: 'auto',
-                                        objectFit: 'cover',
-                                        aspectRatio: '1/1',
-                                    }}
-                                    className='py-1 pt-3'
-                                    onError={() => {
-                                        book.image = 'https://via.placeholder.com/150';
-                                    }}
-                                />
-                                <Card.Body className='d-flex flex-column gap-2'>
-                                    <div className='d-flex align-items-center gap-1'>
-                                        <BsFillHeartFill className='text-danger' />
-                                        <small className="text-danger">
-                                            {book.rate}
-                                        </small>
-                                    </div>
-                                    <Card.Subtitle className='lh-sm'>{book.title}</Card.Subtitle>
-                                    <Card.Text>{book.year}</Card.Text>
-                                </Card.Body>
-                            </Card>
+                            <BookCard
+                                key={index}
+                                book={book}
+                            />
                         </Col>
                     ))}
                 </Row>
@@ -81,40 +51,10 @@ const Home = () => {
                 <Row className='mb-4'>
                     {books.slice(0, 4).map((book, index) => (
                         <Col xs={6} md={4} lg={3} key={index} className='d-flex flex-wrap justify-content-center gap-4'>
-                            <Card as='a'
-                                className='hoverable mb-4'
-                                style={{
-                                    width: '100%',
-                                    cursor: 'pointer',
-                                    textDecoration: 'none',
-                                }}
-                                onClick={() => navigate(`/books/${book._id}`)}
-                            >
-                                <Card.Img
-                                    variant="top"
-                                    src={`http://20.2.89.234:5000/api/books/${book?.poster}/poster`}
-                                    style={{
-                                        width: '100%',
-                                        height: 'auto',
-                                        objectFit: 'cover',
-                                        aspectRatio: '1/1',
-                                    }}
-                                    className='py-1 pt-3'
-                                    onError={() => {
-                                        book.image = 'https://via.placeholder.com/150';
-                                    }}
-                                />
-                                <Card.Body className='d-flex flex-column gap-2'>
-                                    <div className='d-flex align-items-center gap-1'>
-                                        <BsFillHeartFill className='text-danger' />
-                                        <small className="text-danger">
-                                            {book.rate}
-                                        </small>
-                                    </div>
-                                    <Card.Subtitle className='lh-sm'>{book.title}</Card.Subtitle>
-                                    <Card.Text>{book.year}</Card.Text>
-                                </Card.Body>
-                            </Card>
+                            <BookCard
+                                key={index}
+                                book={book}
+                            />
                         </Col>
                     ))}
                 </Row>

@@ -149,14 +149,22 @@ const api = (() => {
         return await response.data;
     }
 
-    async function createBorrow({bookTitle, bookAuthor, startDate, endDate}) {
-        const result = {
-            bookTitle: bookTitle,
-            bookAuthor: bookAuthor,
-            startDate: startDate,
-            endDate: endDate
+    async function createBorrow(data) {
+        const requestBody = {
+            userId: data.user,
+            books: data.books.map(book => ({
+                book: book.idBook,
+                quantity: book.quantity,
+            })),
         };
-        return await result;
+    
+        const headers = {
+            'Authorization': `Bearer ${token}`
+        };
+    
+        const response = await librify.post('/borrows', requestBody, { headers });
+    
+        return response.data;
     }
 
     async function getAllBorrowed() {
@@ -169,7 +177,11 @@ const api = (() => {
     }
 
     async function getBorrowById({id}) {
-        const response = await librify.get(`/borrows/${id}`);
+        const response = await librify.get(`/borrows/${id}`,
+            { headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }});
         return response.data.data;
     }
 
@@ -203,5 +215,3 @@ const api = (() => {
 })();
   
 export default api;
-
-

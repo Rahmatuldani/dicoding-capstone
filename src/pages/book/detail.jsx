@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams   } from 'react-router-dom';
+import { useParams   } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import Zoom from 'react-medium-image-zoom';
@@ -16,13 +16,12 @@ import {
     Image,
     Row
 } from 'react-bootstrap';
-import { BsHeart, BsCartPlus, BsHeartFill, BsBookmarksFill } from 'react-icons/bs';
+import { BsHeart, BsHeartFill, BsBookmarksFill } from 'react-icons/bs';
 import api from '../../data/api';
 
 
 export const DetailBook = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
     let { books } = useSelector(selectBooks);
     const { currentUser } = useSelector(selectAuth);
     const [ like, setLike ] = useState(false);
@@ -78,6 +77,32 @@ export const DetailBook = () => {
         }
     };
 
+    const handleAddToCart = async (book) => {
+        if (!currentUser) {
+            AlertUtil('error', 'Silahkan login terlebih dahulu');
+            return;
+        }
+    
+        const data = {
+            user: currentUser._id,
+            books: [
+                {
+                    idBook: book._id,
+                    quantity: 1,
+                },
+            ],
+        };
+    
+        try {
+            await api.createBorrow(data);
+            AlertUtil('success', 'Buku berhasil ditambahkan ke keranjang');
+        } catch (error) {
+            AlertUtil('error', error.message || 'An error occurred');
+        }
+    };
+
+    console.log(currentUser._id);
+    
     return (
         <section className='detail-book-page mt-4'>
             <Container>
@@ -166,7 +191,7 @@ export const DetailBook = () => {
                                 <ButtonLikes />
                                 <Button 
                                     disabled={isDisabled} 
-                                    onClick={() => navigate('/borrows')}
+                                    onClick={() => handleAddToCart(book)}
                                     variant="primary" size="lg">
                                     Pinjam <BsBookmarksFill />
                                 </Button>

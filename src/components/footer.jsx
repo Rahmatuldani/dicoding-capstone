@@ -17,8 +17,8 @@ const Footer = () => {
                         <Typography variant='body1'>
                             <Link to='https://www.linkedin.com/in/rahmatulramadhani' target='_blank' rel='noopener noreferrer' style={{textDecoration: 'none', color: 'white'}}>Rahmatul Ramadhani</Link> <br/>
                             <Link to='https://www.linkedin.com/in/ianseptiana' target='_blank' rel='noopener noreferrer' style={{textDecoration: 'none', color: 'white'}}>Ian Septiana</Link> <br/>
-                            <Link to="https://www.linkedin.com/in/amujahidakbar" target='_blank' rel='noopener noreferrer' style={{textDecoration: 'none', color: 'white'}}>Ahmad Mujahid Akbar</Link> <br/>
-                            <Link target='_blank' rel='noopener noreferrer' style={{textDecoration: 'none', color: 'white'}}>Yasir Amri</Link> <br/>
+                            <Link to='https://www.linkedin.com/in/amujahidakbar' target='_blank' rel='noopener noreferrer' style={{textDecoration: 'none', color: 'white'}}>Ahmad Mujahid Akbar</Link> <br/>
+                            <Link to='https://www.linkedin.com/in/yasiramrr' target='_blank' rel='noopener noreferrer' style={{textDecoration: 'none', color: 'white'}}>Yasir Amri</Link> <br/>
                         </Typography>
                     </Col>
 
