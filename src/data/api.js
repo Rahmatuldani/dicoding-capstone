@@ -27,6 +27,27 @@ const api = (() => {
         return result;
     }
 
+    async function forgotPassword({ email }) {
+        const user = await axios.put('http://localhost:3000/api/auth/forgotpassword', { email });
+        const result = user.data;
+        return result;
+    }
+
+    async function changePassword({ oldPassword, newPassword , token}) {
+        const data = {
+            // oldPassword,
+            password: newPassword,
+        };
+
+        const response = await axios.put('http://localhost:3000/api/auth/changePassword/'+token, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+
+        return response;
+
     async function getUsers() {
         const users = await librify.get('/users', { headers: {
             'Content-Type': 'multipart/form-data',
@@ -164,6 +185,8 @@ const api = (() => {
     return {
         register,
         login,
+        forgotPassword,
+        changePassword,
         getUsers,
         verifyAdmin,
         createBook,

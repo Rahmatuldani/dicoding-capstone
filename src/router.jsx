@@ -22,6 +22,8 @@ import LikeUser from './pages/dashboard/users/LikeUser'; */
 import BooksList from './pages/dashboard/admin';
 import BorrowList from './pages/dashboard/admin/BorrowList';
 import AddBookAdmin from './pages/dashboard/admin/AddBook';
+import ForgotPassword from './pages/auth/forgotpassword';
+import ChangePassword from './pages/auth/changepassword';
 import UsersList from './pages/dashboard/admin/Users';
 import EditBookAdmin from './pages/dashboard/admin/EditBook';
 import DetailBorrow from './pages/dashboard/admin/DetailBorrow';
@@ -56,6 +58,10 @@ const Router = createBrowserRouter(
             <Route element={<AuthRequired/>}>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/register' element={<Register/>}/>
+                <Route path='/forgotpassword' element={<ForgotPassword/>}/>
+                <Route path='/changepassword/' >
+                    <Route path=':token' element={<ChangePassword/>}/>
+                </Route>
             </Route>
         </Route>
     )
