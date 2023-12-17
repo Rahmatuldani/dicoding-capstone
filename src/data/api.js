@@ -47,6 +47,7 @@ const api = (() => {
         });
 
         return response;
+    }
 
     async function getUsers() {
         const users = await librify.get('/users', { headers: {
