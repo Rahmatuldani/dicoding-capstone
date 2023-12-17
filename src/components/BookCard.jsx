@@ -10,16 +10,16 @@ export const BookCard = ({ book }) => {
     const { currentUser } = useSelector(selectAuth);
 
     const handleFavorite = () => {
-        if (book?.likes?.length > 0 && currentUser?._id === book.likes[0].userId) {
-            return (
-                <Card.Text>
-                    <BsHeartFill className='icon-pink' />
-                </Card.Text>
-            );
-        }
+        const totalLike = book?.likes?.length;
+        const isLikedByCurrentUser = totalLike > 0 && book.likes.some(like => like.userId === currentUser?._id);
+    
+        const heartIcon = isLikedByCurrentUser ? <BsHeartFill className='icon-pink' /> : <BsHeart className='icon-pink' />;
+        const likesCount = totalLike > 0 && <small className="icon-pink fs-6 ps-1">{totalLike}</small>;
+    
         return (
             <Card.Text>
-                <BsHeart className='icon-pink' />
+                {heartIcon}
+                {likesCount}
             </Card.Text>
         );
     };
@@ -36,7 +36,7 @@ export const BookCard = ({ book }) => {
         >
             <Card.Img 
                 variant="top" 
-                src='/book-1.png' 
+                src={`http://localhost:5000/api/books/${book.poster}/poster`}
                 className='py-1 pt-3'
                 style={{ 
                     width: '100%',

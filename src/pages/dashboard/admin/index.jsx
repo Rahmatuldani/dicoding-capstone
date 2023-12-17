@@ -19,7 +19,7 @@ const BooksList = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const totalPages = pages * 5;
+    const totalPages = pages * 10;
 
     const buttonPropTypes = {
         id: PropTypes.string.isRequired,

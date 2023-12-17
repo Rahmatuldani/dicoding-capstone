@@ -27,6 +27,28 @@ const api = (() => {
         return result;
     }
 
+    async function forgotPassword({ email }) {
+        const user = await axios.put('http://localhost:3000/api/auth/forgotpassword', { email });
+        const result = user.data;
+        return result;
+    }
+
+    async function changePassword({ oldPassword, newPassword , token}) {
+        const data = {
+            // oldPassword,
+            password: newPassword,
+        };
+
+        const response = await axios.put('http://localhost:3000/api/auth/changePassword/'+token, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+
+        return response;
+    }
+
     async function getUsers() {
         const users = await librify.get('/users', { headers: {
             'Content-Type': 'multipart/form-data',
@@ -36,7 +58,6 @@ const api = (() => {
     }
 
     async function verifyAdmin({id}) {
-        console.log(id);
         const verify = await librify.get(`/users/verifyAdmin/${id}`);
         return verify;
     }
@@ -146,6 +167,7 @@ const api = (() => {
         return response.data;
     }
 
+<<<<<<< HEAD
     async function getAllBorrowed(userId) {
         const headers = {
             'Authorization': `Bearer ${token}`
@@ -155,10 +177,37 @@ const api = (() => {
     
         return response.data.data;
     }     
+=======
+    async function getAllBorrowed() {
+        const result = await librify.get('/borrows',
+            { headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }});
+        return result.data.data;
+    }
+
+    async function getBorrowById({id}) {
+        const response = await librify.get(`/borrows/${id}`);
+        return response.data.data;
+    }
+
+    async function changeStatus(data) {
+        const response = await librify.post(`/borrows/${data.id}/changeStatus`, 
+            {
+                status: data.status, 
+                denda: data?.penalty || 0,
+            });
+
+        return await response.data;
+    }
+>>>>>>> 9b627430b508a5ec2ac3701bc57b0cd5c4961d4a
 
     return {
         register,
         login,
+        forgotPassword,
+        changePassword,
         getUsers,
         verifyAdmin,
         createBook,
@@ -168,6 +217,8 @@ const api = (() => {
         getBooksPages,
         createBorrow,
         getAllBorrowed,
+        getBorrowById,
+        changeStatus,
     };
 })();
   

@@ -23,10 +23,19 @@ function signOut() {
     return createAction(AUTH_ACTION_TYPES.SET_CURRENT_USER, null);
 }
 
+function forgotPassword({email}) {
+    return createAction(AUTH_ACTION_TYPES.FORGOT_PASSWORD_START, {email});
+}
+
+function changePassword(formData) {
+    return createAction(AUTH_ACTION_TYPES.CHANGE_PASSWORD_START, formData);
+}
 export {
     setCurrentUser,
     setError,
     signIn,
+    signOut,
     signUp,
-    signOut
+    forgotPassword,
+    changePassword
 };
